@@ -3,6 +3,7 @@ https://www.youtube.com/watch?v=SWYqp7iY_Tc&t=605s
 
 # create file
 touch index.html
+
 touch app.js
 
 # start a folder as git repository
@@ -10,18 +11,25 @@ git init
 
 # add name and email address to git
 git config --global user.name 'Jean Vu'
+
 git config --global user.email 'jean.say.hi@gmail.com'
 
 # add file to local repository / staging area
 git add index.html
+
 	#add specific file
+	
 git add *.html
+
 	#add any html file to the staging area	
+	
 git add .
+
 	#add everything	
 
 # check what's in the staging area
 git status
+
 	#changes to be commmitted: staging area, files that have been added to the staging area
 	#untracked files: files that haven't been uploaded to staging area
 	#changes not staged for commit: we added some kind of change to the file while it was in staging area. git tells you to re-add that file
