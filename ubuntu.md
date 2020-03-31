@@ -8,6 +8,7 @@
 [What is the difference between JAVA_HOME and update-alternatives?](https://unix.stackexchange.com/questions/123412/what-is-the-difference-between-java-home-and-update-alternatives)
 
 [apt-get update fails to fetch files, “Temporary failure resolving …” error](https://askubuntu.com/questions/91543/apt-get-update-fails-to-fetch-files-temporary-failure-resolving-error): seeming-internet connection error, good fix, must redo everything there is error
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
 
 ### INSTALLATION 
