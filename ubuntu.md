@@ -10,6 +10,8 @@
 [apt-get update fails to fetch files, “Temporary failure resolving …” error](https://askubuntu.com/questions/91543/apt-get-update-fails-to-fetch-files-temporary-failure-resolving-error): seeming-internet connection error, good fix, must redo everything there is error
 echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
+[How to Fix “Username is not in the sudoers file. This incident will be reported” in Ubuntu](https://www.tecmint.com/fix-user-is-not-in-the-sudoers-file-the-incident-will-be-reported-ubuntu/)
+
 
 ### INSTALLATION 
 
