@@ -95,6 +95,8 @@ class EightPuzzle(object):
                 explore(node, depth)
 
         if solved:
+            ###
+            print(self.retrieve_path(goal, previous))
             return self.retrieve_path(goal, previous), len(visited)
         return None, len(visited)
 
