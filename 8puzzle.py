@@ -135,13 +135,13 @@ class EightPuzzle(object):
         path = [goal]       # path là list từ 0 đến 8
         current = goal      # current là goal state
         while previous[current]:    # nếu trong danh sách previous có tồn tại 
-            path.insert(0, previous[current])
-            current = previous[current]
+            path.insert(0, previous[current]) #thêm state (previous) vào đường đi path
+            current = previous[current] #chuyển đến trạng thái tiếp theo
         return path
 
 puzzle = EightPuzzle(_init_state)
 
-# display the current puzzle state 
+# biểu diện lên màn hình trạng thái hiện tại của các ô trong bài toán
 def display():
     color = 'gray' if puzzle.state != _goal_state else 'green'
 
@@ -153,7 +153,7 @@ def display():
             var[i].set('')
             label[i].config(bg='white')
 
-# solve 8-puzzle 
+# hàm giải bài toán
 def solve():
     for b in button:
         b.configure(state='disabled')
@@ -169,11 +169,11 @@ def solve():
     print('Solving...')
     
     # get solving time
-    stime = time.time()
-    path, n = puzzle.solve_by_IDS()
+    stime = time.time()                 # tính toán thời gian giải
+    path, n = puzzle.solve_by_IDS()     #### CHẠY THUẬT TOÁN TÌM CÁCH GIẢI
     ttime = time.time()
 
-    # if 8-puzzle is unsolvable
+    # nếu bài toán không thể giải được
     if not path:    
         print('This 8-puzzle is unsolvable!')
         for i in range(9):
@@ -191,15 +191,17 @@ def solve():
     display_procedure(path) 
 
 # demonstrate the shortest path
+# hiển thị kết quả bài toán
 def display_procedure(path):
-    if not path:
+    if not path:                # nếu bài toán không giải được
         for b in button:
             b.configure(state='normal')
         option.configure(state='normal')
         return
-    puzzle.state = path.pop(0)
-    display()
-    win.after(500, lambda: display_procedure(path)) 
+    puzzle.state = path.pop(0) # xóa trạng thái đầu tiên trong lời giải (path)
+    display() # hiện ra màn hình nước đi
+    win.after(500, lambda: display_procedure(path)) # gọi hàm recursive display_procedure 
+                                                    # để thực hiện bước đi tiếp theo trong hàng đợi path
 
 # shuffle the state
 def shuffle():
@@ -211,18 +213,7 @@ def reset():
     puzzle.state = copy.deepcopy(_init_state)
     display()
 
-def move(event):
-    text = event.widget.cget('text')
-    if not text:
-        return
-    
-    pos = puzzle.state.index(text)
-    pos0 = puzzle.state.index('0')
-    if _distance[pos0][pos] > 1:
-        return
 
-    puzzle.swap(pos)
-    display()
 
 #
 # Set up of Basic UI
