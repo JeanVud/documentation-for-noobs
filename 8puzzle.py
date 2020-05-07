@@ -93,14 +93,14 @@ class EightPuzzle(object):
             if depth >= limit:
                 return
             next_depth = depth+1
-            for next_node in self.get_next(current):
-                if not next_node in visited:
-                    visited[next_node] = True
+            for next_node in self.get_next(current):    # tìm tất cả nước đi tiếp theo của trạng thái hiện tại và chạy vòng lặp
+                if not next_node in visited:        # nếu vị trí hiện tại chưa từng đi qua
+                    visited[next_node] = True       # bật cờ visited thành true (đã đi qua)
                     previous[next_node] = current
                     if not next_depth in level:
                         level[next_depth] = []
-                    level[next_depth].append(next_node)
-                    explore(next_node, next_depth)
+                    level[next_depth].append(next_node) # sau khi duyệt xong, khởi tạo level tiếp theo
+                    explore(next_node, next_depth)       # gọi hàm recursive explore(node tiếp theo cần duyệt, depth cũ + 1)
                 if solved:
                     break
         
@@ -130,11 +130,11 @@ class EightPuzzle(object):
             return self.retrieve_path(goal, previous), len(visited)
         return None, len(visited)
 
-    # retrieve the shortest path
+    # tìm đường đi ngắn nhất
     def retrieve_path(self, goal, previous):
-        path = [goal]
-        current = goal
-        while previous[current]:
+        path = [goal]       # path là list từ 0 đến 8
+        current = goal      # current là goal state
+        while previous[current]:    # nếu trong danh sách previous có tồn tại 
             path.insert(0, previous[current])
             current = previous[current]
         return path
