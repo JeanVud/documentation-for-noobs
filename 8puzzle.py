@@ -4,11 +4,16 @@ import random
 import copy
 import time
 
-
+# state cuối cùng mà agent cần đạt được để kết thúc bài toán
+# các vị trí được lưu dưới dạng string, có thứ tự sắp xếp từ trái qua phải, từ trên xuống dưới
+# đây là biến mà ta sẽ dùng để so sánh xem state hiện tại của puzzle có phải là goal hay không
 _goal_state = '012345678'
+
+# trạng thái sắp xếp ban đầu của bài toán, do chương trình quy ước sẵn
 _init_state = '724506831'
 
-# neighbors of each square
+# với mỗi ô sẽ có những ô lân cận thích hợp, tùy thuộc vào vị trí
+# được lưu dưới dạng dict, key-value pairs
 _neighbors = {0: [1,3],
               1: [0,2,4],
               2: [1,5],
@@ -19,27 +24,41 @@ _neighbors = {0: [1,3],
               7: [4,6,8],
               8: [5,7]}
 
+# loại thuật toán được sử dụng để giải puzzle
 _algo = {1:"Iterative Deepening Search"}
 
 class EightPuzzle(object):
 
+    #class được tạo ra gồm thuộc tính state, [object] là đối tượng khởi tạo theo mẫu 
     def __init__(self, input_state=None):
-        if input_state:
+        
+        # input_state=None ý nói giá trị default của state ban đầu là rỗng
+        # nếu người dùng tạo object thuộc kiểu EightPuzzle mà truyền tham số không rỗng thì tham số đó sẽ được gán vào input_state
+
+
+        if input_state:     # câu này ý nói if input_state is not null -> gán nó vô thuộc tính state của EightPuzzle
             self.state = copy.deepcopy(input_state)
         else:       
-            # generate a solvable state randomly
-            self.state = copy.deepcopy(_goal_state)
-            self.shuffle()
+            # nếu người dùng tạo object thuộc kiểu EightPuzzle với tham số rỗng
+            self.state = copy.deepcopy(_goal_state)     # chương trình sẽ gán đại trạng thái goal vào thuộc tính state
+            self.shuffle()                              # sau đó chương trình random một trạng thái bất kỳ cho puzzle
             
+
     # shuffle the current state
+    # shuffle trạng thái hiện tại
     def shuffle(self):
-        pos0 = self.state.index('0')
+        pos0 = self.state.index('0')        # gán vị trí hiện tại của ô chữ 0 vào biến pos0
         for i in range(100):
-            choices = _neighbors[pos0]
+            # gán những ô hàng xóm với vị trí của chữ 0 thành danh sách vào biến choices
+            choices = _neighbors[pos0] 
+            # random vị trí một ô bất kỳ là hàng xóm với chữ số 0, lấy từ list choices, gán tạm thời vào pos 
             pos = choices[random.randint(0, len(choices)-1)]
             self.swap(pos)
-            pos0 = self.state.index('0')
+            pos0 = self.state.index('0') # lấy vị trí của chữ 0 sau khi tráo
+            # lặp lại 100 lần
+
     # swap 0 with its neighbor pos
+    # tráo vị trí chữ số 0 với vị trí pos
     def swap(self, pos):
         pos0 = self.state.index('0')
         l = list(self.state)
@@ -47,11 +66,15 @@ class EightPuzzle(object):
         self.state = ''.join(l)
 
     # get all the possible next states
+    # tìm tất cả những nước đi có thể với vị trí hiện tại
     def get_next(self, current):
         pos0 = current.index('0')
         nextStates = []
 
-        for pos in _neighbors[pos0]:
+        # lượt qua danh sách những ô là hàng xóm của số 0, xét từng ô
+        # chương trình hoán vị trí của mỗi ô hàng xóm với ô chữ 0, và lưu lại trạng thái của puzzle vào biến list nextStates,
+        # được tính là một nước đi
+        for pos in _neighbors[pos0]: 
             l = list(current)
             l[pos0], l[pos] = l[pos], l[pos0]
             step = ''.join(l)
@@ -80,14 +103,21 @@ class EightPuzzle(object):
                     explore(next_node, next_depth)
                 if solved:
                     break
+        
 
-        root = self.state
+        root = self.state # gán trạng thái hiện tại của puzzle vào root
         goal = '012345678'
         previous = {root: None}
         visited = {root: True}
         level = {0:[root]}
         solved = (root == goal)
         limit = 0
+
+        # bắt đầu chạy vòng lặp tìm đường đi
+        # while cờ solved vẫn còn false (chưa tìm được lời giải) 
+        # và level mình đang xử lý hiện tại còn nằm trong mức limit đang xét
+        # ý là mình sẽ khám phá từng level, hết vòng lặp thì sẽ tăng limit lên 1, chạy đến khi hàm explore(current, depth)
+        # đổi biến solved thành true thì thôi
         while not solved and limit in level:
             depth = limit
             limit += 1
