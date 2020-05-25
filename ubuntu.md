@@ -18,3 +18,24 @@ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 [Install Hadoop: Setting up a Single Node Hadoop Cluster](https://www.edureka.co/blog/install-hadoop-single-node-hadoop-cluster): most trust-worthy link, works good as hell
 
 [Apache Pig Installation on Linux](https://www.edureka.co/blog/apache-pig-installation)
+
+### COMMANDS
+create a file 
+> touch filename.type
+>> touch sample.txt
+> create a file in editor
+>> vi filename.txt // gedit filename.txt
+
+append to file
+> cat > sample.txt
+
+display the contents of a text file on the command line
+> cat filename
+>> cat sample.txt
+
+move file to another directory
+> mv [file] [directory]
+>> mv sample.txt Desktop  
+
+list files in a remote directory
+> ls -l /some/directory
