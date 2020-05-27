@@ -4,11 +4,20 @@ get list of directories in hdfs.
 browse hdfs directory on browser    
 > http://localhost:50070/explorer.html#/  
 
+create hdfs directory
+> hdfs dfs -mkdir /user
+
 exit namenode safe mode
 > hadoop dfsadmin –safemode leave
 
+upload local file to hdfs directory
+> hdfs dfs -put /home/hadoopuser/pig_exercise/student_data.txt pig_exercise
+
 recursively list all files in the /tmp/hadoop-yarn directory.
 > hadoop fs -ls -R /tmp/hadoop-yarn
+
+copy file from one directory to another
+> hdfs dfs -cp old/directory/file new/directory/file
 
 Show List Output in Human Readable Format  
 Human readable format will show each file’s size, such as 1461, as 1.4k.
@@ -17,3 +26,9 @@ Human readable format will show each file’s size, such as 1461, as 1.4k.
 
 List Information About a Directory  
 > hadoop fs -ls -d /user/akbar
+
+Display content of file on hdfs to terminal
+> hdfs dfs -cat /path/to/file 
+
+Delete hdfs folder/file
+> hadoop fs -rm -r /path/to/directory
