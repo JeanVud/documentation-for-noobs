@@ -32,3 +32,20 @@ Display content of file on hdfs to terminal
 
 Delete hdfs folder/file
 > hadoop fs -rm -r /path/to/directory
+
+## BUG FIXES
+### pig connection refused
+[Pig and Hadoop connection error](https://stackoverflow.com/questions/28061100/pig-and-hadoop-connection-error)
+> ~/hadoop$ cd sbin
+
+> ~/hadoop/sbin$ mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR
+
+starting historyserver, logging to /home/hadoopuser/hadoop/logs/mapred-hadoopuser-historyserver-master.out
+
+> $ jps
+
+6800 Jps
+4369 ResourceManager
+3922 NameNode
+6759 JobHistoryServer
+4200 SecondaryNameNode
