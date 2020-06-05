@@ -19,6 +19,8 @@ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
 [Apache Pig Installation on Linux](https://www.edureka.co/blog/apache-pig-installation)
 
+[Install Gnome on Ubuntu](https://www.wikihow.com/Install-Gnome-on-Ubuntu)
+
 ### COMMANDS
 create a file 
 > touch filename.type
