@@ -22,6 +22,8 @@ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
 [Apache Pig Installation on Linux](https://www.edureka.co/blog/apache-pig-installation)
 
+[Hive Tutorial for Beginners: Learn in 3 Days](https://www.guru99.com/hive-tutorials.html)
+
 [Install Gnome on Ubuntu](https://www.wikihow.com/Install-Gnome-on-Ubuntu)
 
 ### COMMANDS
