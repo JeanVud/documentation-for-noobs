@@ -11,6 +11,8 @@
 echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
 [How to Fix “Username is not in the sudoers file. This incident will be reported” in Ubuntu](https://www.tecmint.com/fix-user-is-not-in-the-sudoers-file-the-incident-will-be-reported-ubuntu/)
+> su root
+> adduser username sudo
 
 
 ### INSTALLATION 
