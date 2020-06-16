@@ -1,0 +1,13 @@
+Sinh viên làm các câu hỏi trong file NorthwindExercises.sql sử dụng CSDL trong file Northwind.rar đính kèm (lược đồ của Northwind là file Northwind.png). SV tạo CSDL từ file Northwind.rar (giải nén file này và sử dung tính năng Restore Database trong SQL Server cho Northwind.bak hoặc thực thi Northwind.sql). Sinh viên đổi tên file NorthwindResults.docx lại thành Ten_Ho_Dem_MSSV_NorthwindResults.docx trước khi nộp (trình bày giống như ví dụ mẫu trong file NorthwindResults.docx - mỗi câu trả lời gồm sql code và màn hình kết quả).
+ 
+	
+Northwind.png Northwind.png
+ 
+	
+Northwind.rar Northwind.rar
+ 
+	
+NorthwindExercises.sql NorthwindExercises.sql
+ 
+	
+NorthwindResults.docx NorthwindResults.docx 
