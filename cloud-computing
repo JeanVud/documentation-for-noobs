@@ -38,3 +38,11 @@ https://i.imgur.com/xy3M0Xy.jpg
 df_model['x'] = df['temperature'][:Len(...-1)
 df_model['y'] = df['temperature'][:Len(1:...)
 
+### Biết nhiệt độ hiện tại 
+Hãy cho biết nhiệt độ tương lai
+
+df_model = pd.DataFrame()
+
+df_model['x'] = df['Temp'][:int(len(df)-1)]
+df_model['y'] = df['Temp'][1:]
+print(df_model)
