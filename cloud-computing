@@ -7,7 +7,7 @@
 
 _________________
 Vẽ đồ thị scatter df.plot.scatter(x = 'x', y = 'y', c = 'Red')
-y = Ax + B (1)
+y = Ax + B  
 A is slope B is intercept
 A = -1,609742
 B = 103,520515
@@ -31,3 +31,10 @@ import matplotlib.pyplot as plt
 
 plt.scatter(df_test['x'], df_test['y'])
 plt.plot(df_test['x'],f(df_test['x']))
+
+
+# lấy mẫu dữ liệu nhiệt độ thật ra load vào df
+https://i.imgur.com/xy3M0Xy.jpg
+df_model['x'] = df['temperature'][:Len(...-1)
+df_model['y'] = df['temperature'][:Len(1:...)
+
