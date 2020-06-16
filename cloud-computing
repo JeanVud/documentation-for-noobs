@@ -26,3 +26,8 @@ def f(x):
           return -1.6*x+103.5
 df_test.plot.scatter(df_test['x'])   
 df_test.plot(df_test['x'],f(df_test['x'])                                           
+
+import matplotlib.pyplot as plt
+
+plt.scatter(df_test['x'], df_test['y'])
+plt.plot(df_test['x'],f(df_test['x']))
