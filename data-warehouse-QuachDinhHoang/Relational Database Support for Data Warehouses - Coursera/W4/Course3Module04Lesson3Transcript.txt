@@ -1,0 +1,97 @@
+Welcome to Lesson 3 of Module 4 on
+Materialized View Processing and Design. In this lesson we will accelerate
+our fun about materialized views with query rewriting rules. I'm gonna start with an important
+practical lesson that I want you to think about throughout this lesson. In practice, do you need to know the query
+rewriting rules covered in this lesson? Lesson 3 extends the introduction
+to materialized views in Lesson 2, with details about query rewriting. You will learn details about
+the query rewriting process and rules to match a user query to
+available materialized views. This lesson is based on several
+research papers about query rewriting, not specific details in Oracle or
+other enterprise DBMSs. Precise details in Oracle and other enterprise DBMSs about
+query writing are proprietary. You have three learning
+objectives in this lesson. You should be able to explain
+the query rewriting process, especially to contrast it with query
+modification for traditional views. As a more concrete goal, you should be able to apply the matching
+rules to query and a materialized view. As a reflective goal, you should think
+about the complexity of query rewriting especially as it is compared to query
+modification for traditional views. The query rewriting process for
+materialized views reverses the query modification process for
+traditional views. The query modification process
+substitutes base tables for views and queries that reference views
+to simplify query formulation. In contrast, the query rewriting process matches
+a query to available materialized views. When matching a query in materialized
+view, the SQL compiler replaces base tables with the materialized view to avoid
+access large fact and dimension tables. Overall, query rewriting is more
+complex than query modification, because query rewriting involves
+a more complex substitution process, it requires the optimizing
+compiler to evaluate cost. In both processes, the SQL compiler
+performs the substitution process, not the user. In the query rewriting process,
+an optimizing compiler evaluates whether the substitution will improve performance
+as compared to the original query. The query rewriting process
+substitutes materialized views for base tables in a query. In this diagram, query sub FD is a query that is a select statement
+using fact and dimension tables. Rewriting involves matching with sets
+of candidate materialized views and then replacing base tables
+with materialized views, for each set of candidate materialized views. If an optimizing SQL compiler
+determines that the rewritten query, designated as query sub MV, provides
+an expected performance improvement, the rewritten query is then executed
+by the SQL engine to generate results. The rewriting process uses rules
+to match clauses in a user's query to clauses in the query
+defining a materialized view. Only materialized views that satisfy all
+rules can be used to rewrite the query. For row conditions, the materialized
+view rows must contain the query rows. Thus, query conditions must be at least as restrictive as
+conditions in a materialized view. The grouping columns in materialized view
+should contain the grouping columns in a query. A grouping column in a query can be
+derivable by a functional dependency if the column does not match exactly. To be derivable, a materialized
+view must contain the determinant, there's the left-hand side
+in a functional dependency. And the query must contain the column on
+the right-hand side of the same functional dependency. Sources of functional dependencies
+are primary keys, unique constraints, and in Oracle, dimension statements
+defined by the determinants clause in the Oracle create dimension statement. The aggregate functions
+in a query must match, or be derivable by aggregate
+functions in the MV. For example, average can be derived
+using the sum and count functions. To clarify the matching rules,
+I will present simple examples, starting with row matching. This diagram depicts row matching between
+a query with conditions on TimeYear and StoreNation to a materialized view,
+with a condition on TimeYear. The rows in the materialized view
+contain the rows in the query. So the matching row will satisfy. The conditions in the query are more
+restrictive than the condition in the materialized view
+with TimeYear = 2012 AND StoreNation = 'USA' being a subset of
+years greater than 2010 in all nations. Rewriting would not be possible if the
+query condition were TimeYear = 2010 as the query rows would not be subset
+of the materialized view rows. Matching of grouping columns
+is simpler than row matching. This diagram depicts matching on grouping
+columns between a query with grouping on StoreCity, to a materialized view
+with grouping on TimeYear in StoreCity. We write as possible because the
+materialized view grouping columns contain the grouping columns in the query. Rewriting would not be possible if the
+query contained another grouping column such as CustZip not in
+the materialized view. I'll finish the details of this lesson
+with a more comprehensive example covering each matching rule. Lesson 4 provides complete queries and materialized views so that you can apply
+matching rules and rewrite queries. The row conditions of the materialized
+view match the row conditions in a query. The query rows in USA stores
+during 2012 are a subset of materialized view rows in the USA or
+Canada after 2010. The Grouping Columns of the materialized
+view master Grouping Columns in a query. The Grouping Columns, StoreState and
+TimeYear in the materialized view contain the Grouping Columns in the query,
+StoreState. Grouping Dependencies allow a materialized
+view to match a query even when the query contains a grouping column not
+contained in the materialized view. Since StoreId determines StoreCity,
+the materialized view matches the query. StoreCity could be retrieved by
+joining the materialized view to the SS store table on StoreID. The aggregate functions
+in the materialized view match the aggregate functions in a query. The AVG function can be
+derived using the SUM and COUNT functions in the materialized view. This lesson,
+extended background materialized views, with details about matching
+rules used in queried rewriting. Query rewriting is an essential
+part of summary data management to improve query performance in
+business intelligence processing. You learned about matching rules for row conditions, grouping columns, grouping
+dependencies, and aggregate functions. If materialized views satisfies each
+matching rule, the query can be rewritten with the materialized view
+replacing fact and dimension tables. After query rewriting occurs and optimizing SQL compiler
+evaluates the rewritten query to determine if it provides
+expected performance improvements. An answer to the opening question,
+optimizing SQL compilers, use the matching rules, so
+you do not need to use them directly. Understanding the basic
+ideas in the matching rules provides a deeper understanding
+of query rewriting. As a data warehouse administrator, you
+may need to understand why a materialized view is not used to rewrite a query. A basic understanding of the matching
+rules provides insight and may help you change a materialized view so
+it can be used to rewrite a query.

@@ -1,0 +1,7 @@
+Làm bài tập Week 3 (thư mục W3) trong file "Relational Database Support for Data Warehouses - Coursera.zip". 
+
+SV trả lời các câu hỏi trong file Course3Module3Assignment.doc bằng cách viết trực tiếp code SQL lên file này và chụp lại màn hình kết quả.
+
+Đổi tên file lại thành STT_Ho_Dem_Ten_Analytic_Functions.doc trước khi nộp.
+
+Hạn chót: 22h00 ngày 17/05/2020.

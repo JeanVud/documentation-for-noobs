@@ -1,0 +1,90 @@
+Welcome to Lesson five and
+Module one on DBMS Extensions and Example Data Warehouses. I'm gonna start with
+a definitional question about the type of data warehouse
+featured in this lesson. What does the word federated mean for
+a data warehouse? Lesson five provides conceptual background
+on how data warehouse is deployed in various organizations to provide a context
+for detailed skills in other modules. You will learn about
+the Colorado Education Data Warehouse, that supports the decision making
+about K-12 education in Colorado, USA. You have three learning objectives,
+in this lesson. You should understand the scope of
+moderate-sized data warehouses. You should get insight about
+development difficulties with cooperation among data providers
+from moderate-sized data warehouses. You should reflect about mandatory
+participation by data providers in wide uses by stakeholders. The Colorado education data warehouse
+was developed in response to public concern and related legislation about accountability
+in student growth in K-12 education. In Colorado, a 1997 law required an adult
+accountability systems for K-12 education. This law was extended in 2004 and 2007 to measure student growth, not just
+student achievement at a point in time. The original education data warehouse was
+developed beginning in 2002 to support education accountability. The first major extension
+performed 2007 to 2009 with a budget of
+approximately 6.7 million. Develop web portals for
+public and private usage. And extended the scope of the data
+warehouse to measure student growth. The second major extension in 2013
+increased the scope with preschool and career data and supported more
+efficient data transfer from school districts to the data warehouse. Colorado SchoolView is a public/private
+portal that uses the education data warehouse. Schoolview supports visual analysis of
+student growth on standardized tests for all Colorado school districts. Users can compare median students growth
+in achievement in reading, writing, and math by school as depicted
+in this snapshot. Schools are classified into four
+quadrants by achievement and growth level such as higher achievement and
+higher growth in the top right quadrant. In addition, users can search on the
+dimensions of student group, grade, and ethnicity, as well as
+rolling up school districts. This snapshot displays visual results for
+the student group dimension. By selecting a bubble display users can drill down to the individual
+school member value. SchoolView provides a map interface in
+addition to standard searching tools for selecting schools and school districts. The Colorado education data warehouse
+uses a federated architecture with mandatory participation by data
+providers, mostly school districts. Colorado has 178 school districts so the number of data sources provided
+by school districts is large. This diagram shows other data sources
+provided by higher education, public safety, corrections, early
+childhood development and human services. After extraction, transformations are performed including
+generation of unique identifiers. The primary measure is
+a standardized test score. Students take standardized tests once
+per year typically in the second half of the school year. Standardized test scores are augmented
+with data from school districts about student grades and
+demographic attributes. Web portals provide reporting
+to stakeholders, public and private, local, state and national. The data model for the education data warehouse is a complex
+collection of nine constellation schemas. The constellation schemas contain 94
+dimension tables, and 32 fact tables. The fact tables have some
+level of denormalization. So fact tables contain both key and code
+values instead of just of the key values. The constellation schemas have
+some level of snowflaking as 10 dimension tables are referenced
+in other dimension tables. The schema diagram uses nine pages
+in Microsoft Visio Professional. With each page containing
+the constellation schema, with many connections among fact and
+dimension tables. The education data
+warehouse is modest size, compared to enterprise data
+warehouses of major corporations. The total size of the education data
+warehouse is about 270 gigabytes. The fact tables have
+about 200 million rows. With 1.6 million rows added per
+year to the major fact table for standardized test results. The standardized test schema
+contains a fact table for standardized test scores, along with
+connections of 27 dimension tables. This diagram shows a simplified
+representation of the schema. The fact table contains
+semi-additive measures. A number of points, percentage points,
+scaled score, and growth percentile for each part of a standardized test. Most dimension tables contain flat
+dimensions, typically a code value. For example dimension tables for
+ethnicity, homeless, migrant status, and gifted contain a single column. Some dimension tables contain hierarchical
+dimensions and multiple attributes. For example, the school dimension
+has location columns that form hierarchical dimensions and
+other columns comprising flat dimensions. Each dimension table uses two
+data columns, beginning and effective dates,
+to provide historical integrity. Lesson five presented a modest size
+data warehouse to provide context for detailed concepts and
+skills covered in other modules. The education data warehouse has
+evolved over more than ten years under several legislative mandates. The development effort required
+coordination among many areas of state and local government in Colorado, USA. The operation of the data warehouse
+involved many new policies for data quality. In this lesson, you were provided
+an overview of the SchoolView website for reporting about student performance and
+growth. Along with the design of
+the education data warehouse. You are encouraged to use the public
+part of the SchoolView website to explore the reporting features. An answer to the opening question. A federation involves an alliance among
+members surrendering some authority to essential body or maintaining some
+level of authority for members. A federated data warehouse involves
+cooperation from independent organizations. School districts in the Colorado
+education data warehouse. Participation of Colorado education data
+warehouses is mandated by law in Colorado. Although state funding was
+provided to defer costs. The benefits are intangible especially for
+school districts. Without mandatory participation, federated data warehouses can be difficult
+to develop and maintain over time.

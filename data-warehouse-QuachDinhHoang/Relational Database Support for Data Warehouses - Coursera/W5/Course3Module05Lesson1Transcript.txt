@@ -1,0 +1,127 @@
+Welcome to Lesson 1 of Module
+5 on Physical Design and Governance of Data Warehouses. Let's have some fun learning about
+bitmaps and data warehouse appliances. I'm going to start with
+an important conceptual question that I want you to think
+about throughout this lesson. What are the differences between
+data warehouse appliances and data warehouse cloud solutions? Module five finishes the course with
+a return to conceptual material. About physical design technologies and
+data governance practices. Lesson one covers basic
+storage architectures and important indexing technique in packaging
+of data warehouse technology solutions. The coverage in this lesson is conceptual,
+so your learning should readily apply across
+enterpriseDB messes and data warehouses. You have three learning
+objectives in this lesson. You should compare and
+contrast basic physical architectures for implementing data warehouses. You should explain components of a bitmap
+join index, an important storage structure for efficient processing
+of data warehouse queries. Finally, you should explain features
+of data warehouse appliances. Important packaging of hardware and
+software components by by DMS vendors. Several storage technologies have been
+developed to provide multi-dimensional data capabilities. The storage technologies support online
+analytic processing, or OLAP for short. A generic name, applied to business
+intelligence capabilities, for data cubes. Multidimensional OLAP, or MOLAP,
+the original storage architecture for data warehouses,
+directly manipulates stored data cubes. MOLAP systems provide high performance,
+because of optimization for queries, using precomputed data cubes. Even with techniques to deal with sparsity Molap engines can be overwhelmed
+by the size of data cubes. This data explosion problem limits the
+size of data in cubes that Molap engines can manipulate. In a relational Olap, or
+Rolap approach data cubes are dynamically constructed from fact and dimension tables
+as well as from materialized views. Typically only a subset of
+a data cube must be constructed as specified in a user's query. ROLLUP provides a number of
+well-developed storage and optimization technologies of parallel
+query execution and partitioning as well as data warehouse specific technologies
+for materialized view processing. Because of tradeoffs between MOLAP and
+ROLAP, hybrid OLAP, or HOLAP, has been developed
+to combine ROLAP and MOLAP. HOLAP allows a data warehouse to be
+divided between relational storage of fact and dimension tables in multi-dimensional
+storage of summary data cubes. A whole app system can combine data
+from the rollups managed data and the MOLAP managed data. Despite the conceptual appeal of HOLAP,
+complexity limits its usage with a DBS vendor required to provide
+two storage engines, and processing to combine storage engines. Indexes support efficient query response
+with overhead for database modifications. A bitmap index supports
+fast query response for columns with relatively few values, such
+as province name and tax filing status. Bitmap indexes require
+considerable overhead to update. So Bitmap Indexes are much better for data
+warehouses than operational databases. A Bitmap contains a string of bits that
+is zero one values with one bit for each row or table. In this example, the first bit position containing one
+indicates that the first row contains USA. The second bit position containing the 1
+indicates the second row contains USA, and the third bit position
+containing a 0 value indicates the third row
+does not contain USA. The DB Mesh storage engine
+provides an efficient way to convert a position in a bitmap
+into a physical address of a row. Let's look at sample Bitmap indexes
+to clarify your understanding. These tables depict a Bitmap column
+index for a sample SSCustomer table. The to the Bitmap is 12 positions because there are 12 rows in
+a sample SSCustomer table. For the first index row you should
+verify that the rows one, two, five, eight and 12 of the SSCustomer table
+have USA for the cust country value. If a query contains a condition on
+cust country equal USA the storage engine can use the bitmap index to provide
+efficient access to the SSCustomer table. For data warehouse queries, bitmap join
+indexes can be especially useful for star queries involving a fact table and
+related dimensional tables. A join bitmap index can be defined for
+a join column such as cusnum or a non-join column such as cuscountry. This tables depict a bitmap join index for
+the cust country column in the SSCustomer table to related
+rows in a sample SS sales table. The length of the bitmap is 24 bits because there are 24 rows in
+the sample SSSales table. A one value in a bit map. Indicates that a parent row
+containing the column value joins with a child table in
+a specified bit position. For example, a 1 in the first bit position
+of the USA row of the join index, means that an SSCustomer
+row with a USA value joins with the first row
+of the SSSales table. Enterprise DBMSs support fast query
+response using bitmap join indexes. Bitmap indexes on multiple columns can
+be combined with intersection operation before accessing fact tables. Data warehouse appliances
+provide pre-packaged solutions. For data warehouses containing
+various storage technologies and optimization methods. A data warehouse appliance is
+a combination of hardware and software components for rapid
+deployment and transparent operation. The components typically include a DBMS, server, hardware,
+storage devices in an operating system. Early appliances emphasize
+proprietary components. But the trend now is now for and
+open source operating systems. Data warehouse appliances
+promise to increase performance, reduce maintenance cost and
+improve scalability. Most appliances provide
+parallel data processing and other performance enhancements. To improve both query and
+refresh processing. Performance improvements are partially due
+to dedicated components and tuning for data warehouse processing without
+compromise for other types of processing. Vendors have designed data warehouse
+appliances for rapid deployment and transparent operation organizations
+who reported lower staffing cost due to less performance tuning and
+monitoring. Vendors had designed data
+warehouse appliances for scalability with incremental addition
+of components as loads increase. Data warehouse appliances have
+some potential disadvantages. Using a data warehouse
+appliance often means redeploying a data warehouse
+to a new environment. Migration costs are potential problem,
+although data warehouse appliance vendors provide tools to reduce data
+migration difficulties. Query migration may also be required
+depending on the level of proprietary SQL used in the current environment. Fixed cost, that is the purchase and lease of data warehouse
+appliances can be considerable. Although these costs must be
+weighed against cost reductions for improved performance and
+lower staffing cost. Data warehouse appliance vendors
+emphasize lower cost of ownership, balancing fixed cost against
+lower operating cost. The market for data warehouse appliances
+provides both complete solutions with both hardware and
+software components. In partial solutions,
+sometimes known as software appliances, with software components only. Complete solutions are mostly
+offered by DBMS vendors, sometimes in cooperation with
+particular hardware vendors. For example, Microsoft provides
+solutions for both HP and Dell servers packaged with SQL server. Partial solutions are special
+purpose to analytical engines for data warehouse processing,
+especially data cube operations. Some of the partial solutions
+use different database models. Such as column and grid representation, along with
+an emphasis on main memory processing. Partial solutions an be combined
+with commodity hardware to provide complete solutions for
+data warehouse processing. Lesson one began module five
+with conceptual material about fiscal design technologies for
+data warehouses. You learned about three storage
+architectures, MOLAP, ROLAP, and HOLAP, bitmap indexes supporting queries
+combining fact and dimension tables, and data warehouse appliances providing
+prepackaged solutions of hardware and software. This conceptual material applies
+across enterpriseDB messes. In answer to the opening question,
+enterprise vendors package data warehouse components into appliances to
+simplify deployment by organizations. An organization must
+provide infrastructure and staff to host data warehouse appliances,
+or outsource these service. In contrast cloud solutions for
+data warehouses involve external hosting providing economies of scale
+crossed organizations. Generally the same product features are
+available in data warehouse appliances and cloud services. The choice between a data warehouse
+appliance and cloud solution. Involves different cost structures and
+levels of control.

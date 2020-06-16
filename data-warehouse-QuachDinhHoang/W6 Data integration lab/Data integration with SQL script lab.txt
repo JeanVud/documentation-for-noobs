@@ -1,0 +1,17 @@
+Sinh viên làm theo các hướng dẫn và yêu cầu trong file "Data integration (with SQL) Lab.pdf".
+
+Chú ý: Tất cả các bài lab đều là bài tập cá nhân. Bạn có thể trao đổi với các bạn trong lớp nhưng bài nộp phải là bài do chính bạn làm. Bạn phải chịu hoàn toàn trách nhiệm nếu có sao chép (dù chỉ là một phần) bài của bạn khác. Những bài giống nhau (một phần hoặc hầu hết) đều bị 0 điểm (cả bạn chép và cho chép). Những bạn đã từng vi phạm mà vẫn tiếp tục tái diễn sẽ bị cấm thi.
+
+Hạn chót nộp bài: 12h00 ngày 18/04/2020.
+ 
+	
+Ch3-SampleDateDim.xls Ch3-SampleDateDim.xls
+ 
+	
+Data integration (with SQL) Lab.pdf Data integration (with SQL) Lab.pdf
+ 
+	
+NorthwindSaleDW-Detailed-Dimensional-Modeling-Workbook-KimballU.xlsm NorthwindSaleDW-Detailed-Dimensional-Modeling-Workbook-KimballU.xlsm
+ 
+	
+NorthwindSalesDW.sql NorthwindSalesDW.sql 

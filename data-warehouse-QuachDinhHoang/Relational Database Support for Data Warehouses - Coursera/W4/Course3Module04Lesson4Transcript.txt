@@ -1,0 +1,121 @@
+Welcome to lesson four of module four on
+Materialized View Processing and Design. In this lesson, we'll have a grand finish
+to our fun about materialized views with query rewriting examples. I'm gonna start with
+an important practical question that I want you to think
+about throughout this lesson. What is a good analogy for
+practicing query rewriting examples? Lesson four completes your
+study about materialized views with query rewriting examples. You will apply the rules
+from lesson three and learn to replace base tables with
+materialized views in queries. This lesson is based on several
+research papers about query rewriting, not specific details in Oracle or
+other enterprise DBMSs. Precise details in Oracle and other enterprise DBMSs about
+query rewriting are proprietary. You have four learning
+objectives in this lesson. As part of the query rewriting examples, you should apply the matching
+rules presented in lesson three. You will gain experience with simple
+query rewriting involving a single materialized view, as well as more
+complex query rewriting involving the UNION operator to combine
+multiple materialized views. As a reflective goal, you should think
+about the complexity of query rewriting with a large number of materialized views. Let's begin with a query and materialized view extending the example
+in lesson three for matching rules. MV1 was used in lesson two, so
+you should already be familiar with it. You should note the key parts
+of the query that is named DWQuery1 in the materialized view MV1. The condition TimeYear
+= 2012 in DWQuery1 and the condition TimeYear > 2010 in MV1. The condition StoreNation IN
+('USA','Canada') in DW1Query, and no corresponding condition
+on StoreNation in MV1. Identical grouping columns of StoreState
+and TimeYear in DWQuery1 and MV1. Identical aggregate function,
+SUM(SalesDollar) in DWQuery1 and MV1. Before rewriting a query, you should
+summarize the components in the query and candidate materialized view. This table contains rows for
+grouping columns, conditions, and aggregate functions for MV1 and DWQuery1. Using the table, you can easily
+apply the matching rules for row conditions, grouping columns,
+and aggregate functions. The condition on TimeYear in
+DWQuery1 is more restrictive than the condition on MV1, so
+the row matching rule is satisfied. The matching rules for grouping and aggregate functions are satisfied,
+because the grouping columns and aggregate functions are identical
+in DWQuery1 and MV1. In the conditions row,
+you can easily see the condition on StoreNation in DWQuery1
+without a counterpart in MV1. The StoreNation column is not in MV1,
+so the SSStore table must be used to test this condition in
+the rewritten query with a join to MV1. For both DWQuery1 and MV1,
+grouping on StoreState without StoreNation assumes that
+StoreState determines StoreNation. Otherwise, sales and
+states with the same name but different countries
+are combined in the result. After organizing the components and applying the matching rules,
+you are ready to rewrite the query. The rewritten query replaces the SSSales
+and SSTimeDim tables with MV1. Note that the rewritten query
+does not have a group by clause, because MV1 has already
+performed grouping. The rewritten query contains
+a join between MV1 and SSStore to eliminate states
+not in the USA or Canada. The DINSTINCT keyword removes
+duplicate state values in the result, as a row in MV1 can join
+with multiple SSStore rows. I will now execute both queries
+in the Oracle SQL developer, to demonstrate that they
+produce the same results. The result of DWQuery1 contains
+two rows with three columns. You must create MV1 before
+executing the rewritten query. The rewritten query
+contains the same two rows. Note that generating identical results
+does not ensure that statements are equivalent, but
+it provides good evidence of equivalence. You are now ready for a more complex example using multiple
+materialized views in query rewriting. This problem involves three
+materialized views, MV1, MV2, and MV3. MV2 and MV3 were additional
+problems in lesson two, so you should have some
+familiarity with them. The query involves a sum of USA and
+Canadian dollar sales from 2010 to 2013,
+by store state and month. A twist on this example
+is the CUBE operation. The summary table is too detailed
+to show here with four columns, that is three materialized
+views in the query. You're encouraged to
+construct summary table to improve your understanding
+of this example. This query matches MV1, MV2,
+and MV3, but these materialized views need to be combined with the UNION
+operations to generate all query rows. MV1 provides USA and
+Canadian store sales after 2010. MV2 provides USA sales in 2010. MV3 provides Canadian sales in 2010. MV2 and MV3 provide row summaries
+in finer detail than the query, so grouping must be applied to roll
+up totals from month to year for MV2, and from city to state for MV3. The CUBE operation must be performed
+one time if you're combining the materialized views. The rewritten query is too
+detailed to show in this lesson. You can find the rewritten query
+in the module four document. You will need to study the complete
+select statement carefully, after watching this part of the lesson. As an alternative to
+the complete select statement, this diagram provides a convenient
+visual representation. The circles inside the cube
+represent query blocks combined with a UNION operator. The first query block joins MV1 to
+SSStore on StoreState while testing a condition on TimeYear using MV1 and
+a condition on StoreNation using SSStore. The second query block tests
+a condition on TimeYear using MV2. The third query block joins MV3 to
+SSStore on StoreCity while testing a condition on TimeYear using MV3 and
+a condition on StoreNation using SSStore. The condition on StoreNation eliminates
+cities with identical names in countries other than Canada. The group by clauses are necessary
+in the second and third query blocks to roll up the finer-level detail
+in the materialized views. The DISTINCT keyword in the first and third query blocks removes duplicate
+state values in the result, because the SSStore table has multiple
+rows with the same state value. The CUBE operation applies
+after the UNION operations. The from clause should have
+a nest query with UNION operations with a CUBE operation
+placed in the outer query. You should not use CUBE operations in each
+query block because extra subtotal rows will be computed. You should now be ready to write select
+statements for some additional problems. You should create three
+materialized views and two queries using the SSSales,
+SSCustomer, and SSTimeDim tables. You should then rewrite the first query
+using the first materialized view. Example one's lesson provides a good
+template for rewriting the first query. You should rewrite the second query
+using all three materialized views. As a variation, you should revise the
+second query by adding a CUBE operation and rewrite the revised second query. Example two in this lesson provides a good
+template for rewriting the second query. You are also encouraged to
+make summary tables for each rewriting problem,
+to verify satisfaction of matching rules. This lesson extended details about
+matching rules covered in lesson three, with complete examples of query rewriting. To help organize details,
+you learned about using a summary table to compare components of a query and
+candidate materialized views. Complete examples of query rewriting were
+presented for using a single materialized view and using multiple materialized
+views, combined with the UNION operator. Query rewriting is a tedious process
+performed by an extended SQL compiler. Working problems provides insight about the complexity of
+the query rewriting process, and may help you diagnose materialized views
+that cannot be used for rewriting. In answer to the opening question,
+I think that practice with query rewriting is similar to practice with
+statistical calculations. To gain insight about statistical
+calculations, you can write spreadsheet formulas with sample
+data to perform statistical computations. Of course, you should use a statistical
+package to perform calculations on a real dataset, but you will use statistical
+software with more confidence after building some computations
+in a spreadsheet. Likewise, performing simple query
+rewriting provides insight and appreciation for query rewriting
+performed by an extended SQL compiler.

@@ -1,0 +1,62 @@
+Welcome to relational database support for
+data warehouses. The third course in this specialization,
+data warehousing for business intelligence. I'm excited to be your instructor for
+this course. They will continue your learning
+journey about data warehouses. My involvement with database
+technology and education spans more than 35 years in academic
+positions, consulting, and research. My work in this course is a culmination of
+teaching data warehouse development for 15 years. Worth writing a support textbook and
+conducting research projects. It's my pleasure and
+privilege to share my excitement and extensive background to help you continue
+on an adventure towards a rewarding and challenging career as a data warehouse or
+business intelligence professional. This course provides
+foundational knowledge and skills about DBMS extensions. Query formulation,
+summary data management, and data warehouse administration for
+your career aspirations. This lesson provides a context for
+your effort in this course. You should reflect on this lesson as you
+work through the details of this course. Through this lesson, you should gain
+a perspective on the position of this course in the specialization. Grasp the target learners for
+this course in the specialization. And understand the broad objectives and
+prerequisite background for this course. The specialization data warehousing for
+business intelligence provides a unified and comprehensive foundation about data
+warehousing and business intelligence. The courses in specialization balance
+concepts, management practices, t t technology advancements, and technical skills, along with a capstone
+course to integrate across courses. This course, the third course in the specialization
+builds on the second course. While the second course covers
+data warehouse concepts, design, and data integration,
+the third course covers implementation and application development. Using relational databases in DBMS's. In addition, the third course presents
+important data warehouse administration topics to augment the concepts
+covered in course two. The specialization targets students and
+working professionals who aspire for careers in data warehouses and
+business intelligence. These careers require background about
+DBMS extensions query formulation, summary data management, and
+data warehouse administration. This third course provides
+this essential background for targeted learners including university
+students with an interest in computing, information technology professionals,
+project managers with an interest in business intelligence and
+business analysts. This course provides a foundation
+of data warehouse background for a career in data warehousing and
+business intelligence. You will understand conceptual
+background about query formulation, summary data management, and
+physical data warehouse design. You will develop skills to write
+queries using extended parts of SQL for sub totals and analytical calculations as well as perform query re-writing using
+materialized views and user queries. You will gain insights about important
+data warehouse administration practices for evaluating big data opportunities in
+initiating a data governance practice. Through mastery of data warehouse concepts
+and skills, is reflect on guidelines and query formulation, materialized
+view design and data governance. This course requires concepts and skills
+taugght in instructive database course in the previous course and specialization. The first course in a specialization
+provides the prerequisite database background about the relational model,
+data modeling, query formulation using joins and grouping
+operations, and relational DBMS usage. You need background from the second
+course in a specialization about data warehouse concepts, schema
+patterns and data integration concepts. The third course in specialization is the
+second course with data warehouse specific content. This course provides a balanced coverage
+about relational database usage for implementing and developing
+applications for data warehouses. You'll develop skills to formulate
+queries and perform query writing. As well as learn about data warehouse
+administration concepts and practices. You will utilize these skills in
+the Capstone course, providing a realistic case study about building a data
+warehouse for business intelligence. This course provides
+an essential foundation. For your journey towards a challenging and
+rewarding career as a data warehouse or business intelligence professional.

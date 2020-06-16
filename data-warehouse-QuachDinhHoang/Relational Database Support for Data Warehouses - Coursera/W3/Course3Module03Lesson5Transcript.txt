@@ -1,0 +1,127 @@
+Welcome to lesson five of module three
+on the Oracle SQL analytic functions. Let's finish our fun about analytic
+functions with some cumulative distribution examples. I'm gonna start with an important usage
+question about analytic functions that I want you to think about
+at the end of the lesson. Are analytic functions portable
+across enterprise DBMS's? Lesson Five completes your
+study of analytic functions. You will learn to write select
+statements with analytic functions for ratio comparisons. Important for
+common business intelligence applications. Although the coverage in this
+lesson is specific to Oracle SQL, other enterprise DNS's
+provide similar capabilities. You have three learning
+objectives in this lesson. Before writing statements you
+need to understand concepts about cumulative distribution functions. As the primary goal, you should be ready
+to write SELECT statements using two functions, CUME_DIST and PERCENT_RANK,
+for cumulative distributions and one function for contribution ratios,
+RATIO_TO_REPORT. As a reflective goal, you should think
+about the importance of query language support for ratio comparisons. Ratio comparisons are common
+in business intelligence, providing more precision than rankings. Ratio comparisons involve contribution
+ratios and distribution ratios. Contribution ratios
+indicate parts of a whole, such as the share of total sales for
+each division. Distribution ratios indicate the size of
+cumulative subsets as compared to the size of a total population such as
+the threshold for top 5% of unit sales. Oracle provides three analytic
+functions for ratio comparisons. The ratio to report function
+computes contributions for additive columns such as sales units. The ratios in the result sum to one, showing a contribution of
+each element to the whole. The Cume_Dist and Percent_Rank functions
+compute distribution ratios for ordered columns such as unit prices and
+credit ratings. The largest value of a cumulative
+distribution function is one. Oracle provides two functions for
+the distribution ratios. Differing on the minimal value and
+the range. The Cume_Dist function does
+not generate zero as a result. But the Percent_Rank
+function generates zero. Precise definitions of both functions
+are given later in the lesson. Let's begin with examples of
+the ratio to report function. Since it is simpler than
+the distribution functions. Example one computes contribution
+ratios or the sum of dollar sales by year in customer city with contribution
+ratios restarting on each year. For clarity, the result is ordered by
+year in descending sum of dollar sales. In the select statement,
+should note the parameter for the Ratio_To_Report function is
+the sum function of sales dollar. Unlike other analog functions that you
+have seen, an order inside the over clause cannot be specified for
+the Ratio_To_Report function. However, a partitioning can be
+specified as shown in this example. I will now execute this statement
+using the Oracle SQL Developer. The result contains 20 rows
+with four columns in each row. In the first row, Littleton is the top
+customer city with more than 50%, 0.5036, of total sum of
+dollar sales in 2010. The contribution ratio sum to one for
+each year in the result. Cumulative distribution gives
+the probability that a random or chance variable is less than or
+equal to a specified value. This graph displays the cumulative
+distribution for highest average salaries. Starting pension amounts for public employees are based on
+their highest average salaries. A number of years ago, I collected this
+data set about public employee retirees in Colorado for several published
+studies in academic journals. Looking at the graph carefully, you can
+see that about half the observations have a highest average salary of less than or
+equal to $54,711. The oracle Cume_Dist function uses
+the formula, number of rows per seating inclusive of the specified row
+divided by the total number of rows, N. Cume E Dist ranges from
+greater than zero to one. In the data set of highest average
+salaries, Cume E Dist of 54,950 is 0.50987, that is 801 divided by 1,571. The Oracle percent rank function,
+uses the formula rank minus one, divided by the number of rows minus one. Percent rank ranges from zero to one,
+with the first value always zero. In the data set of highest average salaries, percent rank of 54,950 is
+0.50955, that is 800 divided by 1570. You can find an Excel spreadsheet
+in this module with a dataset of highest averaged salaries and calculations
+for Cume_Dist and Percent_Rank. You can see the calculations for
+this example in the spreadsheets. Example two demonstrates the cumulative
+distribution functions Percent_Rank and Cume_Dist for item unit prices. To help you verify calculations,
+the rank and row number function values are also shown. I will now execute this statement
+using the Oracle Sequel Developer. The result contains ten rows
+with six columns in each row. You should be able to verify
+the percent rank of zero and the Cume_Dist of 0.1 for the first row. Note that the last row contains one
+is the value of both functions. Example three demonstrates handling
+of equal values by the distribution functions. To help you verify
+calculations the rank and row number function values are also
+shown the select statement uses the distribution functions for
+the sum of unit sales by customer name. I will now execute this statement
+using the Oracle SQL developer. The result contains nine rows,
+with six columns in each row. You should note the identical values
+in the third and fourth rows for the sum of unit sales. The distribution function values,
+0.25 for percent range and 0.4444 for
+Cume_Dist are identical in both rows also. Example four demonstrates a more useful
+statement to retrieve top performers. The select statement uses the Cume_Dist
+function for item unit price. The result should contain the items in
+the top 30% of the largest unit prices. The select statement uses a nested
+theory in the front clause because analytic functions cannot be
+tested in the where or having clauses. The nested query generates the computed
+cumulative distribution column, so that a where condition can
+reference it in an outer query. The nested query in the from clause
+is surrounded by parenthesis. I will now execute this statement
+using the Oracle SQL Developer. The result contains three rows,
+four columns in each row. You should note that the last column with
+accumulative distribution function results is less than or equal to 0.3 for each row. You should now be ready to write select
+statements for some additional problems. You can find the solutions in
+the module three document for all additional problems. In example 5,
+you should write a select statement to calculate the cumulative distribution
+of dollar sales in Colorado. Because there are many duplicate dollar
+sales, you should remove duplicates. The results show the dollar sales and
+cumulative distribution. In example 6, you should write a select statement to
+retrieve the top 30% of the customer zip codes on a sum of dollar sales using
+either cumulative distribution function. You should restart cumulative
+distribution calculations for each year. The result should show the year,
+store zip code, sum of dollar sales, and cumulative distribution, sorted by
+year and cumulative distribution. In Example 7, you should write
+a select statement to calculate the contribution ratio of the sum
+of 2011 unit sales by month and item brand, with contribution
+ratios restarting on each month. The result should show the month,
+item brand, sum of unit sales, and contribution ratio, sorted by month and
+descending sum of unit sales. Lesson five completed your study of
+analytic functions, with coverage of analytic functions for contribution
+ratios and distribution ratios. You learned about
+the RATIO_TO_REPORT function for computing contributions of additive
+columns to an overall total. In the CUME_DIST and
+PERCENT_RANK functions for computing cumulative distributions. You were encouraged to
+write SELECT statements for the additional problems to apply
+the details of this lesson. In answer to the opening question, analytic functions seem reasonably
+portable across enterprise DBMSs. Microsoft SQL Server and IBM DB2
+support the syntax used in this module. Since no compliance testing has
+been performed on this part of the SQL standard, the examples may
+not produce the same results however. Vendors may provide
+specialized aggregate functions not available in computing products. In addition, optimizing compilers in
+each product may perform differently. For open source products My SQL does
+not support analytic functions, while post-gress SQL
+supports analytic functions. The reasonable level of portability means
+that your query formulation skills are not limited to Oracle. The skills that you gain from this module
+will enable you to use analytic functions to support development of business
+intelligence applications across major enterprised DB masses.

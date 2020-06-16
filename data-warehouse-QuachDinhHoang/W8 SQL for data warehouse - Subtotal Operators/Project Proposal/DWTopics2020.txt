@@ -1,0 +1,42 @@
+Mỗi nhóm sinh viên (3-4 SV/nhóm) có thể chọn một trong các dataset bên dưới (các nhóm cũng có thể đề xuất sử dụng các dataset khác với GV) để thực hiện project. Output của project gồm các phần sau: 
+	1. Bản thiết kế data warehouse/data mart dựa trên dataset đã chọn (nên dùng template của Kimball Group để thiết kế)
+		Tạo enterprise bus matrix (nên có tối thiểu 3 business process ứng với 3 loại fact table)
+		Tạo các bảng fact và dimension với thông tin chi tiết
+		Xây dựng các hierarchy cho các dimension (nếu có)
+	2. Tích hợp dữ liệu từ các dataset đã chọn vào data warehouse đã thiết kế (nên dùng SSIS)
+	3. Thiết kế các truy vấn trên data warehouse/data mart đã xây dựng để tạo các báo cáo tổng hợp (nên dùng SQL, MDX, và SSAS)
+
+1. oracle sample db - (company that sells computer hardware including storage, motherboard, RAM, video card, and CPU)
+	https://www.oracletutorial.com/getting-started/oracle-sample-database/
+
+2. posgresql sample db (DVD rental store)
+	https://www.postgresqltutorial.com/postgresql-sample-database/
+	
+3. sqlite sample db (chinook - music db)
+	https://www.sqlitetutorial.net/sqlite-sample-database/
+	https://github.com/lerocha/chinook-database
+
+4. mariadb sample db (countries, regions, languages, and statistics)
+	https://www.mariadbtutorial.com/getting-started/mariadb-sample-database/
+
+5. movies db
+	https://www.databasestar.com/sample-database-movies/
+
+6. video games db
+	https://www.databasestar.com/sample-database-video-games/
+
+7. olympic games db
+	https://www.databasestar.com/sample-database-olympic-games/
+
+8. university rankings db
+	https://www.databasestar.com/sample-database-university-rankings/
+
+9. employee db
+	https://dev.mysql.com/doc/employee/en/sakila-structure.html
+
+10. Sakila db
+	https://dev.mysql.com/doc/sakila/en/sakila-structure.html
+
+11. university db
+	https://www.db-book.com/db7/university-lab-dir/sample_tables-dir/index.html
+

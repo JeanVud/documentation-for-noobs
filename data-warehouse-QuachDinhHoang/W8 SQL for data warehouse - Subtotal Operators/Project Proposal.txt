@@ -1,0 +1,105 @@
+File đính kèm chứa danh sách các chủ đề và các tài liệu tham khảo gợi ý. Mỗi nhóm (5-6 bạn) chọn chủ đề trình bày dựa trên các chủ đề gợi ý trong file đính kèm và viết bản đề xuất (gồm tên chủ đề, các thành viên trong nhóm, giới thiệu sơ lược về CSDL, chủ đề, phác thảo nội dung thực hiện, kế hoạch triển khai, phân chia nhiệm vụ - xem file DWProjectGuides2020.txt).
+
+Đặt tên file đề xuất: <STT chủ đề> - <tên chủ đề> - Proposal.txt. Ví dụ: 1 - Xây dựng và hiện thực kho dữ liệu cho công ty bán phần cứng máy tính - Proposal.txt
+
+Thời gian nộp: trước 20h00 ngày 10/05/2020.
+
+
+Các nhóm đăng ký đề tài bằng cách submit bản đề xuất (proposal) với nội dung là:
+
+1. Nhóm xxx - Tên đề tài 
+
+    Để dễ theo dõi, thứ tự nhóm sẽ tương ứng với thứ tự đề tài, nhóm đăng ký sau không đăng ký lại đề tài nhóm trước đã đăng ký. Thứ tự nhóm không nhất thiết là thứ tự trình bày đề tài.
+    2. Danh sách nhóm (họ tên - MSSV)
+    Mỗi nhóm khoảng 5-6 SV (không có ngoại lệ).
+
+3. Mô tả vắn tắt về đề tài 
+
+    Tham khảo file "Proposal Guides.txt". Đây là phần bắt buộc, đề tài không có phần này sẽ được xem như chưa đăng ký.
+
+4. Phác thảo kế hoạch thực hiện và phân công công việc
+
+    Những công việc mà nhóm dự định làm. Bảng phân chia công việc, ai làm cái gì.
+
+5. Thời gian nhóm dự định trình bày trước lớp (cả trình bày và trả lời câu hỏi)
+
+    Tối thiểu 30 phút, tối đa 45 phút.
+
+
+Chú ý: Sau khi submit bản đề xuất (proposal), các nhóm cập nhật danh sách nhóm và tên đề tài ở link sẽ được gửi qua mail.
+
+
+Thời hạn đăng ký: trước 22h00 ngày 10/05/2020.
+
+    Nhóm nào trễ hạn sẽ bị mất điểm phần này (10% điểm project).
+
+
+Những công việc mà mỗi nhóm cần chuẩn bị trước và sau khi báo cáo
+
+1. Tham khảo các file "DWProjectGuides2020.txt", "DWTopics2020.txt"
+
+2. Trước thời hạn báo cáo 2 ngày
+
+    Slide báo cáo phải được gửi trước thời hạn cuối 2 ngày. Tuy vậy, nhóm có thể bổ sung những nội dung còn thiếu trong buổi báo cáo. Nhóm nào gửi trễ hạn sẽ bị trừ 10% điểm project. Sau khi các nhóm gửi xong, GV sẽ gửi silde cho các nhóm khác tham khảo trước và chuẩn bị câu hỏi.
+
+3. Trong buổi báo báo, sau khi mỗi nhóm báo cáo xong
+
+    Nhóm trình bày trả lời những câu hỏi của các nhóm khác. Những câu hỏi nào chưa trả lời được trực tiếp, nhóm trình bày có thể xin trả lời sau.
+    Phần hỏi đáp có 2 cột điểm: điểm QA của nhóm trình bày và điểm đặt câu hỏi của các SV khác, mỗi phần chiếm 10% điểm project.
+    Điểm QA của nhóm trình bày chiếm sẽ dựa trên chất lượng câu trả lời.
+    Điểm cho đặt câu hỏi của mỗi SV chiếm 10% điểm project. Để có điểm cho phần này, mỗi SV cần có ít nhất 1 câu hỏi. Chất lượng câu hỏi cũng rất quan trọng. Các SV cần tránh hỏi lại những nội dung mà nhóm trình bày đã nói kỹ. Những câu hỏi lại những nội dung đã được trình bày kỹ sẽ bị trừ điểm. Những SV tích cực và có câu hỏi chất lượng trong buổi báo cáo sẽ được cộng điểm.
+    Tất cả các SV đều phải có mặt trong buổi báo cáo. Nếu SV tự ý vắng mặt hoặc về sớm mà không có lý do chính đáng sẽ không có điểm project.
+
+4. Sau buổi báo cáo 1 tuần
+
+    Nhóm trình bày sẽ nộp slide, báo cáo viết và phần trả lời câu hỏi đầy đủ nhất có thể.
+    Mỗi thành viên trong nhóm sẽ phải thực hiện việc chấm điểm sự đóng góp và tham gia của các thành viên khác. Việc đánh giá này được làm độc lập bởi mỗi thành viên. Phiếu đánh giá này là một phần bắt buộc và sẽ được gửi qua một link riêng cho GV. SV nào không thực hiện sẽ bị trừ 10% điểm project.
+
+
+Các điểm thành phần của project cho mỗi thành viên như sau:
+
+1. Đề xuất (điểm nhóm): 10%
+
+2. Trình bày trước lớp (điểm cá nhân): 20%
+
+    Ai được phân công phần nào sẽ trình bày phần đó.
+    Vì phần này được chấm điểm riêng nên các thành viên trong nhóm cần phân chia công việc hợp lý để mọi thành viên đều có đóng góp và thời gian trình bày tương tự nhau. Độ khó về nội dung mà mỗi thành viên phụ trách cũng nên tương tự nhau. Những thành viên trình bày những nội dung quá đơn giản sẽ có điểm thấp hơn. Do vậy, những thành viên giỏi hơn trong nhóm nên hỗ những thành viên yếu hơn hiểu được những nội dung quan trọng.
+
+3. Trả lời câu hỏi của các nhóm khác (điểm nhóm): 10%
+
+    Đây là phần nhóm trình bày trả lời câu hỏi của các nhóm khác. Phần này cần ghi thông tin những ai tham gia trả lời câu hỏi của bạn nào.
+
+4. Đặt câu hỏi cho nhóm trình bày (điểm cá nhân): 10%
+
+    Đây là phần mỗi các nhân đặt câu hỏi cho nhóm trình bày. Những câu hỏi có chất lượng sẽ được xem xét cộng điểm.
+
+5. Tham gia buổi báo cáo (điểm cá nhân): bắt buộc
+
+    Mỗi SV cần dành thời gian tham gia và đặt câu hỏi trong buổi báo cáo. Đây là một cách thể hiện sự tham gia tích cực của mỗi SV và sự tôn trọng đối với nhóm trình bày. SV tự ý vắng mặt hoặc về sớm vì lý do không chính đáng sẽ không có điểm project. Mỗi nhóm trình bày có nhiệm vụ điểm danh các nhóm khác và báo lại cho GV.
+
+6. Báo cáo (điểm nhóm): 40%
+
+    Báo cáo cần ghi thông tin ai tham gia viết phần nào.
+
+7. Đánh giá các thành viên trong nhóm (điểm cá nhân): 10%
+
+    Mỗi SV phải có nhiệm vụ đánh giá sự đóng góp và tham gia của các thành viên khác trong nhóm (những phần mà mỗi thành viên tham gia, nếu cả đề tài là 100% thì mỗi thành viên đóng góp bao nhiêu % vào đề tài, điểm cho mỗi thành viên là bao nhiêu). SV nào không thực hiện sẽ không có điểm phần này.
+
+8. Điểm cộng (điểm cá nhân): <= 20%
+
+    Những SV tham gia tích cực vào buổi báo cáo hoặc có câu hỏi hay.
+
+Điểm project
+
+    Điểm cho mỗi SV sẽ dựa trên đánh giá của từng thành viên trong nhóm với các thành viên khác và đánh giá chung của GV.
+
+
+
+
+
+ 
+	
+DWProjectGuides2020.txt DWProjectGuides2020.txt
+ 
+	
+DWTopics2020.txt DWTopics2020.txt 

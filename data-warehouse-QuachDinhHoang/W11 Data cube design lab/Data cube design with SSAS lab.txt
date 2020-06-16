@@ -1,0 +1,8 @@
+Sinh viên thực hiện theo các yêu cầu trong file đính kèm. Nộp lại project và các report (dùng Excel).
+
+Cách nộp: bỏ các file cần nộp vào thư mục STT_Ho_Dem_Ten_SSAS và nén lại trước khi nộp.
+
+Hạn chót: 22h00 ngày 31/5/2020.
+
+ 
+Data Cube Design with SSAS lab.pdf Data Cube Design with SSAS lab.pdf

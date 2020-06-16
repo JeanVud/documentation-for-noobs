@@ -1,0 +1,97 @@
+Welcome to lesson two of module
+two on the SQL subtotal operators. Let's begin our fun with
+subtotal operators. I'm gonna start with
+an important conceptual question that I want you to think
+about throughout this lesson. What table operator is
+a counterpart to the cube operator? After review of the group
+by clause from lesson one, you are ready to use the cube operator. Lesson two covers characteristics of
+the cube operator, example statements with a cube operator in a group by clause,
+calculations about cube operations. In equivalence of union and
+cube operations. You have three learning
+objectives in this lesson. Your primary goal is to write select
+statements with the cube operator after this lesson. To demonstrate the understanding
+of a cube operator, you should be able to write equivalent
+SELECT statements with the union operator. And perform simple calculations
+about CUBE results. As a more reflective goal, you should think about
+the importance of the CUBE operator. Let's begin with basic characteristics
+about the CUBE operator. The CUBE operator generates a complete set
+of subtotals for collection of columns. Is only appropriate for independent
+columns, usually less than four columns. The column specification
+is order independent due to the nature of the operator
+generated all possible subtotals. You can understand results
+of a cube operation by comparison to the normal
+group by results. The only syntax difference in
+the abbreviated statements is the cube operator in a group by clause. Complete select statements
+appear later in this lesson. The cube result contains
+additional rows for subtotals. The first seven rows
+are identical in both results. Dash in the cube results
+indicates subtotal rows. For example the eighth row,
+the CA for California and the dash, shows the sum of sales, 175, for
+California across all months. The last row with two dashes
+shows the grand total of 750. This cube result group beyond
+two columns stated month contains three sets of subtotal rows. Subtotals for state, subtotals for
+month, and the grand total. This example shows a complete select
+statement using a cube operator. The statement summarizes store
+sales by zip code and month for 2012 sales in the USA and
+Canada with three computed columns, using sum, count, and
+min for dollar sales. The cube operator generates all possible
+subtotal rows so it meets the requirement. Though a new syntax in the statement is
+the cube operator with a list of columns, store, zip and
+time month after the group by clause. The order by clause provides a convenient
+order to view subtotal rows. I will now execute this statement
+using the Oracle SQL Developer. The result contains 20 rows
+with five columns in each row. Blank values in a row indicate a summary
+across all values of the column. For example,
+the fifth row show some of sales restore zip 80111-0033 across all months. The final row with blank values for both
+beam columns shows the grand total for all zip codes and months. To understand the cube operator
+you should be able to perform some simple calculations about
+the number of subtotal rows and the number of groups of subtotal rows. With two columns, a CUBE operation
+generates a maximum of M x N rows in a normal GROUP BY result,
+plus M + N + 1 subtotal rows. In which M and N are the number
+of unique values in each column. A CUBE operation of two columns generates
+three sets of subtotal rows for Col1, Col2, and the grand total. The next part of the lesson shows
+the derivation of a CUBE operation using UNION operations for
+each group of subtotal rows. The cube operator is not primitive,
+but still very useful. You could derive a cube operation with
+union operators combining select blocks with each select block generating
+a group of subtotal rows. However, the cube operator is more
+convenient than using more complex SQL statements with a union operator. Optimizing SQL compilers can also
+generate more efficient plans for a select statement with a cube operation than a more complex select
+statement with union operations. This example shows a partial
+select statement for brevity. You can find a complete statement
+in a document in the module two area of the course website. The first SELECT block is a normal group
+by clause with add a cube operator. The next SELECT block, subtotals
+to StoreZip, using NULL values for time month. Due to the Union compatibility
+requirement, each SELECT block must have the same number of columns with
+positional correspondence among columns. The next select block generates subtotals
+for time month, with null values for store zip. The final select block generates
+the grand total, with null values for both grouping columns,
+and no group by clause. I will now execute the complete statement,
+using the Oracle SQL developer. The result contains the same number of
+rows as the cube example previously shown. To extend your understanding
+of the cube operator, you should consider
+a cube of three columns. The number of subtotal
+rows grows as the product of the unique values of each column. The number of sub-total
+groups grows exponentially as the number of grouping
+columns increases. These calculations should convince you that the cube operations with more than
+three columns should be used with caution. To extend your understanding
+of the cube operator, you should work additional problems. You can work these problems
+with three grouping columns. The class website contains a solution for
+these problems. This was other practice
+problems from module two. This lesson presented the SQL cube
+operator used in a group by clause. SQL subtotal operators including the cube
+operator support sub total computations, similar to sub total
+computations in pivot tables. The cube operator, generates a complete
+set of sub totals, appropriate for independent columns. Although the cube operators not primitive,
+it's convenient to use, and easier to analyze by
+optimizing SQL compilers. In answer to the opening question, the cube operator has similarity to
+the cross product operator for tables. The cube operator generates
+all possible subtotal rows. The cross product operator generates all
+possible combinations of rows from two tables. The cross product operator is really used because most row combinations
+are meaningless. The joint operator is
+almost always preferred. The cube operator has more direct
+application than the cross product operator. However, the cube operator
+should be used with caution, for more than three columns, because of the
+large number of subtotal rows generated. In other lessons of module two, you'll
+learn about other subtotal operators, that do not generate as
+many subtotal rows as cube.

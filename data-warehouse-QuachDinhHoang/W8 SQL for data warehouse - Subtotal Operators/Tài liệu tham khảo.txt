@@ -1,0 +1,15 @@
+Phần này đề cập đến subtotal operators, analytic functions, and materialized views. SV có thể tham khảo khóa học "Relational Database Support for Data Warehouses" trên coursera.org.
+
+Sinh viên có thể đăng ký khóa học trên web hoặc trên mobile (tải và cài ứng dụng Coursera trên Android hoặc IOS) bằng cách đăng ký tài khoản trên Coursera (chỉ cần thông tin email).
+
+Tài liệu tham khảo thêm: 
+
+1. https://docs.oracle.com/database/121/DWHSG/title.htm (Xem mục "SQL for Aggregation in Data Warehouses").
+
+2. https://docs.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-2017
+
+Sinh viên có thể đăng ký khóa học trên web hoặc trên mobile (tải và cài ứng dụng Coursera trên Android hoặc IOS) bằng cách đăng ký tài khoản trên Coursera (chỉ cần thông tin email).
+
+Tài liệu tham khảo thêm: https://docs.oracle.com/database/121/DWHSG/title.htm
+
+(Xem mục "SQL for Analysis and Reporting" và "SQL for Aggregation in Data Warehouses".

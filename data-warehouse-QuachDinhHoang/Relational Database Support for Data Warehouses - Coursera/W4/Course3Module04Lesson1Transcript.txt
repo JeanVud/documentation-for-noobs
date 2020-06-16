@@ -1,0 +1,123 @@
+Welcome to lesson one of Module four on
+Materialized View Processing and Design. Before having fun with materialized
+views and query re-writing, you will have some fun with traditional
+views and query modification. I'm gonna start with
+an important conceptual question that I want you to think about
+through out this lesson. Can traditional views be
+used with data warehouses? Module four continues a detailed
+content provided in modules two and three with more ungraded
+problems in a graded assignment. Lesson one introduces traditional
+views to provide a context for the study of materialized views and
+other lessons of module four. The coverage in this lesson is
+not specific to Oracle SQL, so your learning should readily
+transfer to other enterprise DBMSs. You have three learning
+objectives in this lesson. You should be able to write statements
+to create traditional views after the lecture. Since a major part of creating a view
+is to write a select statement, you should not have difficulty with
+writing create view statements. You should be able to explain
+the query modification process, and perform it on simple examples. As a reflective goal, you should think
+about the usage of traditional views in data warehouse applications. Before getting into the details
+of traditional views, let's consider basic ideas. A traditional view, or view for
+short, is a drive table. A view is essentially a stored query
+defined by a select statement. So it could contain any derived content
+of a database, not just row and column subsets. For data warehouse applications,
+use typically involved joins and grouping to derive those summaries. A view has a virtual behavior so that it behaves like a base table,
+but no physical table exists. A view can be used in
+a query like a base table. However the rows of the view do not exist
+until they are derived using a query on base tables. After these basic ideas, you should
+understand the reasons for using views. The original motivation for views was
+reducing the impact of database definition changes in software development. The original motivation originated
+in 1970s when database definition changes caused tedious
+recompilation of computer programs, often stored on punch cards at the time. Today, the primary
+advantage of using views is simplification of
+application development. Many queries can be easier to write if
+a view is used rather than base tables. Without a view, a select statement
+may involve multiple tables and require grouping if
+summary data are needed. With a view, the select statement can just reference
+a single view without showing a grouping. Training users to write single
+table statements is much easier than training them to write multiple
+table queries with grouping. Views also provide a flexible
+level of security. Restricting access by views is more
+flexible than restrictions for columns and tables because a view is any
+derived part of a database. Data not in the view
+are hidden from the user. The only drawback to
+views can be performance. For most views, using views instead of
+base tables directly, incurs little or no performance penalty. For some complex views, using the views
+can involve a performance penalty, as opposed to using
+the base tables directly. Defining a view is no more
+difficult than writing a query. The SQL standard provides
+the create view statement, in which the view name in the underlying
+select statement must be specified. This example involves a view
+of Connex product sales, cost, and units from 2010 to 2012. Selected columns from the item,
+time dimension and sales tables are shown in the result. In the create view statement,
+you should note the create view keywords, the view name,
+it's Connex20102012Sales_View, in the select statement,
+which joins the three tables, SS item, SS sales, and SS time dim,
+in a condition on item brand. Then I'll execute the create views
+statement using the Oracle SQL developer. The statement execution provides
+a message that the view was created. You can see details by looking at the
+views object in the database connection. You can see the list of columns by opening
+the Connex 2010-2012 sales view object. If you double-click the view object, you will open up a tab in the worksheet
+with sub-tabs for columns, data, grants, dependencies,
+details, triggers, and SQL. Views can also involve row summaries,
+especially common for business intelligence applications. This example contains
+a sum of dollar sales and sales cost from 2010 to 2012 for
+Connex products. In the select statement,
+you should note the GROUP BY clause. Conditions on ItemBrand and TimeYear, and
+the SUM functions in the SELECT clause. I will now execute the CREATE VIEW
+statement using the Oracle SQL Developer. The statement execution provides
+a message that the view was created. You can see the columns of the view, if I open it in the views object
+of the database connection. You can see complete details
+in the worksheet window by double-clicking on Connex 2010
+2012 some sales view object. To simplify query formulation you can use views in the front clause of the select
+statement just like you use base table. Examples three and
+four demonstrate usage of views. Those statements are much easier to write
+than the statements to find the views. A novice user could probably write both
+statements with just a little training. In contrast,
+it may take many hours of training for a novice user to write queries
+with multiple tables and grouping. I will now execute both statements
+using the Oracle-SQL developer. The SQL developer executes both statements without any user awareness that views
+were used instead of base tables. Example three contains 30
+rows with nine columns. Example four contains four
+rows with six columns. To process queries that reference a view an SQL compiler typically
+uses a modification process. This diagram shows that a query using
+a view designated as query sub v is modified or rewritten as
+a query using base tables only. That's designated as query sub b. The modified query, query sub b,
+is executed using the base tables. The modification process
+happens automatically, without any user knowledge or action. In most DBMSs, the modified query cannot
+be seen even if you want to review it. The modification process occurs in
+main memory, with little overhead. To deepen your understanding
+of the modification process, you should study
+the modification examples. Example five, modifies examples three,
+so that base tables replace the view. When you submit a query using a view
+the reference to the view is replaced with the definition of the view. The view name in the front clause
+is replaced by base tables. In addition, the conditions in the where
+clause are combined using the and operator with the conditions in
+the query to finding the view. The underlying parts in example five indicate substitutions made
+in the modification process. I would now execute example five
+using the Oracle SQL developer. Example five contains 30 rows with nine
+columns, the same result as example three. You should now be ready to write select
+statements for some additional problems. In example six, you should create a view containing
+Colorado customer sales in 2010. In example seven, you should write a select statement
+using the view created in example six. Example seven should retrieve selected
+details about sales in Denver Colorado. During the second half of 2010. Example eight modifies example seven so
+that the view is no longer used. You should apply the query
+modification process to replace the view name with base
+tables and combine conditions from the view definition with
+conditions in example seven. You can find the solutions for
+all problems in the module four document. This lesson introduced traditional
+views to provide a context for the study of materialized views
+in other lessons of module four. Traditional views stored queries that
+could be used in select statement just like base tables. Simplify application development and
+provide a flexible unit of security. You learn to write Create View statements using select statements to
+define derivations of rows. You also learned about
+the modification process for transforming a query using a view
+into a query using base tables only. In answer to the opening question,
+traditional views simplify application development and provide a unit of security
+for both transaction processing and business intelligence processing. In other lessons in module four,
+you will learn about materialized views, used primarily in business
+intelligence processing, rather than transaction processing. In contrast to traditional views
+materialized views support improved performance in query
+intensive environments rather than simplification and security. Thus business intelligence applications
+use views to simplify application development and materialized views
+to improve query performance.
