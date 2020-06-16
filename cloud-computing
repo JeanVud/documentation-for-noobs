@@ -1,0 +1,6 @@
+### ngày 16/7/2020
+1. đọc dữ liệu lên dataframe
+2. xử lý dữ liệu bằng phương pháp loại bỏ hoặc thay bằng trá trị mean
+3. vẽ độ thị phân tán biểu diễn y theo x
+4. xây dựng hàm hồi quy tuyến tính y = f(x) với tỉ lệ training-test: 80% - 20%
+5. vẽ biểu đồ scatter và line doi sanh kq dự bào y theo x trên tập test
