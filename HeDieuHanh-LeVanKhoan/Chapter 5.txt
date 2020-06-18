@@ -68,3 +68,26 @@ tương tự 4.3
 BÀI 6.5
 
 BÀI 6.6
+a 100
+mov dh,0a
+mov dl,0
+mov cx,50
+push cx     ;(1)
+mov ah,2
+mov bh,0
+int 10
+mov ah,8
+int 10
+mov ah,9
+mov bh,0
+add bl,0d
+mov cx,1
+int 10
+inc dl
+pop cx
+loop 107      ;(1)
+mov ah,8
+int 21
+int 20
+
+# nhớ enter 2 lần cho nó ra ký tự "-" xong ấn "g" để thực thi đoạn code
