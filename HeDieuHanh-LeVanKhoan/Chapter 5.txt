@@ -91,3 +91,7 @@ int 21
 int 20
 
 # nhớ enter 2 lần cho nó ra ký tự "-" xong ấn "g" để thực thi đoạn code
+
+
+cơ sở văn hóa việt nam cô mỹ châu
+kỹ năng thuyết trình cô châu long
