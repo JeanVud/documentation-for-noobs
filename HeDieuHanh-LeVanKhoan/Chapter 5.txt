@@ -1,3 +1,5 @@
+LINK BÀI TẬP: https://lms.hcmute.edu.vn/mod/resource/view.php?id=483242
+< tài liệu tham khảo >
 int 10
 mov ah,8
 int 21
@@ -7,7 +9,7 @@ pop cx
 loop 103
 int 20
 
-6.3
+BÀI 6.3
 xóa màn hinh (AH=6; AL=0; BH=07; CX=0; DX=184F; INT 10)
 đặt con trỏ tại (13,30) (AH=2L BH=0;DH=Odh; DL=1eh; INT 10)
 nhập 1 câu (AH=0a, DX=đ/c nhập; INT 21)
@@ -60,3 +62,9 @@ jmp 100
 int 20
 
 e 250 "Bam phim bat ky de tiep, ... ESC de ket thuc$"
+
+BÀI 6.4
+tương tự 4.3
+BÀI 6.5
+
+BÀI 6.6
