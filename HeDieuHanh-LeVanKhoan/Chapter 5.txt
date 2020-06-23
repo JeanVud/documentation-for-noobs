@@ -1,0 +1,97 @@
+LINK BÀI TẬP: https://lms.hcmute.edu.vn/mod/resource/view.php?id=483242
+< tài liệu tham khảo >
+int 10
+mov ah,8
+int 21
+cmp al,1b
+jz 12d
+pop cx
+loop 103
+int 20
+
+BÀI 6.3
+xóa màn hinh (AH=6; AL=0; BH=07; CX=0; DX=184F; INT 10)
+đặt con trỏ tại (13,30) (AH=2L BH=0;DH=Odh; DL=1eh; INT 10)
+nhập 1 câu (AH=0a, DX=đ/c nhập; INT 21)
+Xác định vị trí in (AH=2;BH=0; DH=0;DL=50h - [d/c nhap +1]+1; INT 10)
+In câu vừa nhập (AH=9; DX = địa chỉ nhập +2; INT 21)
+Xác định vị trí in (AH=2;BH=0; DH=14;DL=05; INT 10)
+In câu thông báo (AH=9; DX=địa chỉ câu thông báo; INT 21)
+Nhập ký tự không hiện (AH=8; INT 21)
+Kiểm tra AL với 1B
+true -> kết thúc
+quay lại đầu chương trình
+kết thúc
+
+a 100
+mov ah,6        ; xóa màn hình
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2        ; xác định tọa độ nhập
+mov bh,0        ; (13,30)
+mov dx,0c1e
+int 10
+mov ah,9        ; nhập 1 câu
+mov dx,200      ; địa chỉ chứa câu nhập
+int 21
+mov ah,2        ; xác định tọa độ in
+mov bh,0
+mov dh,0        ; góc trên phải màn hình
+mov dl,50
+sub dl,[201]
+inc dl
+int 10
+mov ah,9        ; in câu nhập
+mov dx,202
+int 21
+mov ah,2        ; xác định tọa độ in
+mov bh,0        ; câu thông báo (20,5)
+mov dx,1405
+int 10
+mov ah,9        ; in câu thông báo
+mov dx,250      ; tại địa chỉ 250
+int 21
+mov ah,8
+int 21
+cmp al,1b
+jz 111
+jmp 100
+int 20
+
+e 250 "Bam phim bat ky de tiep, ... ESC de ket thuc$"
+
+BÀI 6.4
+tương tự 4.3
+BÀI 6.5
+
+BÀI 6.6
+a 100
+mov dh,0a
+mov dl,0
+mov cx,50
+push cx     ;(1)
+mov ah,2
+mov bh,0
+int 10
+mov ah,8
+int 10
+mov ah,9
+mov bh,0
+add bl,0d
+mov cx,1
+int 10
+inc dl
+pop cx
+loop 107      ;(1)
+mov ah,8
+int 21
+int 20
+
+# nhớ enter 2 lần cho nó ra ký tự "-" xong ấn "g" để thực thi đoạn code
+
+
+cơ sở văn hóa việt nam cô mỹ châu
+kỹ năng thuyết trình cô châu long
