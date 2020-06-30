@@ -1,0 +1,26 @@
+Về các nội dung cần trình bày trong báo cáo và slide, các nhóm có thể dựa trên gợi ý sau:
+
+1. Dữ liệu
+	Giới thiệu về cơ sở dữ liệu
+		Mô tả schema
+	Lý do cần phải có một data warehouse
+		Gợi ý: Data warehouse có thể giúp công ty (hay tổ chức) tối ưu business và hỗ trợ vấn đề ra quyết định không? Như thế nào? (ví dụ: data warehouse có thể giúp thực hiện các truy vấn và report phức tạp để giúp ra quyết định có nên làm việc gì đó hay không chẳng hạn, nên nêu cụ thể)
+2. Business process
+	Đâu là các business process mà nhóm muốn mô hình (mô tả thành đoạn văn) và nó giúp gì cho việc trả lời các business question
+	Với mỗi business process, liệt kê các thông tin sau (kết hợp mô tả bằng lời và Data Warehouse Bus Matrix):
+		Business questions 
+			Các queries mà data mart được tạo ra từ business process này có thể giúp trả lời
+		Granularity
+			Nên chọn mức độ chi tiết nào (cao nhất hay thấp nhất)? Mỗi fact là mỗi dòng trong fact table nên mô tả thông tin gì? Các function nào có thể áp dụng trên các fact?
+		Dimensions
+			Mô tả các dimension, các hierarchy
+		Measures
+			Mô tả các measure
+			Các measure này thuộc loại nào? (additive, semi-additive, non-additive)
+3. Thiết kế
+	Bình luận, nhận xét chi tiết hơn về các khía cạnh cụ thể của việc mô hình hóa
+	Vẽ schema cho các business process
+4. Truy vấn và báo cáo
+	Liệt kê một số truy vấn và báo cáo để trả lời cho các business question
+5. Kết luận
+	Mô tả những gì nhóm đã làm được, những gì chưa làm được và những gì có thể làm thêm
