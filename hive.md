@@ -10,6 +10,12 @@ https://dzone.com/articles/how-configure-mysql-metastore
 
 [how to install hive in ubuntu with mysql database](https://www.youtube.com/watch?v=vUjDNAy8pEk)
 
+https://bigdataprogrammers.com/load-csv-file-in-hive/
+
+https://stackoverflow.com/questions/19320611/hadoop-hive-loading-data-from-csv-on-a-local-machine
+
+http://www.javachain.com/load-data-into-hive-table-from-hdfs/
+
 
 #TROUBLESHOOTING
 HiveException java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
