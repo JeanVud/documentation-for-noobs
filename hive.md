@@ -8,6 +8,8 @@ https://dzone.com/articles/how-configure-mysql-metastore
 
 [HIVE installation on mysql](https://drive.google.com/file/d/11pTGJICAfPwxTV7jNMi7yyHeTtQ3kHz8/view)
 
+[how to install hive in ubuntu with mysql database](https://www.youtube.com/watch?v=vUjDNAy8pEk)
+
 
 #TROUBLESHOOTING
 HiveException java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
