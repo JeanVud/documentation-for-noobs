@@ -16,6 +16,13 @@ https://stackoverflow.com/questions/19320611/hadoop-hive-loading-data-from-csv-o
 
 http://www.javachain.com/load-data-into-hive-table-from-hdfs/
 
+https://www.tutorialspoint.com/hive/index.htm
+
+https://hive.apache.org/
+
+https://cwiki.apache.org/confluence/display/Hive/Home
+
+(BIG DATA HANDS-ON WORKSHOPData Manipulation with Hive and Pig)[https://www.oracle.com/technetwork/topics/bigdata/articles/hive-and-pig-hol-1937050.pdf]
 
 #TROUBLESHOOTING
 HiveException java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
