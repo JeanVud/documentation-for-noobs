@@ -33,6 +33,10 @@ Display content of file on hdfs to terminal
 Delete hdfs folder/file
 > hadoop fs -rm -r /path/to/directory
 
+> https://stackoverflow.com/questions/26216876/find-port-number-where-hdfs-is-listening
+
+> 
+
 ## BUG FIXES
 ### pig connection refused
 [Pig and Hadoop connection error](https://stackoverflow.com/questions/28061100/pig-and-hadoop-connection-error)
