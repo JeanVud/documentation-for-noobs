@@ -46,7 +46,7 @@ LOAD DATA LOCAL INPATH '/home/hadoopuser/apps.csv' OVERWRITE INTO TABLE googlepl
 
 
 -- LOAD DATA TO APPS
-#LOAD DATA LOCAL INPATH '/home/hadoopuser/apps.csv' OVERWRITE INTO TABLE googleplaystore.apps;
+-- LOAD DATA LOCAL INPATH '/home/hadoopuser/apps.csv' OVERWRITE INTO TABLE googleplaystore.apps;
 USE googleplaystore;
 INSERT INTO TABLE googleplaystore.apps
 SELECT app,category,rating,reviews,size,installs,type,price,content_rating,
@@ -58,4 +58,4 @@ from googleplaystore.apps_temp;
 
 
 -- DISPLAY INSERTED DATA
-SELECT * FROM googleplaystore.apps LIMIT 10;
+SELECT last_updated FROM googleplaystore.apps LIMIT 10;
