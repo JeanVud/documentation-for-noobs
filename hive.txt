@@ -1,3 +1,6 @@
+
+
+
 DROP DATABASE IF EXISTS googleplaystore CASCADE;
 CREATE SCHEMA IF NOT EXISTS googleplaystore;
 DROP TABLE IF EXISTS googleplaystore.apps_temp;
@@ -39,23 +42,22 @@ CREATE EXTERNAL TABLE IF NOT EXISTS googleplaystore.apps
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
 STORED AS TEXTFILE;
 
-
-
 -- LOAD DATA TO APPS_TEMP
 LOAD DATA LOCAL INPATH '/home/hadoopuser/apps.csv' OVERWRITE INTO TABLE googleplaystore.apps_temp;
 
-
 -- LOAD DATA TO APPS
--- LOAD DATA LOCAL INPATH '/home/hadoopuser/apps.csv' OVERWRITE INTO TABLE googleplaystore.apps;
+-- from_unixtime(unix_timestamp('20150101' ,'yyyyMMdd'), 'yyyy-MM-dd')
+
 USE googleplaystore;
 INSERT INTO TABLE googleplaystore.apps
 SELECT app,category,rating,reviews,size,installs,type,price,content_rating,
 genres, 
-from_unixtime(unix_timestamp(last_updated,'yyyy/mm/dd'),'yyyy-MM-dd')
+from_unixtime(unix_timestamp(last_updated,'mm-dd-yyyy'),'yyyy-mm-dd')
 , current_ver, android_ver
 from googleplaystore.apps_temp;
 
-
-
 -- DISPLAY INSERTED DATA
-SELECT last_updated FROM googleplaystore.apps LIMIT 10;
+SELECT last_updated FROM googleplaystore.apps LIMIT 2;
+
+-- REMOVE TEMP TABLE
+DROP TABLE IF EXISTS googleplaystore.apps_temp;
