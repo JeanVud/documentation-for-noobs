@@ -25,7 +25,7 @@ order by Installs desc;
 select installs, app, price from apps where type != 'Free' order by installs desc;
 
 --3
-select Installs, Year(Last_Updated) as year, count(App) as numof apps
+select Installs, Year(Last_Updated) as year, count(App) as numofapps
 from apps
 where Installs > 500
 group by Rollup(Installs,Year(Last_Updated)) 
