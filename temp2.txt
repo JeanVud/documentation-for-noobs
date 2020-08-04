@@ -1,0 +1,30 @@
+insert into table partition_sentiment partition (polarity,subjectivity) 
+
+
+
+select r.app app,a.rating rating, 
+
+	case
+		when polarity between -1 and -0.5 then 'very bad'
+		when polarity between -0.4 and 0 then 'bad'
+		when polarity between 0.1 and 0.5 then 'good'
+		when polarity between 0.6 and 1 then 'very good'
+		else '0'
+	end as polarity_range,
+
+	case
+		when polarity > 0.4 then 'subjective'
+		else 'objective'
+	end as subjectivity_range,
+
+from
+
+(
+
+select app, avg(sentiment_polarity) polarity, avg(sentiment_subjectivity) subjectivity
+
+from apps_reviews
+
+group by app
+
+) r inner join apps a on r.app = a.app;
