@@ -1,8 +1,24 @@
-insert into table partition_sentiment partition (polarity,subjectivity) 
+drop table if exists partition_sentiment;
+ 
+create table partition_sentiment 
+(
+app STRING
+,rating FLOAT
+,polarity float
+,subjectivity float
+,polarity_range STRING
+,subjectivity_range STRING
+)
+PARTITIONED BY (polarity_range STRING, subjectivity_range STRING)
+row format delimited 
+fields terminated by ','
+stored as textfile;
+
+set hive.exec.dynamic.partition.mode=nonstrict;
 
 
-
-select r.app app,a.rating rating, 
+insert into table partition_sentiment partition (polarity_range,subjectivity_range) 
+select r.app app,a.rating rating, r.polarity polarity, r.subjectivity subjectivity
 
 	case
 		when polarity between -1 and -0.5 then 'very bad'
@@ -18,13 +34,8 @@ select r.app app,a.rating rating,
 	end as subjectivity_range,
 
 from
-
 (
-
 select app, avg(sentiment_polarity) polarity, avg(sentiment_subjectivity) subjectivity
-
 from apps_reviews
-
 group by app
-
 ) r inner join apps a on r.app = a.app;
