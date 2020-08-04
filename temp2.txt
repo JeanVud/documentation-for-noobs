@@ -6,8 +6,6 @@ app STRING
 ,rating FLOAT
 ,polarity float
 ,subjectivity float
-,polarity_range STRING
-,subjectivity_range STRING
 )
 PARTITIONED BY (polarity_range STRING, subjectivity_range STRING)
 row format delimited 
