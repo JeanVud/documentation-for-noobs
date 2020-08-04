@@ -21,3 +21,48 @@ where Installs > 500
 group by Rollup(Installs,Year(Last_Updated)) 
 order by Installs desc;
 
+--2
+select installs, app, price from apps where type != 'Free' order by installs desc;
+
+--3
+select Installs, Year(Last_Updated) as year, count(App) as numof apps
+from apps
+where Installs > 500
+group by Rollup(Installs,Year(Last_Updated)) 
+order by Installs desc;
+
+--4
+create view if not exists app_sentiment as
+select apps.app, avg(sentiment_polarity) as avgsentiment
+from apps_reviews r inner join apps on r.app = apps.app
+group by apps.app
+
+select distinct a.app, avgsentiment,  installs, genres, size
+from
+app_sentiment f inner join apps a on f.app = a.app
+order by avgsentiment desc limit 10;
+
+--5 
+select Category, count(App) numofapps
+from apps
+group by Category
+order by count(App);
+
+--6 
+create view if not exists category_count_by_apps as
+select Category, count(App) as apps
+from apps
+group by Category
+
+
+select category, apps, apps *100.0/ (select count(App) from apps) as popularity
+from category_count_by_apps
+order by popularity desc;
+
+--7
+select type,avg(installs) as avg_installs, avg(rating) as avg_rating, avg(reviews) as avg_reviews
+from apps
+group by type;
+
+
+
