@@ -35,11 +35,10 @@ order by Installs desc;
 create view if not exists app_sentiment as
 select apps.app, avg(sentiment_polarity) as avgsentiment
 from apps_reviews r inner join apps on r.app = apps.app
-group by apps.app
+group by apps.app;
 
 select distinct a.app, avgsentiment,  installs, genres, size
-from
-app_sentiment f inner join apps a on f.app = a.app
+from app_sentiment f inner join apps a on f.app = a.app
 order by avgsentiment desc limit 10;
 
 --5 
@@ -52,7 +51,7 @@ order by count(App);
 create view if not exists category_count_by_apps as
 select Category, count(App) as apps
 from apps
-group by Category
+group by Category;
 
 
 select category, apps, apps *100.0/ (select count(App) from apps) as popularity
