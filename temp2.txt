@@ -16,8 +16,7 @@ set hive.exec.dynamic.partition.mode=nonstrict;
 
 
 insert into table partition_sentiment partition (polarity_range,subjectivity_range) 
-select r.app app,a.rating rating, r.polarity polarity, r.subjectivity subjectivity
-
+select r.app app,a.rating rating, r.polarity polarity, r.subjectivity subjectivity,
 	case
 		when polarity between -1 and -0.5 then 'very bad'
 		when polarity between -0.4 and 0 then 'bad'
@@ -25,7 +24,6 @@ select r.app app,a.rating rating, r.polarity polarity, r.subjectivity subjectivi
 		when polarity between 0.6 and 1 then 'very good'
 		else '0'
 	end as polarity_range,
-
 	case
 		when polarity > 0.4 then 'subjective'
 		else 'objective'
