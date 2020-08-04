@@ -1,1 +1,23 @@
+use googleplaystore;
+
+show tables;
+
+dfs –ls –R user/hadoopuser/hive/warehouse/ ;
+describe apps;
+
+describe apps_reviews;
+
+set hive.execution.engine; 
+set hive.execution.engine = tez; 
+set hive.execution.engine = mr; 
+
+set hive.cli.print.header=true; 
+
+describe formatted googleplaystore.apps;
+
+explain select Installs, Year(Last_Updated),count(App)
+from apps
+where Installs > 500
+group by Rollup(Installs,Year(Last_Updated)) 
+order by Installs desc;
 
