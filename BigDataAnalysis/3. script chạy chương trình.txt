@@ -1,0 +1,3 @@
+Nằm trong file báo cáo.docx 
+III - Demo
+4. Các câu truy vấn Hive
