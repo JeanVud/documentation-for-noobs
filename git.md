@@ -44,8 +44,29 @@ git commit
 git commit -m '<message>'
 	# for instance: git commit -m 'changed app.html'
 
-## clear git command
-clear
+## pull a branch from repo
+git branch
+git branch -h  (see additional commands for git branch)
+git branch -a  (list all branches: remot* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/develop
+  remotes/origin/develop-recommend
+  remotes/origin/feature-calc-item-info-playstats
+  remotes/origin/feature-calc-tracking-performance
+  remotes/origin/feature-calc-tracking-performance-v1
+  remotes/origin/feature-dump-replicate-data-mongodb
+  remotes/origin/feature-merge-playstats-proxy-parser
+  remotes/origin/feature-parse-playstats-logs
+  remotes/origin/feature-personalize-blocks-recom
+  remotes/origin/feature-segmentation
+  remotes/origin/feature-streaming-metadata-kafka
+  remotes/origin/master
+  remotes/origin/parser_logs
+  remotes/origin/tracking-very-old
+e-tracking and local branches)
+		
+git fetch origin develop 
+git checkout develop
 
 ## create .gitignore file ignore files
 touch .gitignore
