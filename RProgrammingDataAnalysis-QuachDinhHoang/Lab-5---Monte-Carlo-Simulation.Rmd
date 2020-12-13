@@ -1,0 +1,300 @@
+---
+title: "Monte Carlo Simulation"
+author: "Vũ Đặng Quỳnh Giang"
+date: "2020/11/19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Mô phỏng Monte Carlo cho biến rời rạc
+
+Thay vì tính xác xuất chính xác theo lý thuyết hoặc bằng các công thức, ta sẽ dùng mô phỏng Monte Carlo để ước lượng các xác suất này.
+
+### 1. Mô phỏng thí nghiệm tung xúc xắc
+Giả sử ta cần tính xác suất để một xúc xắc 6 mặt nhận một giá trị cụ thể, chẳng hạn 1. Nếu xúc xắc cân bằng, xác suất này sẽ là $1/6$ theo lý thuyết. Ta sẽ dùng mô phỏng Monte Carlo để ước lượng xác suất này.
+
+Mô phỏng một thí nghiệm tung xúc xắc
+```{r}
+# Mô phỏng thí nghiệm tung xúc xắc
+trial <- sample(1:6, size = 1)
+
+# Số lần xúc xắc có giá trị 1 (số lần thành công)
+success <- if(trial == 1) 1 else 0
+
+# Ước lượng xác suất
+mean(success)
+```
+
+
+Lặp lại thí nghiệm tung xúc xắc nhiều lần (100.000 lần) đê ước lượng xác suất
+```{r}
+set.seed(1)
+# Lặp lại thí nghiệm 100.000 lần
+n <- 1e5
+sims <- numeric(n)
+
+# Lặp lại các thí nghiệm
+for(i in 1:n) {
+  # Mô phỏng thí nghiệm tung xúc xắc
+  trial <- sample(1:6, size = 1)
+  
+  # Số lần xúc xắc có giá trị 1 (số lần thành công)
+  sims[i] <- if(trial == 1) 1 else 0
+}
+
+# Ước lượng xác suất
+mean(sims)
+```
+
+Ta thấy giá trị xác suất ước lượng theo mô phỏng Monte Carlo rất gần với giá trị lý thuyết (xác suất mô phỏng là 0.16685, xác suất theo lý thuyết là 1/6 = 0.1666667)
+
+
+
+### 2. Mô phỏng Monty Hall problem
+[Bài toán Monty Hall](https://en.wikipedia.org/wiki/Monty_Hall_problem)
+
+> Giả sử bạn đang tham gia một chương trình trò chơi và bạn được lựa chọn ba cánh cửa: Phía sau một cánh cửa là một chiếc ô tô, đằng sau những cái khác là các con dê. Bạn chọn một cánh cửa, giả sử là của số 1, và người dẫn chương trình, người biết những gì đằng sau cánh cửa, sẽ mở một cánh cửa khác, giả sử số 3, có một con dê. Sau đó anh ấy nói với bạn, "Bạn có muốn chọn cửa số 2 không?" Việc chuyển đổi lựa chọn có lợi cho bạn không?
+
+Đoạn mã sau thực hiện mô phỏng Monte Carlo cho Monty Hall problem.
+
+```{r}
+set.seed(2)
+# Số lần lặp lại thí nghiệm
+n <- 1e4
+sims <- rep(NA, n)
+
+for(i in 1:n) {                                # Lặp lại thí nghiệm n lần
+  doors <- sample(c("goat", "goat", "car"), 3) # sinh ngẫu nhiên các giá trị
+  choice <- sample(1:3, 1)                     # chọn ngẫu nhiên một cửa (Bước mô phỏng)
+  if(doors[choice] == "car") {                 # nếu bạn chọn của có "car"
+    opens <- sample(c(1:3)[-choice], 1)        # người dẫn chương trình mở một trong hai cửa "goat"
+  } else {                                     # ngược lại, người dẫn chương trình mở cửa "goat" còn lại
+    opens <- setdiff(which(doors == "goat"), choice)           
+  }
+  final <- setdiff(1:3, c(choice, opens))
+  sims[i] <- doors[final]                      # Số lần thành công
+}
+
+sum(sims == "car")/n                           # Ước lượng xác suất
+```
+
+Thí nghiệm này cho thấy nếu bạn đổi lựa chọn sau khi người dẫn chương trình mở cửa "goat" thì xác suất có quà sẽ cao hơn (2/3 thay vì 1/3 như ban đầu).
+
+
+
+### 3. Mô phỏng birthday problem
+[Birthday problem](https://en.wikipedia.org/wiki/Birthday_problem)
+
+> Giả sử bạn đang ở trong một lớp học có 50 người. Nếu ta giả sử đây là một nhóm được chọn ngẫu nhiên gồm 50 người, thì khả năng có ít nhất hai người có cùng ngày sinh là bao nhiêu? 
+
+Ta sẽ sử dụng mô phỏng Monte Carlo cho bài toán này. Để đơn giản, chúng ta cho rằng không ai sinh vào ngày 29 tháng 2 (để có thể biểu diễn ngày sinh là một số từ 1 đến 365). Điều này thực sự không ảnh hưởng nhiều đến kết quả.
+
+```{r}
+n <- 50
+birthdays <- sample(1:365, n, replace = TRUE)
+```
+
+Để kiểm tra xem trong tập hợp cụ thể gồm 50 người này, có ít nhất hai người có cùng ngày sinh hay không, ta có thể sử dụng hàm `duplicated`, hàm này trả về `TRUE` bất cứ khi nào một phần tử của vector là bị trùng lặp. Dưới đây là một ví dụ:
+
+```{r}
+duplicated(c(1,2,3,1,4,2,5,6))
+```
+
+Giá trị 1 và 2 được lặp lại 2 lần nên ta có các giá trị `TRUE`.
+
+Để kiểm tra có ngày sinh nào trung nhau hay không ta dùng hàm `duplicated` và hàm `any` như sau:
+
+```{r}
+any(duplicated(birthdays))
+```
+
+Ta thấy kết quả là `TRUE`, tức là có ít nhất 2 ngày sinh trùng nhau.
+
+Để ước tính xác suất trong nhóm có những người có chung ngàu sinh, chúng ta lặp lại thử nghiệm này bằng cách lặp lại việc lấy mẫu nhóm 50 ngày sinh nhiều lần:
+
+```{r}
+set.seed(3)
+B <- 10000  # Số lần lặp lại thí nghiệm
+
+same_birthday <- function(n){ # n: số người trong nhóm
+  birthdays <- sample(1:365, n, replace=TRUE) # Chọn ngẫu nhiên n ngày sinh (mô phỏng)
+  
+  any(duplicated(birthdays))  # kiểm tra xem có ngày sinh nào trùng nhau không
+}
+
+results <- replicate(B, same_birthday(50)) # Lặp lại thí nghiệm mô phỏng B lần
+
+mean(results) # Ước tính xác suất
+```
+
+Ta thấy xác suất rất cao. Tức trong một nhóm 50 người được chọn ngẫu nhiên, gần như chắc chắn sẽ có ít nhất 2 người có cùng này sinh. Ta có thể minh họa xác suất này như sau:
+
+```{r}
+set.seed(4)
+
+birthday_probs <- function(n, B=10000){
+  
+  results <- replicate(B, same_birthday(n))
+  
+  mean(results)
+}
+
+n <- seq(1,60)
+probs <- sapply(n, birthday_probs)
+
+library(tidyverse)
+qplot(n, probs)
+```
+
+Ta sẽ tính xác suất lý thuyết của bài toán thay vì xác suất ước lượng theo mô phỏng Monte Carlo.
+
+Thay vì tính trực tiếp xác suất có một cặp có cùng ngày sinh, ta sẽ tính xác suất điều này không xảy ra.
+
+Xét người thứ nhất, xác xuất này là 1. Xác suất người thứ hai có ngày sinh khác với người thứ nhất là 364/365. Xác suất người thứ ba có ngày sinh khác với người thứ nhất và người thứ hai là 363/365. Xác suất $n$ người có ngày sinh khác nhau đôi một là:
+
+$$1 \times \frac{364}{365} \times \frac{363}{365} \cdots \frac{365 - n - 1}{365}$$
+
+Ta sẽ minh họa xác suất này bằng hình ảnh cho trực quan
+
+```{r}
+exact_probs <- function(n){
+  prob_unique <- seq(365,365-n+1)/365 
+  1 - prod( prob_unique)
+}
+
+eprobs <- sapply(n, exact_probs)
+qplot(n, probs) + geom_line(aes(n, eprobs), col = "red")
+
+```
+
+Biểu đồ này cho thấy rằng mô phỏng Monte Carlo cung cấp một ước tính rất tốt cho xác suất chính xác. Nếu không thể tính toán các xác suất chính xác, chúng ta vẫn có thể ước tính chính xác các xác suất bằng mô phỏng Monte Carlo.
+
+
+## Mô phỏng Monte Carlo cho biến liên tục
+Khi làm việc với các biến liên tục, sẽ không hữu ích khi xây dựng một phân phối xác định tỷ lệ cho mỗi kết quả có thể xảy ra. Ví dụ: nếu chúng ta đo chiều cao từng người trong một quần thể rất lớn có kích thước $n$ với độ chính xác cực cao, vì không có hai người nào có cùng chiều cao chính xác, chúng ta cần gán tỷ lệ $1/n$ cho mỗi giá trị quan sát và không đạt được một tóm tắt thật sự hữu ích nào cả. Tương tự, khi xác định phân phối xác suất, sẽ không hữu ích nếu gán một xác suất rất nhỏ cho mọi chiều cao đơn lẻ.
+
+Về mặt kỹ thuật, dữ liệu luôn luôn rời rạc. Ví dụ: chúng ta có thể coi dữ liệu chiều cao của mình là biến phân loại với mỗi chiều cao cụ thể là một danh mục duy nhất. Phân phối xác suất được xác định bởi tỷ lệ mỗi người báo cáo ứng với mỗi mức chiều cao.
+
+Hầu hết mọi người làm tròn chiều cao của họ đến cm gần nhất. Tuy nhiên, có thể có những người khác báo cáo các giá trị với độ chính xác hơn. Một sinh viên cho biết chiều cao của mình là 170.18 cm (67 inches). Xác suất được gán cho chiều cao này có thể là 0,0001. Xác suất cho 170 cm có thể cao hơn nhiều chẳng hạn 0,105, nhưng có thực sự hợp lý khi nghĩ xác suất chính xác 170 cm khác với 170.18 không? Rõ ràng sẽ hữu ích hơn nhiều cho mục đích phân tích dữ liệu khi coi kết quả này như một biến số liên tục, lưu ý rằng rất ít người, hoặc có lẽ không ai, chính xác là 170.18 cm và lý do chúng ta nhận được nhiều giá trị ở 170 cm hơn là vì mọi người làm tròn đến cm gần nhất.
+
+Với phân phối liên tục, xác suất của một giá trị đơn lẻ thậm chí không được xác định. Ví dụ, sẽ không hợp lý khi hỏi xác suất mà một người cao 170 khi biết chiều cao tuân theo phân bố chuẩn. Thay vào đó, chúng ta xác định xác suất cho các khoảng chiều cao. Do đó, chúng ta có thể hỏi xác suất ai đó nằm trong khoảng 169 đến 170.
+
+R cung cấp các hàm để tạo ra các kết quả (outcome) cho các phân bố xác suất. Ví dụ, hàm `rnorm` nhận ba đối số: kích cỡ mẫu, giá trị trung bình (mặc định là 0) và độ lệch chuẩn (mặc định là 1) và sinh ra các số ngẫu nhiên tuân theo phân bố chuẩn. Dưới đây là một ví dụ về cách ta có thể tạo dữ liệu chiều cao của 1000 người tuân theo phân bố chuẩn:
+```{r}
+n <- 1000
+m <- 170
+s <- 10
+heights <- rnorm(n, m, s)
+hist(heights)
+```
+
+Xác suất để tìm được một người cao 200 cm trở lên là bao nhiêu?
+```{r}
+sum(heights >= 200)/length(heights)
+```
+
+
+Giả sử ta lặp lại thí nghiệm trên 10000 lần, cho biết phân bố của người cao nhất? xác suất để tìm được một người cao nhất có chiều cao 200 cm trở lên là bao nhiêu?
+```{r}
+B <- 10000
+n <-1000
+
+tallest <- replicate(B, {
+  simulated_data <- rnorm(n, m, s)
+  max(simulated_data)
+})
+
+hist(tallest)
+
+mean(tallest >= 200)
+```
+
+
+
+### Bài tập áp dụng
+
+
+#### Câu 1. 
+
+Mô phỏng thí nghiệm tung 2 xúc xắc và tính xác suất tổng giá trị 2 xúc xắc bằng 5 hoặc 7. So sánh kết quả thu được với kết quả lý thuyết.
+
+```{r q1}
+# Viết code của bạn ở đây
+
+```
+
+
+#### Câu 2.
+Giả sử bây giờ ta có $k (k \ge 3)$ cửa thay vì 3 cửa (chỉ một cửa có xe). Hãy viết một hàm thực hiện mô phỏng Monte Carlo cho bài toán Monty Hall với input là $k$. Ước lượng xác suất thành công nếu người chơi đổi cửa cho các trường hợp $k = 5$, $k = 10$.
+```{r q2}
+# Viết code của bạn ở đây
+
+```
+
+#### Câu 3.
+Giả sử đội bóng bàn A và B chơi với nhau 7 game. Giả sử đội A có xác suất thắng là $60\%$. Tính xác suất đội B thắng ít nhất một game.
+
+
+
+#### Câu 4.
+Thực hiện mô phỏng Monte Carlo để xác nhận câu trả lời lý thuyết của bạn ở câu 3. Sử dụng `B <- 10000` thí nghiệm mô phỏng.
+
+```{r q4}
+# Viết code của bạn ở đây
+
+```
+
+
+#### Câu 5.
+Giả sử đội bóng bàn A và B gặp nhau trong một giải đấu. Mỗi trận gồm 7 game, đội nào thắng trước 4 game sẽ thắng trận. Giả sử hai đội có xác suất thắng như nhau. Giả sử đội A thắng game đầu, tính xác suất đội A thắng trận.
+
+
+
+#### Câu 6.
+Thực hiện mô phỏng Monte Carlo để xác nhận câu trả lời lý thuyết của bạn ở câu 5. Sử dụng `B <- 10000` thí nghiệm mô phỏng.
+
+```{r q6}
+# Viết code của bạn ở đây
+
+```
+
+
+#### Câu 7. 
+Giả sử chiều cao của nữ sinh viên Việt Nam tuân theo phân bố chuẩn với trung bình là 155 cm và độ lệch chuẩn là 10 cm.
+
+a. Nếu chúng ta chọn ngẫu nhiên một sinh viên nữ, thì xác suất cô ấy cao hơn hoặc bằng 170 cm là bao nhiêu?
+```{r q7a}
+# Viết code của bạn ở đây
+
+```
+
+b. Nếu chúng ta chọn ngẫu nhiên một sinh viên nữ, thì xác suất cô ấy thấp hơn hoặc bằng 150 cm là bao nhiêu?
+```{r q7b}
+# Viết code của bạn ở đây
+
+```
+
+c. Nếu chúng ta chọn ngẫu nhiên một sinh viên nữ, thì xác suất cô ấy cao từ 150 cm là đến 160 cm là bao nhiêu?
+```{r q7c}
+# Viết code của bạn ở đây
+
+```
+
+d. Cho biết $1\%$ sinh viên nữ cao nhất co chiều cao bao nhiêu? Gợi ý: sử dụng `qnorm`.
+```{r q7d}
+# Viết code của bạn ở đây
+
+```
+
+
+#### Câu 8.
+Cho biết chỉ số IQ của người dân tuân theo phân bố chuẩn với trung bình là 100 và độ lệch chuẩn là 15. Giả sử bạn muốn biết sự phân bố của chỉ số IQ cao nhất trên tất cả các độ tuổi nếu mỗi độ tuổi có 10.000 người. Thực hiện mô phỏng Monte Carlo với `B = 1000` để tạo ra `10.000` điểm IQ và ghi lại điểm cao nhất. Lập biểu đồ tần số để trực quan hóa kết quả.
+```{r q8}
+# Viết code của bạn ở đây
+
+```
+
+
