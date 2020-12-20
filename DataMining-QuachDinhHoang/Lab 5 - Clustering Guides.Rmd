@@ -1,0 +1,176 @@
+---
+title: "Lab 5 - Clustering Guides"
+author: "Quách Đình Hoàng"
+date: "2020/11/27"
+output: 
+  pdf_document:
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dữ liệu
+
+Bài thực hành này hướng dẫn thực hiện phân loại dữ liệu dùng thuật toán k-means, thuật toán gom cụm phân cấp (hierachical clustering) và `dbscan` với R dùng tập dữ liệu `USArrests`. Đây là tập dữ liệu về tỉ lệ tội phạm bạo lực của Mỹ và có sẵn khi cài đặt R. Tập dữ liệu này chứa số liệu thống kê về 100.000 người bị bắt giữ vì tội tấn công (assault), giết người (murder) và hãm hiếp (rape) ở mỗi tiểu bang của Hoa Kỳ năm 1973. Ngoài ra nó còn có một thuộc tính mô tả phần trăm dân số sống ở khu vực thành thị ở mỗi bang.
+
+Đầu tiên, ta sẽ load và tìm hiểu tổng quan về dữ liệu bằng các lệnh sau:
+```{r, echo=TRUE}
+data("USArrests")
+summary(USArrests)
+str(USArrests)
+head(USArrests)
+```
+
+## Gom cụm phân hoạch dùng k-means
+Hàm `kmeans()` của package `stats` hiện thực giải thuật cụm k-means trong R. Hàm này có cú pháp như sau (sử dụng `?kmeans` để biết thêm chi tiết):
+		
+		kmeans(x, centers, iter.max = 10, nstart = 1, ...)
+
+Trong đó:
+
+  - `x`: ma trận, data frame hoặc vector số
+  - `centers`: Có thể là số lượng các cụm (k) hoặc một tập các trung tâm cụm ban đầu. Nếu là một số thì một tập ngẫu nhiên các hàng (khác biệt) trong x được chọn là các trung tâm cụm ban đầu.
+  - `iter.max`: Cho phép số lần lặp lại tối đa. Giá trị mặc định là 10.
+  - `nstart`: Số lần khởi tạo trung tâm cụm ngẫu nhiên khi centers là một số. Khi giá trị này > 1 thì hàm này sẽ thử nhiều lần khởi tạo trung tâm cụm ngẫu nhiên và chỉ xuất ra kết quả của lần tốt nhất (lần có tổng bình phương khoảng cách đến các trung tâm cụm cho mỗi cụm là nhỏ nhất).
+  
+  Thuật toán `kmeans` xuất ra một số biến sau:
+  
+  - `cluster`: Một vector các số nguyên (từ 1 đến k) cho biết cụm mà mỗi đối tượng (object, instance) được gán.
+  -	`centers`: Một ma trận của các trung tâm cụm.
+  - `totss`: tổng bình phương khoảng cách.
+  - `withinss`: Vector của tổng bình phương khoảng cách đến các trung tâm cụm cho mỗi cụm, một thành phần tương ứng với mỗi cụm.
+  - `tot.withinss`: được tính bằng sum(withinss).
+  - `betweenss`: Tổng tổng bình phương khoảng cách giữa các cụm, được tính bằng $totss - tot.withinss$.
+  - `size`: Số lượng điểm trong mỗi cụm.
+
+Thuật toán `kmeans` yêu cầu người dùng phải nhập vào số cụm. Tuy nhiên, nếu người dùng chưa biết về dữ liệu thì đây là một vấn đề khó. Có nhiều phương pháp khác nhau đã được đề xuất để giải quyết vấn đề này. Package `NbClust` cung cấp 30 chỉ số để xác định số lượng các cụm và đề xuất sử dụng lược đồ phân nhóm tốt nhất từ các kết quả khác nhau thu được bằng cách thay đổi tất cả các kết hợp số lượng cụm, các độ đo khoảng cách và phương pháp phân nhóm. Ta sẽ sử dụng package này để xác định số lượng cụm tốt nhất cho tập dữ liệu `USArrests`. Sử dụng `?NbClust` để biết thêm chi tiết.
+
+```{r, echo=TRUE}
+#install.packages("NbClust",dependencies = TRUE)
+library(NbClust)
+nb <- NbClust(USArrests, diss=NULL, distance = "euclidean", min.nc=2, max.nc=10, method = "kmeans")
+```
+
+Lệnh trên thử nghiệm thuật toán k-means với số cụm từ 2 đến 10. Kết quả của lệnh này cho thấy số cụm k = 2 là tốt nhất, do đó, ta sẽ gom cụm dữ liệu `USArrests` với k = 2.
+
+```{r, echo=TRUE}
+set.seed(1234)
+res <- kmeans(USArrests, 2, nstart = 20)
+print(res)
+```
+
+Ta có thể thêm một cột cluster mô tả kết quả gom cụm vào tập dữ liệu gốc như sau:
+
+```{r, echo=TRUE}
+USArrestsWithCluster <- cbind(USArrests, cluster = res$cluster)
+USArrestsWithCluster
+```
+
+Tập dữ liệu `USArrests` có 4 thuộc tính, tương ứng với 4 chiều. Do đó, để có thể minh họa tập dữ liệu và kết quả gom cụm trên không gian 2 chiều hoặc 3 chiều trực ta phải thu giảm số chiều của tập dữ liệu này. Có một số phương pháp để làm việc này. Một phương pháp phổ biến là **phân tích thành phần chính (Principal Components Analysis  - PCA)**. Ta có thể sử dụng hàm `princomp` trong package `stats` để thực hiện việc này.
+
+```{r, echo=TRUE}
+USArrestsPC <- princomp(USArrests)
+summary(USArrestsPC)
+```
+
+Kết quả cho ta thấy rằng chỉ với hai thành phần đầu tiên đã mang lại tỷ lệ phần trăm tích lũy của phương sai là 0.993. Do đó ta chỉ cần dùng hai thành phần đầu tiên này để minh họa kết quả là đủ.
+
+```{r, echo=TRUE}
+plot(USArrestsPC$scores[,1:2], col=res$cluster, main="Clustering results (with PCA)")
+```
+
+Ta có thể liệt kê tên các bang và kết quả gom cụm tương ứng bằng lệnh sau:
+```{r, echo=TRUE}
+plot(USArrestsPC$scores[,1:2], col=res$cluster, main="Clustering results (with PCA)")
+text(USArrestsPC$scores[,1:2], labels = row.names(USArrests), cex=.7)
+```
+
+## Gom cụm phân cấp
+Hàm `hclust()` của package `stats` hiện thực giải thuật cụm phân cấp trong R. Hàm này có format như sau (sử dụng `?hclust` để biết thêm chi tiết):
+
+    hclust(d, method, ...)
+
+Trong đó:
+  - `d`: Ma trận khoảng cách giữa các điểm dữ liệu, được tính dựa vào hàm `dist`.
+  - `method`: Phương pháp được sử dụng. Có các phương pháp sau: `ward.D`, `ward.D2`, `single`, `complete`, `average`, `mcquitty`, `median` hay `centroid`.
+	
+Áp dụng thuật này trên tập dữ liệu `USArrests`. Ở đây ta sẽ thử nghiệm với phương pháp centroid (khoảng cách giữa các cụm được tính bằng khoảng cách giữa các centroid của các cụm) và vẽ dendrogram của kết quả thu được.
+
+```{r, echo=TRUE}
+hc.centroid <- hclust(dist(USArrests), "centroid")
+plot(hc.centroid, main="Centroid Linkage", xlab="", sub ="", cex =.9)
+```
+
+Ta có thể thử nghiệm các method khác để xem kết quả gom cụm thay đổi như thế nào (thay đổi tham số method ứng với từng giá trị `ward.D`, `ward.D2`, `single`, `complete`, `average`, `mcquitty`, hay `median`).
+
+Để xác định các cụm, ta sử dụng hàm `cutree()`.
+```{r, echo=TRUE}
+cutree(hc.centroid, 2)
+```
+
+
+## Gom cụm dựa trên mật độ dùng dbscan
+Hàm `dbscan` của package `dbscan` là một hiện thực của thuật toán gom cụm dựa trên mật độ DBSCAN (density-based spatial clustering of applications with noise). Ngoài DBSCAN, package này còn hiện thực các thuật toán liên quan khác như OPTICS (ordering points to identify the clustering structure), HDBSCAN (hierarchical DBSCAN), và LOF (local outlier factor).
+
+```{r, echo=TRUE}
+#install.packages("dbscan",dependencies = TRUE)
+library(dbscan)
+```
+
+Sau khi đã cài đặt package `dbscan`, ta có thể gọi hàm `dbscan` như bên dưới. Chú ý, hàm này cần hai tham số là `eps` và `minPts`. Cú pháp hàm này như sau:
+
+    dbscan(x, eps, minPts, ...)
+
+Trong đó:
+  - `x`: là data matrix hoặc ma trận khoảng cách
+  - `eps`: là khoảng cách (epsilon neighborhood)
+  - `minPts`: là số điểm tối thiểu trong epsilon neighborhood region
+
+Việc xác định giá trị phù hợp cho các tham số trên là rất quan trọng để có được kết quả gom cụm hợp lý. Thường ta phải thử nghiệm để chọn các tham số phù hợp. Bạn nên thay đổi các tham số này để xem sự thay đổi của kết quả gom cụm. Dưới đây là một ví dụ:
+
+```{r, echo=TRUE}
+library(dbscan)
+data("moons")
+plot(moons, pch=20)
+dbs <- dbscan(moons, eps = 0.4, minPts = 3) 
+dbs
+plot(moons, col = dbs$cluster + 1L, pch = dbs$cluster + 1L)
+```
+
+Hàm `hullplot` là một hàm hữu ích được cung cấp bởi package `dbscan` để vẽ thêm các bao lồi (convex hull) quanh các điểm dữ liệu cho trực quan.
+
+```{r, echo=TRUE}
+hullplot(moons, dbs)
+```
+
+Xem thêm thông tin về package `dbscan` ở các link sau: https://cran.r-project.org/web/packages/dbscan/vignettes/dbscan.pdf và https://cran.r-project.org/web/packages/dbscan/vignettes/hdbscan.html.
+
+
+## Đánh giá kết quả gom cụm
+Ở mục 2 và 3 ở trên ta đã thử nghiệm hai thuật toán gom cụm. Mỗi thuật toán cho ra một kết quả. Câu hỏi đặt ra là thuật toán nào cho kết quả tốt hơn? Tập dữ liệu của ta không có nhãn, ta không thể dùng các **external measures** như **purity**, **maximum matching** hay **F-measure** được. Vì vậy, đối với tập dữ liệu này ta sẽ dùng các **internal measures** để đánh giá chất lượng gom cụm. **Dunn index** là một độ đo như vậy. **Dunn index** tính tỷ lệ giữa khoảng cách nhỏ nhất trong các cụm với đường kính lớn nhất trong các cụm. Giá trị **Dunn index** lớn hơn mô tả kết quả gom cụm tốt hơn. Hàm `dunn()` của package `clValid` tính giá trị này. Chi tiết về **Dunn index** có thể được tham khảo ở https://en.wikipedia.org/wiki/Dunn_index.
+
+```{r, echo=TRUE}
+#install.packages("clValid",dependencies = TRUE)
+library(clValid)
+d <- dist(USArrests, method="euclidean")
+hc.centroid <- hclust(d, "centroid")
+hc.centroid.cluster <- cutree(hc.centroid, k = 2)
+dunn(d, hc.centroid.cluster)
+dunn(d, res$cluster)
+```
+
+Ngoài **Dunn index**, **Silhouette** cũng là một **internal measures** để đánh giá chất lượng gom cụm. Dùng hàm `silhouette` của package `cluster` để tính chỉ số này. Chi tiết về chỉ số Silhouette có thể được tham khảo ở https://en.wikipedia.org/wiki/Silhouette_(clustering).
+
+
+```{r, echo=TRUE}
+d <- dist(USArrests, method="euclidean")
+hc.centroid <- hclust(d, "centroid")
+hc.centroid.cluster <- cutree(hc.centroid, k = 2)
+cl1 <- silhouette(hc.centroid.cluster, d)
+mean(cl1[, 3])
+cl2 <- silhouette(res$cluster, d)
+mean(cl2[, 3])
+```
+

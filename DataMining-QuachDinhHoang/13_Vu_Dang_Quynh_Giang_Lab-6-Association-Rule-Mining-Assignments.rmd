@@ -1,0 +1,140 @@
+---
+title: "Lab 6 - Association Rule Mining Assignments"
+name: Vũ Đặng Quỳnh Giang 17133015
+date: "2020/12/06"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(arules)
+```
+
+
+Các câu hỏi dưới đây liên quan đến file `"browsing.txt"`. Đây là dữ liệu về các trang mà khách hàng truy cập trong mỗi phiên giao dịch của một cửa hàng bán lẻ online. Để đơn giản hóa cho bài tập này, dữ liệu đã được tiền xử lý để mỗi dòng là một phiên giao dịch gồm id của các trang (cách nhau bởi khoảng trắng). 
+
+### Câu 1. 
+Load file `"browsing.txt"` lưu vào biến `browsing`. Cho biết các thông tin tổng quan về dữ liệu: dữ liệu có bao nhiêu phiên giao dịch (dòng), bao nhiêu trang (cột)? Liệt kê 5 trang được truy cập nhiều nhất. Bao nhiêu phiên giao dịch truy cập ít trang nhất, số lượng ít nhất là bao nhiêu? Bao nhiêu phiên giao dịch truy cập nhiều trang nhất, số lượng nhiều nhất là bao nhiêu? Trung bình có bao nhiêu trang được truy cập trên mỗi phiên giao dịch?
+
+
+```{r}
+browsing <- read.transactions("/home/giangvdq/workspaces/documentation-for-noobs/DataMining-QuachDinhHoang/browsing.txt", sep = ",")
+data(browsing)
+summary(browsing)
+```
+```{r}
+inspect(head(browsing))
+```
+
+```{r}
+itemFrequency(browsing[, 1:5])
+```
+
+
+
+### Câu 2. 
+Chọn một giá trị support mà bạn cho là phù hợp với dữ liệu. Giải thích ngắn gọn lý do bạn chọn giá trị đó. Vẽ biểu đồ tần số của các trang trong các phiên giao dịch với support bạn chọn. Vẽ biểu đồ tần số của top 20 trang được truy cập nhiều nhất trong các phiên giao dịch. 
+```{r}
+itemFrequency(browsing[, 1:5])
+```
+```{r}
+itemFrequencyPlot(browsing, topN = 1)
+```
+
+
+
+### Câu 3. 
+Có bao nhiêu frequent itemset? Bao nhiêu frequent itemset có số item (trang) ít nhất? Bao nhiêu frequent itemset có số item là nhiều nhất? Bao nhiêu frequent itemset có ít nhất k item trở lên (thử với k = 2, 3, ...)? Xem top 10 itemset sắp xếp theo support. Xem top 10 k-itemset sắp xếp theo support (thử với k = 1, 2, 3, ...). Vẽ biểu đồ tần số theo bậc (số lượng item) của các frequent itemset.
+```{r}
+is.freq <- apriori(browsing, parameter = list(target = "frequent itemsets"))
+is.freq
+```
+
+```{r}
+is.freq <- apriori(browsing, parameter = list(target = "frequent itemsets", support = 0.05))
+is.freq
+```
+
+```{r}
+is.freq <- sort(is.freq, by = "support")
+inspect(head(is.freq, n = 10))
+```
+
+```{r}
+image(browsing[1:100])
+
+```
+```{r}
+inspect(is.freq)
+```
+
+
+### Câu 4. 
+Có bao nhiêu closed intemset? Bao nhiêu closed itemset có số item là ít nhất? Bao nhiêu closed itemset có số item là nhiều nhất? Bao nhiêu closed itemset có ít nhất k item trở lên (thử với k = 2, 3, ...)? Xem top 10 closed k-itemset sắp xếp theo support (thử với k = 1, 2, 3, ...). Vẽ biểu đồ tần số theo bậc (số lượng item) của các closed itemset.
+```{r}
+
+is.closed <- is.freq[is.closed(is.freq)]
+inspect(head(sort(is.closed, by = "support"), n = 10))
+```
+
+
+### Câu 5. 
+Có bao nhiêu maximal intemset? Bao nhiêu maximal itemset có số item ít nhất? Bao nhiêu maximal itemset có số item là nhiều nhất? Bao nhiêu maximal itemset có ít nhất k item trở lên (thử với k = 2, 3)? Xem top 10 maximal k-itemset sắp xếp theo support (thử với k = 1, 2, 3, ...). Vẽ biểu đồ tần số theo bậc (số lượng item) của các maximal itemset.
+```{r}
+is.max <- is.freq[is.maximal(is.freq)]
+inspect(head(sort(is.max, by = "support"), n = 10))
+```
+
+```{r}
+barplot(c(frequent = length(is.freq), 
+          closed = length(is.closed), 
+          maximal = length(is.max)), 
+        ylab="verbose", xlab="itemsets")
+```
+
+
+
+### Câu 6. 
+Chọn một cặp giá trị support và confidence mà bạn cho là phù hợp với dữ liệu. Tìm tất cả các rule có tối thiểu 2 item ứng với cặp giá trị support và confidence mà bạn chọn. Cho biết thông tin tổng quan về các rule tìm được: Có bao nhiêu rule? Bậc thấp nhất và cao nhất của các rule là bao nhiêu? Support cao (thấp) nhất của các rule? Cho biết top 10 rule sắp xếp theo độ đo lift.
+```{r}
+rules <- apriori(browsing)
+rules
+```
+```{r}
+90/nrow(browsing)
+```
+```{r}
+rules <- apriori(browsing, 
+                 parameter = list(support = 0.009, 
+                                  confidence = 0.25, 
+                                  minlen = 2))
+rules
+```
+```{r}
+#summary(rules)
+```
+```{r}
+rules <- sort(rules, by = "lift")
+inspect(head(rules, n = 10))
+```
+
+
+
+
+### Câu 7. 
+Cho biết có bao nhiêu rule mà vế trái có ít nhất k items (thử với k = 2, 3, ...)? Vẽ biểu đồ các rule dựa trên số bậc. Vẽ biểu đồ dạng graph của top 50 rule theo độ đo lift.
+```{r}
+#Vì không có rules nên không thể vẽ biểu đồ được
+library(arulesViz)
+```
+
+```{r}
+```
+
