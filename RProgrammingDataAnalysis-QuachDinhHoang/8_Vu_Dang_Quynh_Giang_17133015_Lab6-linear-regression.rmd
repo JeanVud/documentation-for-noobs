@@ -1,0 +1,268 @@
+---
+title: "Introduction to linear regression"
+author: "Vũ Đặng Quỳnh Giang"
+date: "2020/12/30"
+output:
+  html_document:
+    css: lab.css
+    highlight: pygments
+    theme: cerulean
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE, 
+                      results = TRUE, 
+                      fig.show = "show",
+                      message = TRUE, 
+                      warning = FALSE)
+```
+
+
+Chỉ số Tự do Con người (Human Freedom Index) là một báo cáo cố gắng tóm tắt ý tưởng về "tự do" thông qua một loạt các biến số khác nhau cho nhiều quốc gia trên toàn cầu. Nó đóng vai trò như một thước đo khách quan thô cho mối quan hệ giữa các loại tự do khác nhau - cho dù đó là tự do chính trị, tôn giáo, kinh tế hay cá nhân - và các hoàn cảnh kinh tế và xã hội khác.
+Chỉ số Tự do Con người là một báo cáo được đồng xuất bản hàng năm bởi Viện Cato, Viện Fraser và Viện Liberales tại Quỹ Friedrich Naumann vì Tự do.
+
+Trong bài lab này, bạn sẽ phân tích dữ liệu từ các báo cáo Chỉ số Tự do Con người từ năm 2008-2016. Mục đích của bạn sẽ là tóm tắt một vài mối quan hệ trong dữ liệu cả bằng đồ thị và số để tìm ra biến nào có thể giúp kể một câu chuyện về tự do. Bài lab này được dịch từ bài [simple linear regression](http://openintrostat.github.io/oilabs-tidy/08_simple_regression/simple_regression.html)
+
+## Giới thiệu
+
+### Load packages
+
+Trong bài lab này, bạn sẽ khám phá và hình dung dữ liệu bằng cách sử dụng `tidyverse` package. Bạn cũng sẽ sử dụng `statsr` package để chọn một đường hồi quy để tối thiểu hóa tổng bình phương các sai số (sum of squared residuals). Dữ liệu có thể được tìm thấy trong `openintro` package, 
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+library(statsr)
+```
+
+### Dữ liệu
+Dữ liệu ta sử dụng trong bài lab đến từ `openintro` package và tên là `hfi`, viết tắt cho Human Freedom Index.
+
+1.  Cho biết các dimension (số dòng và số cột) của tập dữ liệu?
+```{r c1}
+data("hfi")
+summary(hfi)
+glimpse(hfi)
+```
+
+2.  Tập dữ liệu có **rất nhiều** biến, nhưng ta chỉ quan tâm 4 biến: `pf_score`, `pf_expression_control`, `hf_score`, `year`, và `region`. Chọn các biến này từ `hfi` dataframe, và gán kết quả vào biến tên `hfi_small`.
+```{r c2}
+hfi_small <- hfi[,c(62,48,121,1,4)]
+#pf_score (62), pf_expression_control (48), hf_score (121), year (1),  region (4)
+view(hfi_small)
+```
+
+Ta có thể sử dụng hàm `drop_na()` để biết có bao nhiêu dòng có dữ liệu bị thiếu (missing data). Hàm này tìm từng dòng trong dữ liệu để quyết định dòng nào nên được giữ lại. Nếu một dòng có giá trị `NA`, dòng đó bị loại bỏ. Kết quả là một dataframe không còn missing value cho bất cứ biến nào. 
+
+3. Dùng đoạn mã sau, cho biết có bao nhiêu dòng trong `hfi_small` có missing values?__
+Kế tiếp, sử dụng hàm `drop_na()` để tạo một biến mới tên `hfi_small_clean` **không có** bất cứ missing value nào.
+
+```{r, eval = FALSE}
+dim(hfi_small)
+
+drop_na(hfi_small) %>% 
+  dim()
+```
+
+4.  Loại biểu đồ nào bạn nên dùng để hiển thị mỗi quan hệ giữa `pf_score` (personal freedom score) và `pf_expression_control`?
+    Vẽ biểu đồ thể hiện mối quan hệ này dùng biến `pf_expression_control` là biến giải thích (predictor).
+    Mối quan hệ này có tuyến tính hay không?
+    Nếu bạn biết `pf_expression_control` của một quốc gia là 10, với mức cao nhất là 0, về các áp lực chính trị và kiểm soát đối với nội dung truyền thông, bạn có cảm thấy thoải mái khi sử dụng mô hình tuyến tính để dự đoán điểm tự do cá nhân không?
+
+Nếu mối quan hệ có vẻ tuyến tính, chúng ta có thể định lượng độ mạnh của mối quan hệ bằng hệ số tương quan.
+
+```{r cor}
+hfi_small <- drop_na(hfi_small)
+
+hfi_small %>%
+  summarise(cor(pf_expression_control, pf_score))
+#Có, vì khi sử dụng mô hình tuyến tính để dự đoán điểm tự do cá nhân vì tính tương quan là cao.
+```
+
+
+## Sum of squared residuals
+
+::: {#boxedtext}
+Trong phần này, bạn sẽ sử dụng một hàm tương tác để tìm hiểu ý nghĩa của "tổng các sai số bình phương" (sum of squared residuals). Bạn sẽ cần chạy hàm này trong console. Việc chạy hàm cũng yêu cầu tập dữ liệu `hfi` được tải trong môi trường của bạn. Bạn cũng cần đảm bảo rằng Plots tab ở góc dưới bên phải có đủ không gian để tạo biểu đồ.
+:::
+
+Hãy nghĩ lại cách mà chúng ta đã mô tả sự phân bố của một biến. Nhớ lại rằng chúng ta đã thảo luận về các đặc điểm như tâm (center), độ phân tán (spread) và hình dạng (shape). Sẽ rất hữu ích nếu có thể mô tả mối quan hệ của hai biến số, chẳng hạn như `pf_expression_control` và` pf_score` ở trên.
+
+
+5.  Nhìn vào biểu đồ của bạn từ bài tập trước, hãy mô tả mối quan hệ giữa hai biến này. Bình luận về dạng (form), hướng (direction) và độ mạnh (strength) của mối quan hệ cũng như bất kỳ quan sát (điểm dữ liệu) bất thường nào.
+
+Cũng giống như bạn đã sử dụng giá trị trung bình (mean) và độ lệch chuẩn (standard deviation) để tóm tắt một biến đơn lẻ, bạn có thể tóm tắt mối quan hệ giữa hai biến này bằng cách tìm đường phù hợp nhất với sự kết hợp (association) của chúng. Sử dụng hàm tương tác sau để chọn đường mà bạn cho là tốt nhất khi đi qua các điểm dữ liệu.
+
+
+```{r plotss-expression-score, eval=FALSE}
+plot_ss(x = pf_expression_control, y = pf_score, data = hfi_small)
+#plot_ss(x = pf_expression_control, y = pf_score, data = hfi_small, showSquares = TRUE)
+```
+
+Sau khi chạy lệnh này, bạn sẽ được nhắc nhấp vào hai điểm trên biểu đồ để xác định một đường. Khi bạn đã thực hiện xong, đường bạn đã chỉ định sẽ được hiển thị bằng màu đen và phần còn lại có màu xanh lam.
+
+::: {#boxedtext}
+Nếu biểu đồ của bạn xuất hiện bên dưới đoạn mã và không cho phép bạn chọn các điểm để tạo một đường thẳng, hãy thực hiện các bước sau:
+
+- Nhấp vào Tools của RStudio menu
+- Nhấp vào "Global Options..."
+- Nhấp vào "R Markdown" pane (ở bên trái)
+- Bỏ chọn checkbox có nội dung "Show output inline for all R Markdown documents"
+:::
+
+
+Nhớ lại rằng phần dư/sai số (residual) là sự khác biệt giữa các giá trị quan sát và giá trị được dự đoán bởi đường hồi quy:
+
+$$
+  e_i = y_i - \hat{y}_i
+$$
+
+Cách phổ biến nhất để thực hiện hồi quy tuyến tính là chọn đường tối thiểu hóa tổng các phần dư bình phương. Để hình dung phần dư bình phương, bạn có thể chạy lại lệnh plot và thêm đối số `showSquares = TRUE`.
+
+```{r plotss-expression-score-squares, eval=FALSE}
+plot_ss(x = pf_expression_control, y = pf_score, data = hfi_small, showSquares = TRUE)
+```
+
+Lưu ý rằng output của hàm `plot_ss` cung cấp cho bạn slope và intercept của đường hồi quy cũng như tổng các bình phương.
+
+6.  Dùng hàm `plot_ss`, chọn một dòng thực hiện tốt công việc tối thiểu hóa tổng các bình phương. Chạy hàm này nhiều lần. Tổng bình phương nhỏ nhất mà bạn nhận được là bao nhiêu?
+
+## The linear model
+
+Rất khó chọn đúng đường bình phương nhỏ nhất (least squares line), tức là đường hồi quy tối thiểu tổng bình phương phần dư, thông qua thử và sai.
+Thay vào đó, bạn có thể sử dụng hàm `lm` trong R để fit một mô hình tuyến tính (còn gọi là đường hồi quy).
+
+```{r m1}
+m1 <- lm(hf_score ~ pf_expression_control, data = hfi_small)
+
+```
+
+Đối số đầu tiên trong hàm `lm ()` là một công thức có dạng `y ~ x`.
+Ở đây có thể diễn giải là chúng ta muốn tạo mô hình tuyến tính của `pf_score` như một hàm của` pf_expression_control`. Đối số thứ hai chỉ định rằng R nên tìm trong `hfi` dataframe để tìm hai biến này.
+
+**Chú ý:** Toán tử pipe __sẽ không__ thể áp dụng ở đây, bởi vì dataframe không phải là đối số thứ nhất!
+
+Output của `lm ()` là một đối tượng chứa tất cả thông tin chúng ta cần về mô hình tuyến tính vừa được tạo. Chúng ta có thể truy cập thông tin này bằng cách sử dụng hàm `summary`.
+
+```{r summary-m1}
+summary(m1)
+```
+
+Chúng ta hãy xem xét output này từng phần. Đầu tiên, công thức được sử dụng để mô tả mô hình được hiển thị ở trên cùng, trong phần được hiển thị là "Call". Sau công thức, bạn tìm thấy bản tóm tắt năm số của phần dư.
+Bảng "Hệ số" hiển thị tiếp theo là quan trọng; cột đầu tiên của nó hiển thị intercept của mô hình tuyến tính và hệ số của `pf_expression_control`.
+Với bảng này, chúng ta có thể viết ra đường hồi quy bình phương nhỏ nhất cho mô hình tuyến tính:
+
+$$
+  \hat{y} = 4.61707 + 0.49143 \times pf\_expression\_control
+$$
+
+Phương trình này cho chúng ta biết hai điều:
+- Đối với các quốc gia có `pf_expression_control` là 0 (những quốc gia có áp lực chính trị lớn nhất đối với nội dung truyền thông), chúng ta kỳ vọng điểm tự do cá nhân trung bình của họ là 4.61707.
+- Đối với mỗi lần tăng 1 đơn vị trong `pf_expression_control`, chúng ta kỳ vọng điểm tự do cá nhân trung bình của một quốc gia sẽ tăng 0.49143 đơn vị.
+
+Một thông tin cuối cùng mà chúng ta sẽ thảo luận từ kết quả tóm tắt là Multiple R-squared, hay đơn giản hơn, $R^2$. Giá trị $R^2$ đại diện cho tỷ lệ biến thiên trong biến phản hồi được giải thích bởi biến giải thích. Đối với mô hình này, 63.42% độ biến thiên trong `pf_score` được giải thích bởi` pf_expression_control`.
+
+7.  Fit một mô hình mới sử dụng `pf_expression_control` để dự đoán` hf_score` hay tổng điểm tự do của con người. Sử dụng các ước lượng từ output của R, hãy viết phương trình của đường hồi quy. Độ dốc (slope) cho chúng ta biết điều gì trong bối cảnh mối quan hệ giữa tự do của con người và mức độ áp lực chính trị đối với nội dung truyền thông?
+```{r c7}
+#57,7% sự thay đổi trong hf_score có thể được giải thích bằng công thức hồi quy và chúng ta có mối quan hệ tuyến tính thuận.
+
+#hf_score = 5.153687 + 0.349862 * pf_expression_control
+
+#Với pf_expression_control tăng một đơn vị, hf_score tăng 0,349862.
+```
+
+## Prediction and prediction errors
+
+Hãy tạo biểu đồ scatterplot cùng với đường bình phương nhỏ nhất cho `m1` nằm trên nó.
+
+```{r reg-with-line}
+ggplot(data = hfi_small, aes(x = pf_expression_control, y = pf_score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Ở đây, theo nghĩa đen, chúng ta đang thêm một lớp lên trên biểu đồ của chúng ta. `geom_smooth` tạo đường bằng cách fit một mô hình tuyến tính.
+Nó cũng có thể hiển thị cho chúng ta sai số chuẩn `se` ứng với đường hồi quy, nhưng chúng ta sẽ tạm bỏ qua lỗi đó bây giờ.
+
+Đường hồi quy này có thể được sử dụng để dự đoán $y$ ở bất kỳ giá trị nào của $x$. Khi các dự đoán được thực hiện cho các giá trị $x$ nằm ngoài phạm vi của dữ liệu quan sát, thì nó được gọi là *ngoại suy* và thường không được khuyên dùng. Tuy nhiên, các dự đoán được đưa ra trong phạm vi dữ liệu đáng tin cậy hơn. Chúng cũng được sử dụng để tính toán phần dư.
+
+
+8.  Nếu ai đó nhìn thấy đường hồi quy bình phương nhỏ nhất chứ không phải dữ liệu thực tế, họ sẽ dự đoán tự do cá nhân của một quốc gia như thế nào cho một quốc gia có `pf_expression_control` là 7.4? Đây là đánh giá quá cao hay đánh giá thấp và bao nhiêu? Nói cách khác, phần dư cho dự đoán này là gì?
+```{r c8}
+pf_expression_control1 = 7.4
+
+pf_score1 = 4.61707 + 0.491432*pf_expression_control1
+pf_score1
+
+pf_score2 <- hfi_small %>% filter(pf_expression_control == 7.5) %>% select(pf_score) %>% pull() %>% mean()
+pf_score2
+
+pf_score3 <- hfi_small %>% filter(pf_expression_control == 7.25) %>% select(pf_score) %>% pull() %>% mean()
+pf_score3
+
+pf_score4 = 0.6*(pf_score2 - pf_score3) + pf_score3
+pf_score4
+
+pf_score4 -pf_score1 
+# Residual = -0.08084254.Gía trị dự đoán lớn hơn giá trị quan sát.
+```
+
+## Model diagnostics
+
+Để đánh giá xem mô hình tuyến tính có đáng tin cậy hay không, chúng ta cần kiểm tra (1) độ tuyến tính (linearity), (2) phần dư xấp xỉ phân bố chuẩn (nearly normal residuals) và (3) độ biến thiên không đổi (constant variability).
+
+**Tuyến tính (Linearity)**: Bạn đã kiểm tra xem mối quan hệ giữa `pf_score` và `pf_expression_control` có tuyến tính hay không bằng cách sử dụng biểu đồ scatterplot. Chúng ta cũng nên xác minh điều kiện này bằng biểu đồ của các phần dư (residuals) so với các giá trị dự đoán.
+
+```{r residuals}
+ggplot(data = m1, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  xlab("Fitted values") +
+  ylab("Residuals")
+```
+
+Lưu ý ở đây rằng `m1` cũng có thể đóng vai trò là một tập dữ liệu vì nó chứa các giá trị dự đoán ($\hat{y}$) và các phần dư (residuals). Sau khi tạo biểu đồ scatterplot trên lớp đầu tiên (dòng mã đầu tiên), chúng ta thêm một đường đứt nét ngang màu đỏ tại $y = 0$ (để giúp chúng ta kiểm tra xem phần dư có được phân bố xung quanh 0 hay không) và chúng ta cũng đổi tên các nhãn trục tọa độ (axis labels) để có nhiều thông tin hơn.
+
+
+9.  Có bất kỳ dấu hiệu rõ ràng nào trong biểu đồ phần dư không? Điều này cho thấy điều gì về tính tuyến tính của mối quan hệ giữa hai biến?
+
+</br>
+
+**Phần dư xấp xỉ phân bố chuẩn (Nearly normal residuals)**: Để kiểm tra điều kiện này, chúng ta có thể xem biểu đồ của phần dư
+
+```{r hist-res}
+ggplot(data = m1, aes(x = .resid)) +
+  geom_histogram(binwidth = 25) +
+  xlab("Residuals")
+```
+
+hoặc một biểu đồ phân bố chuẩn của các phần dư.
+
+```{r qq-res}
+ggplot(data = m1, aes(sample = .resid)) +
+  stat_qq()
+```
+
+Lưu ý rằng cú pháp để tạo biểu đồ phân bố chuẩn hơi khác so với những gì bạn thường thấy: chúng ta thiết lập `sample` bằng số dư thay vì `x` và chúng ta thiết lập phương pháp thống kê `qq`, viết tắt cho "quantile-quantile", một tên khác thường được sử dụng cho các biểu đồ phân bố chuẩn.
+```{r c9}
+plot(m1)
+
+#Không có mô hình rõ ràng nào trong biểu đồ phần dư.điều kiện chuẩn mực dường như đã được đáp ứng. Các điều kiện cho hồi quy tuyến tính được thỏa mãn, vì vậy chúng ta có một mối tương quan tuyến tính mạnh.
+
+
+```
+10.  Dựa trên biểu đồ tần số (histogram) và biểu đồ phân bố chuẩn, điều kiện phần dư xấp xỉ phân bố chuẩn có bị vi phạm không? Tại sao có hoặc tại sao không?
+
+</br>
+
+**Constant variability**: Không, điều này là do các điều kiện cho tính chuẩn mực dường như được đáp ứng.
+
+11.  Dựa trên biểu đồ phần dư so với dự đoán (residuals vs. fitted plot), có phải điều kiện biến thiên không đổi dường như bị vi phạm? Tại sao có hoặc tại sao không?
+
+Điều kiện biến thiên không đổi không bị vi phạm, điều này là do không có khuôn mẫu rõ ràng.
+
