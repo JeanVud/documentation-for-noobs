@@ -1,0 +1,127 @@
+Welcome to lesson four of module three
+on the oracle SQL Analytics Functions. Let's expand our fun about analytic
+functions to sliding windows. I'm gonna start with
+a specialized question about the interval keyword in
+logical window specifications. When should you use the interval keyword
+in logical window specifications? Lesson four continues your study
+of analytic functions about window comparisons began in lesson three. You will learn to write select
+statements with physical and logical Window specifications for
+sliding Window calculations. Although the coverage in this
+lesson is specific to Oracle SQ, other enterprised messages
+provide similar capabilities. You have three learning
+objectives in this lesson. Before writing SELECT statements,
+you need to understand concepts and syntax about sliding window comparisons. As the primary goal, you should be
+ready to write SELECT statements that perform sliding window calculations. As a reflective goal,
+you should think about the importance of query language support for
+window comparisons. Lesson three covered concepts and examples for cumulative physical
+windows specified with a rows keyword. This lesson covers sliding windows
+both physical and logical. Logical windows indicated
+by the range keyword or specified for an ordering variable such
+as a shipment date or a number of years. The range values indicate starting and
+ending points of a window. Sliding windows, also known as
+moving windows change on both ends. To clarify logical window concepts,
+let's consider some partial examples. These partial examples show the order and column in the logical window
+specification, because a logical window specification cannot really be understood
+without knowing the ordering column. Logical window require edited columns,
+typically columns with a date or energy data type. The first partial example indicates a
+cumulative row containing the current row and rows of all previous
+values of TimeYear. Range unbounded preceding differs
+from rows unbounded preceding when the current row has the same
+ordering column value as the next row. For range unbounded preceding,
+the next row is included in a window or the next row is not included for
+rows unbounded preceding. The second partial example
+defines a sliding logical window. The window specification
+range 90 preceding, indicates the current row than rows with
+higher date in the previous 90 days. For columns with a date data type,
+the default interval is days. The third partial example defines
+a centered, slidy logical window. The window's specification
+range between 365 preceding and 365 following, includes the current row, rows within the previous 365 days
+of ship date in the current row and rows within the next 365
+days of the current row. The fourth partial example
+uses the interval keyword to specify a centered
+sliding logical window. The window specification in examples three
+and four differ only for leap years. Interval values must be
+entered as a text value with an integer inside
+single quotation marks. The order in column must have a date,
+data type when using interval keyword. Intervals can be also be specified
+using the month and day keywords. This diagram, depicts a sliding,
+physically centered window specified as rows between one
+proceeding and one following. In the diagram, you should note the window
+for the fifth row comprising the current row that is row five, the previous row,
+row four and the next row, row six. The arrows indicate the fore direction
+of movement for both the start and end of the window. For each window and
+aggregate function, such as AVG for averages calculated is
+a more complete reference. The windows boundary table shows the
+starting and ending rows of the window for each current row. Note that the windows for the first and
+last rows contain only two rows. Example One demonstrates
+a select statement for sliding physical window
+using the AVG function. The select statement calculates the
+average of the sum of dollar sales by zip code and year over the entire
+result without partitioning. The windows specification rows
+between one proceeding and one following indicates a sliding,
+physically centered window. I will now execute this statement
+using the Oracle SQL Developer. The result contains 12 rows
+with 4 columns in each row. Note that the moving
+average in the first row, 90,772 is the average of the sum
+of sales in rows 1 and 2. Likewise, the moving average
+in the last row 95,056 is the average of summer
+sales in the last 2 rows. The movie in the average on
+the other rows involves three rows, the current row,
+previous row and next row. I encourage you to verify
+other calculations yourself. This diagram to fix sliding
+logically centered window specified as range between one
+preceding and one following. This diagram shows the window for
+the fifth row with ship date 11/06/2015. The current row, row five,
+row four with the previous date of 11/05/2015 In rows six and
+seven with the next date, 11/7/2015 is a more complete reference. The Window Boundaries table shows
+the starting and ending rows and the window for each current row. With duplicate into our missing values, a center of logical window may
+not be physically centered. For example, the window shown in this
+diagram is not physically centered on the current row with starting row four and
+ending row seven. You should study the Window Boundaries to
+see other examples of logically centered windows that are not physically centered. Example Two demonstrates
+a select statement for sliding logically centered
+window using the AVG function. The select statement calculates
+the average of sum of dollar sales by year without partitioning. The Windows specification ranged
+between one proceeding and one following indicates a sliding
+logically centered window. I will now execute this statement
+using the Oracle SQL Developer. The result contains four rows
+with three columns in each row. Note that the moving
+average in the first row, 277,198 is the average of the sum
+of sales in rows 1 and 2. Likewise, the moving
+average in the last row, 275,663 is the average of the sum
+of sales in the last 2 rows. The moving average in the other
+rows involves three rows, the current row, previous row and
+next row since the order in column, TimeYear has no duplicate or
+missing values. I encourage you to verify
+other calculations yourself. You should now be ready to write select
+statements for some additional problems. You can find the solutions
+in a module three document. In Example Three, you should write a
+select statement to calculate the average sum of sales by year and item brand with
+calculations restarting on each year. The window should be centered on two
+preceding and two following rows. The result should only include brands
+with more than five sales in a year. The results should show the year,
+item brand, count, sum of sales and average sum of sales. In Example Four, you should write a select
+statement to calculate the average sum of 2010 dollar sales by month
+without partitioning. The window should be centered
+on three preceding months and three following months. The result should show the month,
+sum of sales and average sum of sales. In Example Five,
+you should write a select statement to calculate the average sum of
+dollar sales by store zip and sales state with calculations
+restarting on each store's zip. The window should be centered
+on the three preceding months in the three following months. The result should show the store zip,
+sales date, sum of sales and average sum of sales. The tricky part of Example Five is to
+reconstruct sales date from the TimeYear, TimeMonth and TimeDay columns. You need to use the to_char and to_date
+functions to combine these columns, then make them into a date as
+shown in these requirements. This lesson extended your background about
+window aggregates from lesson three. Lesson four cover details about SQL
+extensions for aggregate functions computed on sliding windows important for
+common business intelligence applications. You learned extended syntax with
+a range in interval keywords for logical sliding windows. The syntax was applied in examples for
+sliding windows, both logical and physical. You're encouraged to write
+select statements for the additional problems to apply
+the details of this lesson. An answer to the opening question,
+you should use the interval keyword to specify logical windows
+involving months or years. For specifying logical windows using days, you do not need to use the interval
+keyword as the default interval is days. Since the number of days vary in months
+and years due to leap years for years, you need to use the interval keyword for
+logical window specifications for months and years.

@@ -1,0 +1,109 @@
+Welcome to Lesson 1 of Module 3 on
+the Oracle SQL Analytic Functions. An appropriate alternative title is,
+Fun with Analytic Functions. I'm gonna start with
+an important conceptual question that I want you to think
+about throughout this lesson. What is a fundamental different
+between the SQL subtotal operators and analytic functions? Module three continues the detailed
+coverage from module two with ungraded problems and
+a graded assignment. Lesson one introduces Oracle SQL analytic
+functions with coverage of motivation, processing extensions,
+basic syntax, and examples. Although the coverage in this
+module is specific to Oracle SQL, other EnterpriseDB [INAUDIBLE]
+provide similar capabilities. You have three learning
+objectives in this lesson. You should understand
+the processing extension for analytic functions, especially as the
+processing relates to the GROUP BY clause. Your most goal is to write select
+statements using the basic syntax for analytic functions. As a reflective goal,
+you should think about the importance of analytic function extensions for
+the SQL SELECT statement. Before getting into the details
+of analytic functions, let's consider the motivation for
+extensions to the SQL select statement. Business intelligence applications,
+typically involve analysis, that combines data retrieval and
+computations. Here are common types of analysis. Top and worst performers
+providing qualitative ranking of business units such as store sales and
+agent commissions. Trends identifying changes
+between time periods, often involving summary calculations on
+moving windows, such as moving averages. Quantitative contributions
+showing the top or bottom percentage threshold,
+such as the top 10% of stores by sales. In addition,
+contributions to a whole can be important such as sales agent's commissions
+is a part of total commissions. Organizations found
+the SQL select statement inadequate to support standard
+business intelligence applications. Applications required a complex
+skill set involving data retrieval, procedural coding and external tool usage. Organizations experience difficulties to find individuals possessing
+the necessary skill set. Productivity was poor for developing
+business intelligence applications with complex select statements and
+procedural coding often required. Performance was slow, with SQL compilers
+often developing poorly performing plans for complex select statements. In addition, complex calculations were
+typically done outside of SQL statements, so optimizing SQL compilers could
+not optimize both data retrieval and computations. To overcome these deficiencies the select
+statement needed a major extension for both processing and specification. The processing extension makes the
+analytic function extension more complex than the subtotal operator
+extension covered in module two. The key to understanding
+analytic function processing is the new step after GROUP BY processing. As you will see, the appearance of
+analytic functions in a select statement seems to conflict with
+the evaluation order. Analytic function processing occurs
+after row and group processing so the calculations can be performed and
+grouped by results. Many of the examples use grouping and
+analytic function processing because data warehouse retrievals often combine joins
+and grouping on dimension and fact tables. Analytic function processing involves
+organizing results into partitions, evaluate functions over partitions,
+and then ordering the partitions. Analytic function processing
+involves ordering as criteria to evaluate a function,
+rather than ordering in the final result, another confusing part
+of analytic functions. Before examining complete
+select statements, let's focus just on the basic syntax for
+analytic functions. You place analytic functions
+in the select list. Similar to the placement
+of other result columns. Syntactically, analytic functions
+are by an analytic function with an optional list of columns in
+the over keyboard with an ordering. The ordering indicates a criteria for function evaluation,
+not a final ordering of results. To demonstrate the syntax, let's look
+at two examples with a rank function. The rank function does
+not use a column list, so the empty parentheses is required. In the first example, ranking is
+computed on the item priced column. The AS keyword renames
+the computed rank column. In the second example, ranking occurs
+in the sum of sales dollar column. The aggregate function sum indicates
+that a GROUP BY clause is necessary in the complete select
+statement as you will see. Examples in module three
+use the store sales tables. Module one cover the details
+about the scheme and design. Module two use the store
+sales tables in each lesson. So you should be familiar with the tables. The oracle diagram is repeated
+in this lesson for convenience. Example one rank signs by unit price. In the statement you should note the RANK
+function with the empty parentheses. The OVER keyword, in the order by
+specification inside the OVER clause. The ORDER BY clause indicates that rank
+is determined by a sending order of ItemUnitPrice. Sample rows indicate the values
+of the RANK function. With the smallest unit price,
+12, receiving the top rank, one. I will now execute this statement
+using the Oracle SQL Developer. The result contains ten rows
+with four columns in each row. Each row in the SS item table
+appears in one result row. Example two, ranks customers by
+descending some of dollar sales. Because of the requirement to
+rank using the sum function, a GROUP BY clause is required. The order by specification in the over
+clause indicates that customers are ranked using the sum function on the sales
+dollar column in descending order. Thus, the first result row with a largest
+sum of sales obtains a top ranking of one. I will now execute this statement
+using the Oracle SQL Developer. The result contains nine rows,
+with three columns in each row. Note that the GROUP BY clause
+generates one customer per group, and then calculates the sum of dollar
+sales for each group of customers. You should now be ready to write select
+statements for some additional problems. In example three, you should rank item brands in descending
+order on average dollar sales in 2010 and 2011, showing the item brand, average
+dollar sales, and rank and the result. In example four you should extend example
+three to only include item brands with more than ten sales and
+show the number of sales in a result. You can find the solutions
+in a module three document. This lesson introduced Analytic Functions. A substantial extension to the SQL select
+statement in both syntax and processing. Analytic functions support answers to
+common business intelligence questions, involving ranking trends in
+quantitative contributions. You learned about the evaluation order for analytic functions in a syntax using
+the OVER and ORDER BY keywords. You were encouraged to
+write select statements for the practice problems to apply
+the details of the lesson. In answer to the opening question,
+analytical functions evolve a more fundamental change to the select
+statement than a subtotal operators. Both subtotal operators and the analytic
+functions involve syntax changes. Analytic functions also involve
+an extension of the evaluation order for the select statement. To become skilled with query formulation
+using the analytic functions you must understanding
+the evaluation order, especially the evaluation of analytic
+functions after group by processing and ordering is a criteria in many
+analytic functions such as rank.

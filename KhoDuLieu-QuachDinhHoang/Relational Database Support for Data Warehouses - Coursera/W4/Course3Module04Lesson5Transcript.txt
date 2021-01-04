@@ -1,0 +1,175 @@
+Welcome to lesson five of module four, on
+Materialized View Processing and Design. In this lesson we will change directions
+or pivot to the Oracle tools for data integration. I'm gonna start with
+an important market question that I want you to think
+about throughout this lesson. Do you think that the ELT approach as
+exemplified by the Oracle Data Integrator will have a major impact on the data
+integration market in the coming decade? Lesson five returns to a neglected
+topic about data integration. To provide closure about relational
+database support for data warehouses. You will learn about Oracle tools for
+data integration. You will work with data integrator,
+along with two SQL statements useful for certain data integration tasks. These topics fit better in
+course three than course two because of the emphasis on relational
+database support in course three. You have three learning
+objectives in this lesson. You should be able to discuss major
+features of the Oracle Data Integrator an important product supporting
+the extraction, loading, and transformation that is ELT Architecture. You should be able to provide scenarios
+for using the multiple table INSERT and MERGE statements. As a more detailed goal you should
+also be able to explain examples of multiple table insert statements and
+merge statements. The Oracle Data Integrator, known as ODI, is a comprehensive data integration tool
+supporting the extraction loading and transformation that is
+the ELT architecture. The ODI has evolved from
+the acquisition of Synopsis in 2006 and the Oracle Warehouse Builder,
+first released in 2000. Oracle's merged both products into
+the ODI with no new releases for the Oracle Warehouse Builder after 11GR2. The current version of the ODI, supports
+development of platform independent data integration solutions, although
+dependent on an Oracle database server. The ODI contains four major components, as depicted in this diagram,
+from the ODI 12 documentation. On the desktop,
+the ODI Studio provides navigators for designing data integrity rules and
+transformations, operating production scenarios, defining topology of
+a data integration architecture, and specifying security details such as users,
+roles, and profiles. On the server side, The ODI requires
+the web logic application server to provide components
+shown in the diagram. An Oracle database server manages
+repositories defining information technology infrastructure,
+project scenarios, execution logs, and model details the repository
+supported open relational data model, with user defined elements. The ODI supports extraction for
+a wide range of data sources, including legacy data, files, XML, DBMSs, third-party enterprise applications,
+and data warehouses. A data warehouse administrator or analyst
+uses the ODI Studio to implement data integration projects using data
+sources in a target data warehouse. This diagram,
+from the ODI 12 documentation, depicts a small data integration project
+for sales administration data warehouse. The project uses a database of orders,
+and external files of salespeople and age groups. The data warehouse administrator
+analyst defines declarative rules for transformations and integrity control,
+both stored in the repository. The ODI studio generates
+integration scenarios to implement the transformation
+in integrity rules. In integration scenario, implements
+transformations, with mappings, packages, procedures, and variables. The ODI Operator Navigator, supports
+sessions, execution of integration scenarios, using data sources to refresh
+the sales administration data warehouse. Mapping specifications
+support a declarative or rules-driven approach to separate
+specifications from implementation. This diagram from the ODI
+12 documentation, depicts a mapping
+specification to transform and load a data source of customers
+into the customer dimension table. The mapping defines three data sources, the age group table, customer source
+table, and sales person file. Operations for lookup and join and the target data source,
+that is the customer dimension table. The lookup operation ensures that
+customer age is within the minimum and maximum ages,
+is to find an age group table. The joint operation combines a salesperson
+file with a customer source table. Target expressions in a mapping
+transform fields in a data source into columns in the target table. In this example,
+target expressions map column names. Concatenate first and last names,
+convert marital status to an abbreviation, and convert age in years to an age group. This brief introduction to the ODI
+just touches on the basics. The course website contains
+links to Oracle webcasts and documentation for more details. Oracle provides two SQL statements for
+specific data integration tasks. The merge statements,
+supports processing of change data for dimension tables, through a traditional
+update, or insert, using a single SQL statement If a row in change table,
+matches a row in a target table. The matching target row is updated. Otherwise, the change row is
+inserted into the target table. The merge statement provides
+improved productivity and performance as compared
+to multiple statements. That is, insert an update to
+accomplish the same task. Oracle's implementation of
+the merge statement closely follows the specifications in
+the SQL 2003 standard. The merger statement uses a source table,
+target table and join condition to support
+conditional updating and inserting. This diagram indicates
+that the merge statement matches rows in a source
+table to a target table. In the source and target tables, the dark
+blue row indicates the table heading with the same columns in the source and
+target tables. The light blue rows in
+the source table indicate new rows to insert into the target table. The red rows indicate existing rows
+to update in the target table. Yellow rows in the target table indicate
+existing rows in the target table, not updated after the merge
+statement executes. To specify merge processing, the merge
+statement uses the MERGE INTO keywords, followed by the target table name. The source table name
+follows the USING keyword. The join_condition follows the ON keyword. The WHEN clauses prevent action for
+a matching target row, typically an UPDATE statement in a non matching row,
+typically an INSERT statement. Let's clarify the MERGE statement
+structure with an example. This example uses the SSCustomerChanges
+table as a source table to modify the target table, SSCustomer. The same color scheme is used with
+light blue representing new rows, red rows representing changed rows, and yellow rows representing existing
+rows that are not updated. This partial merge example statement
+uses SSCustomer as the target table, with the alias target. As this customer changes is the source
+table, with the alias source. Note that the alias names
+are optional in the merge statement. The joint condition compares CustID
+in the source and target tables. The matched keyword precedes and update
+statement set in each column in a target table to the value specified in
+a corresponding source column. The not matched keywords proceed an insert
+statement using the columns of the target table SSCustomer in the values
+from the source table. SSCustomer changes. You can see the full merge statement
+in a document on the course website Work also provides the multiple
+table insert statement for specific data integration tasks. The multiple table insert statement
+supports data integration tasks to insert rows to a change table
+to a set of target fact tables. Typically the target table is partitioned
+by columns, sometimes known as vertical partitioning, or rows, sometimes
+known as horizontal partitioning. Insertion is unconditional for
+target tables partitioned by columns. Insertion is conditional for
+target tables partitioned by rows. The multiple table insert statement
+provides improved productivity and performance as compared to multiple insert
+statements to accomplish the same task. The proprietary multiple
+table insert statement had been part of Oracle SQL since the 1990s. The multiple table insert statement uses
+source table, multiple target tables, and optional conditions. This diagram indicates a multiple
+table insert statement for target tables with low partitioning. In the source and target tables, the dark
+blue row indicates the table heading, with the same columns in the source and
+target tables. The light blue rows indicate
+existing rows in the target tables, rows not impacted by the insert statement. Yellow rows indicate rows to
+insert into target table 1. Red rows indicate rows to
+insert into target table 2. If target tables are partitioned by
+columns instead of rows, the columns in a target table will overlap, usually in
+the primary key, not in other columns. To specify multiple
+table insert processing, Oracle provides two statement variations. The all keyword supports insertion
+in tables partitioned by columns. The all keyword indicates
+that rows in source table are inserted into all target tables. Typically the all keyword is used
+unconditionally without when conditions. The first keyword supports
+target tables partition by rows. When conditions are use
+with the first keyword to indicate the target
+table in which to insert. A row is inserted in to target table
+with the first matching when condition. Let's clarify the multiple table insert
+statement with some simple examples. This example inserts rows
+from the product sale table in the target tables partition by columns. The source table shares three columns,
+product ID, product name, and product category with each target table. Four columns are specific to
+each target table, quarter one, quarter two, quarter three,
+and quarter four. Their target tables contain different
+quarter sales in each table. The insert all statement uses one
+into clause for each target table. For example, the into clause for
+Qtr1Sale uses the Qtr1 column. The SELECT block at the end of the
+statement indicates retrieval of all rows in the PRODUCTSALE table. You can see the full INSERT ALL statement
+in a document on the course website. The example tables
+are unique to this lesson, not part of the store
+sales data warehouse. Let's use a second example to
+clarify the INSERT FIRST statement. This example inserts rows
+from the product sale table into target tables partitioned by rows. The first three columns of the source
+table, ProductSale, match the first three columns of the target tables,
+ElectronicsSale, BooksSale and MoviesSale. The target tables are partitioned
+with different values for the product category column in each table. The last column,
+total sales of the target tables, is computed as the sum of
+the last four columns. Quarter one, quarter two,
+quarter three, and quarter four are the products sale table. The INSERT FIRST statement uses one
+WHEN clause, and one INTO clause for each target table. For example, for the INTO clause for the ElectronicSale table uses Electronics
+as the value in the WHEN condition. The SELECT block at
+the end of the statement indicates retrieval of all
+rows in the PRODUCTSALE table. You can see the full insert first
+statement on a document on the course website. Example tables are unique to this lesson, not part of the store
+sales data warehouse. Lesson five changes directions
+from materialized views to coverage of Oracle tools for
+data integration. The ELT architecture Is exemplified
+by the Oracle data integrator, provides optimization advantages with
+Oracle's optimizing database compiler and parallel processing technologies. You learned an overview about ODI
+features, a comprehensive tool for data integration with
+declarative specification, before developing comprehensive
+data integration tools. Oracle provided stand alone tools for
+specific data integration tasks. You learned about the SQL standard
+MERGE statement, combining insert and update operations, and the proprietary
+Oracle multiple table INSERT statement, allowing insertion to
+multiple target tables. In answer to the opening question,
+the ETLR architecture dominates the data integration market according
+to Gartner's magic quadrant reports. Oracle's the only major vendor
+focusing on the ELTR architecture. Other major vendors,
+including Informatica, IBM, SAP, and SAS, support the ELT architecture
+although providing some features for the ELT architecture. However, the combination of
+Oracle's power in database market, it's position in the top quadrant
+of the data integration market, and its commitment to the ELT architecture in
+the Oracle data integrator provides strong evidence that ELT architecture will have
+an increased impact in the coming decade.

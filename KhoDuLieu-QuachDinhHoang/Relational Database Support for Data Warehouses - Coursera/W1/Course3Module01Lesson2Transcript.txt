@@ -1,0 +1,64 @@
+Welcome to lesson two of module
+one on DBMS Extensions and Example Data Warehouses. This lesson provides an overview
+of the topics, assessments, and software requirements. You should reflect on this lesson as you
+work through the details of this course. Through this lesson, you should
+understand the nature of the topics and assessments, as well as
+the specific software requirements. The most important part of this module
+is to install and configure the Oracle software, if you do not have access
+to an external Oracle server. The course topics are focused on important
+artifacts that you will learn and manipulate. The first part of the course is
+a conceptual focus, with several example data warehouses presented,
+to provide a context for other modules. The second part of the course emphasizes
+an extension to the group by clause for subtotal operators, important for
+analysis of data cubes. The third part of the course covers
+extensions to the SQL select statement for analytic functions, important for
+business intelligence analysis. The fourth part of the course provides
+details about summary data management involving materialized views. The fifth part of the course
+covers data governance and other important data
+administration topics. This diagram indicates more topic
+detail in the flow of topics. The course is organized into five modules, with lessons covering
+the details of each module. You can keep this diagram in mind as you
+work through the details of the course, so that you maintain perspective
+on your progress. The first module has a conceptual focus
+with quizzes and software installation. The next three modules have a skill focus,
+with an emphasis on query formulation using subtotal operators, analytic
+functions, and materialized views. The last module has a conceptual focus
+with coverage of big data impacts, physical data warehouse design,
+and data governance. Since the course is problem and skill oriented, the major
+assessments come from assignments. In modules two, three, and four you have assignments that
+demonstrate your mastery of skills. You'll write SQL statements to
+implement each problem statement. Assignments in modules two and
+three involve query formulation using new parts of the SQL select statement for
+subtotal operators and analytic functions. The assignment module four involves
+statements to create materialized views and then rewrite select statements
+to use materialized views. Each assignment has a similar
+assessment approach. You will take a detailed quiz
+covering the details of each problem. In addition, you will submit screen
+snapshots to demonstrate execution of each SQL statement. You can study practice problems
+in each module to prepare you for the graded assignments. For conceptual material covered in each
+module, you will take a graded quiz. The graded quizzes for modules one and five will be more detailed as these
+modules do not have assignments. Assignments in modules two, three, and four involve access to an Oracle Server,
+either local or remote. Although the SQL standard contains details
+about subtotal operators, analytic functions, and materialized views, the
+details differ substantially across DBMSs. Thus, it is necessary to use one
+database product in this course. Oracle is an industry leader in
+data warehouse technology, so it is an excellent product to
+learn about these SQL extensions. Module one contains a lesson with
+substantial details about installing and configuring an Oracle server. In addition, discussions had
+helpful comments from learning about installing and
+configuring an Oracle server. If you have access to an external local
+server, perhaps through an employer, you should not need to install and
+configure a local Oracle server. You can use any client providing
+access to an Oracle server, although I recommend use
+the Oracle SQL developer client. This course provides a unified coverage of
+concepts, query formulation skills, and SQL statement details for relational
+database support of data warehouses. You also learn about important data
+warehouse administration topics, including big data impact, physical data
+warehouse design, and data governance. You will perform assignments to master
+skills in query formulation and materialized view usage. You must write Oracle SQL statements for
+each assignment, so you need access to an Oracle server and
+client. Most of your learning will occur through
+your work on practice problems and graded assignments. Your work in this course will extend the
+foundation, provided in the second course in the specialization, for
+your journey towards a challenging and rewarding career as a data warehouse or
+business intelligence professional.

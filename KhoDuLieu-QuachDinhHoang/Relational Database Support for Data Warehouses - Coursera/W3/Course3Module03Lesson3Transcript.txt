@@ -1,0 +1,106 @@
+Welcome to lesson three of Module 3
+on the Oracle SQL Analytic Functions. Let's expand our fun
+with Analytic Functions. I’m gonna start with an important
+motivational question that I want you to think about throughout this lesson. Without analytic function extensions
+in SQL, is application development for window comparisons more difficult
+than application development for ranking functions? Lesson three extends the introductory
+presentations of analytic functions from lessons one and two. Lesson three covers concepts and
+extended syntax for window comparisons. You will learn to write select statements
+with physical window specifications for cumulative window calculations. Although the coverage in this
+module is specific to Oracle SQL, other enterprise DBSs
+provide similar capabilities. You have three learning
+objectives in this lesson. Before writing statements, you need to
+understand window concepts and syntax. As the primary goal, you should be ready
+to write SELECT statements that perform cumulative window calculations. As a reflective goal, you should think
+about the importance of query language support for window comparisons. Business intelligence applications for
+financial analysis and forecasting typically
+use window comparisons. Window comparisons involve changes in
+numeric variables, such as sales or stock prices,
+in sets of rows known as windows. Windows are typically defined by time
+intervals, such as years or months. Typical examples of Window comparisons
+are 90 day moving average of stock prices, percentage sales growth, performance of an
+advertising campaign over recent months, and cumulative sales performance for
+various organizational units. SQL statement extensions to
+support window comparisons provides easier application development
+with a reduced skill-set, increased software development productivity,
+and improved execution performance. Before studying syntax and examples, you
+should understand basic window concepts. A window is a collection of rows in
+which a numeric function is calculated. A window can be specified in units of
+physical rows using a ROWS keyword, or logical rows using a RANGE keyword. Logical windows are specified by values,
+such as the number of days. In this lesson,
+you will learn about physical windows. Numeric variables are calculated
+in moving windows so the variables can be
+compared across windows. A cumulative window is fixed on one end,
+typically the beginning, and changes on the other end. A sliding window changes on both ends. In this lesson,
+you will learn about cumulative windows. Windows specification after
+ordering is optional for analytic functions as noted
+in the syntax specification. Common aggregate functions,
+such as avg for average, sum, count, min, max, and variance,
+can be used with a windows specification. The Oracle documentation provides
+a complete list of aggregate functions that can be used with
+a windows specification. A windows specification,
+beginning with the ROWS keyword, indicates a physical window. For example, ROWS UNBOUNDED PRECEDING
+indicates a window of the current row and all preceding rows. ROWS 2 PRECEDING indicates the current
+row and the two previous rows. ROWS 3 FOLLOWING indicates the current
+row and the next three rows. Logical window specifications
+will be presented in lesson four. This diagram depicts
+a cumulative physical window specified as ROWS UNBOUNDED PRECEDING. Initially, the window
+is just a single row. When processing the second row, the window
+is the current row that is the second row in the previous row that is the first row. This diagram shows the window for
+the fifth row comprising the current row, that is row five, and the previous rows,
+that is rows one to four. The arrow indicates a direction
+of movement from the first row towards the last physical row. For each window, an aggregate function,
+such as sum is calculated. Example one demonstrates a cumulative
+physical window using the sum function. The SELECT statement calculates the
+cumulative sum of dollar sales by zip code and year over the entire
+result without partitioning. The Windows specification,
+ROWS UNBOUNDED PRECEDING, indicates a cumulative physical window. Note that the window calculations involves
+a sum of the sum of dollar sales. Processing the GROUP BY clause
+calculates a sum of dollar sales. So analytic function processing just
+calculates the cumulative sum of sales. For clarity, the result contains
+both a sum of sales and a cumulative sum of sales. I will now execute this statement
+using the Oracle SQL developer. The result contains 12 rows
+with four columns in each row. Note that the last column, that is
+CUMSUMSALES, is calculated as the current sum of sales plus the sum of
+sales in all previous rows. Thus the cumulative sum of
+sales in the second row, that is 181,544,
+is the sum of sales 91,972. Plus the cumulative sum of sales
+in the first row is 89,572. I encourage you to verify
+other calculations yourself. Example two extends example
+one's partitioning. The select statement calculates
+the cumulative sum of dollar sales by zip code and year over partitions
+of store zip code values. The partition clause with
+the partition by keywords indicates that the window calculation
+restarts for each zip code value. The window specification
+ROWS UNBOUNDED PRECEDING indicates a cumulative physical window. I will now execute this statement
+using the Oracle SQL developer. The result contains 12 rows
+with four columns in each row. Note that the cumulative sum of sales
+column restarts when the zip code changes. For example, the zip code 80129-5543
+changes in the fifth row, so that the cumulative sum of sales is just
+the sum of sales, 92,360 in the fifth row. I encourage you to verify
+other calculations yourself. You should now be ready to write SELECT
+statements for some additional problems. In Example 3, you should write a SELECT
+statement to calculate the cumulative sum of 2010 sales by item brand and
+month with partitioning by item brand. The results should show the item brand,
+month, sum of sales, and cumulative sum of sales. In Example 4, you should write a select
+statement to calculate the cumulative sum of sales by year and
+item brand with partitioning by year. Only include brands with more
+than five sales in a year. The result should show the year,
+item brand, count, sum of sales, and cumulative sum of sales. You can find the solutions
+in a module 3 document. This lesson extended your
+background about analytic functions from lessons one and two. Lesson three covered basic
+details about SQL extensions for window comparisons important for
+business intelligence applications. These SQL extensions provide increased
+software development productivity and improved performance. You learned about extended syntax and
+examples for evaluation of analytic functions over cumulative physical
+windows, specified using the ROWS keyword. You're encouraged to write
+SELECT statements for the practice problems to apply
+the details of the lesson. In answer to the opening question,
+application development is more difficult for window comparisons than ranking
+functions without an SQL extension for analytic functions. Window comparisons involve
+dynamic windows that move, whereas ranking functions
+involve static windows. Thus, SQL statements without analytic
+functions are more difficult to write for window comparisons than ranking functions. Without analytic function extensions,
+only database analysts with high levels of skills could write SQL
+statements for window comparisons. In addition, window comparisons involve
+more complex SQL statement processing and optimization than ranking functions.

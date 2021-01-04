@@ -1,0 +1,115 @@
+Welcome to Lesson 4 of Module
+5 on Physical Design and Governance of Data Warehouses. Let's have some fun learning
+about data governance. I'm gonna start with a responsibility
+question that I want you to think about throughout this lesson. What involvement does a data warehouse
+administrator have in data governance? Lesson 4 extends conceptual background of
+big data from Lesson 3 to data governance, an important organizational framework for
+data warehouses, operational databases and
+other organizational data. Lesson 4 covers motivation and
+focus areas of data governance along with components of the prominent
+framework for data governance. The coverage in this lesson is conceptual,
+applicable to most organizations and data warehouses. You have four learning
+objectives in this lesson. To demonstrate general background
+about data governance, you should discuss motivations
+underlying data governance, provide definitions of data governance,
+and identify important focus areas. For details about the Microsoft
+data governance framework, you should visualize relationships
+among core processes and explain artifacts for
+risks and capabilities. Organizations have instituted data
+governance initiatives to control risks from external entities and threats
+inside and outside an organization. The rapid growth of electronic commerce
+and financial scandals in the 2000s propelled major changes in regulatory
+oversight and corporate responsibilities. In the USA, the Sarbanes-Oxley Law,
+the Health Insurance Portability and Accountability Act, and the Dodd-Frank Law have added new corporate
+responsibilities for data management. The European Union has enacted
+broad data privacy directives impacting organizations
+with European operations. Major breaches in security and privacy have demonstrated exposure that
+organizations have from external threats. A study by the Ponemond Institute in 2008,
+found that average loss from a security breach was 6.6 million
+dollars with a substantial loss of customers from 3.6 percent to 6%. Numerous surveys have demonstrated that
+customers increasingly want assurances about the privacy of their
+personal information. Exposure to risks from regulations,
+litigation and threats spurred the movement for
+data governance. According to the data governance
+institute, data governance is the exercise of decision-making and
+authority for data-related matters. Data governance attempts to mitigate
+risks associated with a complex regulatory environment, information
+security, and information privacy, especially for personal, identifiable
+data in related business transactions. A second definition by the Data
+Management Association, known as DAMA, emphasizes authority and
+controlled data assets. Data governance provides a system of
+checks and balances to develop data rules and policies, support application
+of data rules and policies, and evaluate compliance of data rules and
+policies as depicted in this diagram. The system of data governance operates in
+a manner similar to the USA government branches, in which the legislative
+branch makes laws, the executive branch enforces laws, and the judicial branch resolves disputes
+about the meaning and application of laws. Data governance has been applied to
+a number of corporate initiatives. Perceived shortcomings in data quality,
+especially in attributes impacted by regulations, are primary drivers
+of data governance initiatives. For data quality improvements, data
+governance initiatives typically focus on development of data quality measures,
+reporting the status of data quality, and establishing decision rights and
+accountabilities. Mergers and acquisitions often
+trigger data governance initiatives to ensure consistent data definitions and integrate corporate policies
+involving data privacy and security. Business intelligence developments often
+lead to data governance initiatives to establish policies for
+data integration, particularly for changes to source data in different
+parts of an organization. The Microsoft data governance for
+privacy, confidentiality, and compliance, DGPC framework, contains components for
+people, processes, and technologies. The people part of the framework involves
+a small group of executive management. Providing strategic direction to
+a data governance organization, setting policies and
+rules applying to data consumers. The process part of the framework
+involves processes to establish policies, manage the governance organization,
+and implement and monitor controls using appropriate tools. The technology part of the framework
+involves infrastructure for identity and access controls, information protection,
+and monitoring compliance, controls, and policies. The DGPC framework contains four core management processes to guide
+the governance organization. Managing a data governance
+organization involves processes for appointing members, defining roles and
+responsibilities, creating work groups, and reporting status and performance
+of data governance initiatives. Managing requirements involves translating
+business strategy into data quality and compliance requirements. And collecting and integrating authority
+documents, including regulations, standards and policies. Managing strategies and policies
+involves processes to review, approve, publish and implement authority documents. Managing the control environment
+involves processes for developing and monitoring controls and using tools to model information
+life cycles and technology demands. The DGCP framework provides a risk
+gap analysis process that the data governance organization can apply to
+identify and resolve gaps of requirements. In the first step the context is
+established to define the business purpose in listing the specific privacy,
+security, and compliance objectives. In the second step, threats are identified
+using threat modeling tools, such as the Microsoft Security
+Development Lifecycle Tool. In the third step, risk for each cell
+of the risk gap matrix are determined using the security and privacy principles. In the fourth step, risk mitigation techniques are chosen
+subject to cost-benefit analysis. In the fifth step, the effectiveness
+of mitigation techniques are evaluated using data collected from data consumers. The risk gap analysis matrix, a key
+artifact of the risk gap analysis process, combines the information life
+cycle in technology domains. The rows of the matrix of
+the information lifecycle stages or the columns of the technology domains. The last column is manual controls
+not part of technology domains. The cell shows gaps and
+measures to protect data and to manage the risk through combinations of
+lifecycle activity and security domain. Gap should be evaluated using compliance,
+data privacy, and confidentiality principles applicable to
+lifecycle's stage and technology domain. To gauge an organization's relative
+progress in data governance, the DGPC framework provides the capability
+maturity model know as a CMM. The CMM helps organizations
+determine their current status, target future status goals, and create
+action plans to reach maturity targets. The main art of fact of the CMM
+development process is a detailed table with main sections for people,
+processes, and technology. Each area is evaluated on the four
+maturity levels with capabilities noted as current, planned, in progress,
+delivered, and adopted. Lesson 4 concluded Module 5 with
+details about data governance. An important management process for
+controlling risks associated with data warehouses, operational databases, and
+other data managed by an organization. You learned motivations for
+data governance, definitions of data governance, and details about the
+Microsoft framework for data governance. As a data warehouse administrator or
+analyst, you should be aware that business intelligence developments
+often lead to data governance initiatives. In answer to the opening question, data warehouse administrators
+are usually involved in data governance. Data warehouse administrators
+may participate through membership in
+the data governance committee in consulting on activities managed
+by the data governance committee. Data warehouse managers can be heavily
+involved in setting policies for data definitions,
+data quality, and controls. In addition, data warehouse
+administrators can play a support role to help implement technology aided and
+automated controls.

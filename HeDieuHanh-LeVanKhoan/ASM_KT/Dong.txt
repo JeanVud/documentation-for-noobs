@@ -1,0 +1,25 @@
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2    ;in dong so
+mov bh,0
+mov dh,5
+mov dl,0
+int 10
+mov dl,30
+mov cx,50
+mov ah,2       ;1
+int 21
+inc dl
+cmp dl,3a
+jnz 12a        ;1
+mov dl,30
+loop 11d       ;1
+mov ah,8
+int 21
+int 20
+

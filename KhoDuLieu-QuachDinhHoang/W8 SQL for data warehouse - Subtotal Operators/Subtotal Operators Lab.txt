@@ -1,0 +1,19 @@
+Làm bài tập Week 2 (thư mục W2) trong file "Relational Database Support for Data Warehouses - Coursera.zip". 
+
+SV trả lời các câu hỏi trong file Course3Module2Assignment.doc bằng cách viết trực tiếp code SQL lên file này và chụp lại màn hình kết quả.
+
+Đổi tên file lại thành STT_Ho_Dem_Ten_Subtotal_Operators.doc trước khi nộp.
+
+Hạn chót: 22h00 ngày 03/05/2020.
+ 
+	
+InventoryStarCREATEStatementSQLServer.sql InventoryStarCREATEStatementSQLServer.sql
+ 
+	
+InventoryStarINSERTStatementSQLServer.sql InventoryStarINSERTStatementSQLServer.sql
+ 
+	
+StoreSalesCreateTableSQLServer.sql StoreSalesCreateTableSQLServer.sql
+ 
+	
+StoreSalesINSERTStatementsSQLServer.sql StoreSalesINSERTStatementsSQLServer.sql 

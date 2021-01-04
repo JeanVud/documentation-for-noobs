@@ -1,0 +1,94 @@
+Welcome to lesson one of module
+two on SQL sub total operators. An appropriate alternative title
+is fun with sub total operators. I'm gonna start with an important
+motivational question that I want you to think
+about throughout this lesson. What is an advantage of the group
+by clause compared to pivot tables? Module two provides the first
+detailed content for this course with ungraded problems and
+a graded assignment. Lesson one reviews the group by clause
+to ensure that you're ready for the new material about subtotal operators
+in the other lessons of module two. Course one in this specialization covered
+group by clause in modules four and five. You have three learning
+objectives in this lesson. You should review the group by clause so that you can write select statements
+involving joins and grouping. You should be able to explain the
+differences between group by results and pivot table results. As a reflective goal you should think
+about the importance of subtotal operator extensions for the group by clause. Let's begin with a brief
+review about the purpose and components of the group by clause. The group by clause produces row summaries in which each row summary replaces
+collections or groups of rows. Each row summary contains
+grouping columns and summary values calculated
+with aggregate functions. An aggregate function calculates
+one value per set of rows. The standard aggregate functions
+in SQL are min, max, count, sum and avg for average. Many other aggregate functions
+are typically provided depending on the dv mess. You should remember two rules with
+the group by clause for consistency, columns in the SELECT clause should
+match columns in the group by clause. The order of the columns does not matter,
+just a set of columns. For example, if you have three columns in
+a SELECT clause along with one aggregate function expression, you should have the
+same three columns in a group by clause. You must separate row and
+group conditions. Row conditions not involving an aggregate
+function must be placed in a where cause. Group conditions involving
+an aggregate function must be placed in a having clause. The examples in module two
+use the store sales tables. Module one covered the schema design. If you completed the guided tutorial
+in Module five of course two in the specialization,
+you should recall the store sales design. The Oracle diagram is repeated
+in this lesson for convenience. This group by example will be extended
+in other lessons in module two. The proper requirements are to
+summarize store sales in USA and Canada in 2012 by stores zip code and
+month. Only groups with more than
+one row appear in the result. The select statement for this problem depicts joint operations
+with a fact cable and dimension tables, group by and having clauses,
+row conditions and sorting of results. The select clause contains two grouping
+columns, store zip and time month, along with three computed columns using
+aggregate functions, sum, min and count. The where clause is two
+joined conditions and a single table conditions on
+store nation and time month. The group by clause creates row summaries
+on combinations of StoreZip and TimeMonth. The having count clause restricts
+row summaries to more than one row. The order by clause provides
+a convenient ordering as the group by clause may
+not sort results as expected. I will now execute this statement
+using the Oracle SQL developer. The result contains 12 rows,
+with five columns in each row. The evaluation order is conceptual
+rather than actual because most SQL compilers can produce the same
+output using many shortcuts. Evaluation order provides a foundation for
+understanding the meaning of select statements independent of
+system and performance issues. Row operations occur
+before group operations. So it's important not to have any row
+conditions in have HAVING clause. Some SQL compilers allow row
+conditions in the HAVING clause. Although performance will be improved
+if all all row conditions are placed in the where clause. Grouping occurs only one time, although this limitation is only an issue
+in summarizing independent columns. Even in this situation, other
+workarounds such as nested queries and a from clause can be used to
+overcome this limitation. The group by clause was found inadequate
+for business intelligence applications. The major limitation
+motivating this module is a lack of subtotals in
+the results with group by clause. Group by results only contain
+the lowest level totals for each combination of grouping columns. Pivot tables can have subtotals
+on any query dimension or access. Subtotals are not limited to addition. Any statistical function can
+be used to summarize an access such as average and minimum. These sample results visually depict the
+differences between the group by clause and pivot tables. A select statement with a group
+by clause contains row summaries with one combination of
+grouping columns in each row. Only rows with a none null value for all
+grouping columns appears in the result. No sub totals appear in the result. For example the sum of sales for California CA is abbreviation
+are not shown in the result. In contrast, the corresponding pivot table
+shows subtotals and missing values as empty cells, such as the combination
+of CA for California in January. The subtotals in this example show the sum
+of sales for rows, that is states, and months, for the columns, along with
+the grand total a pivot table for two dimensions with N values
+in a row's dimension and N values in a column's dimension
+contains N times N cells. In contrast, the corresponding group
+by result contains a maximum of N times N cells or rows, because
+the results contain no missing values. This lesson reviewed the group
+by clause is a prelude for new material and SQL subtotal operators. In original design of
+the SQL select statement, the group by clause was designed for
+tactical and strategic decision making. Over time, deficiencies in
+the group by clause became apparent other lessons in this module present
+details of SQL subtotal operators, a substantial extension of the group by
+clause, that addresses some deficiencies. You can understand the need for subtotal
+operators by comparing group by results to a pivot table with summary
+calculations for query dimensions. In answer to the opening question, group
+by results do not show missing values in comparison to pivot tables
+with explicit missing values. As the number of dimensions increases, the
+number of unique values in each dimension increases, the sparsity, or
+number of empty cells increases. Efficient compression of missing values
+there's a substantial performance issue with data cubes and
+associated pivot table results but a minor issue is relational by results.

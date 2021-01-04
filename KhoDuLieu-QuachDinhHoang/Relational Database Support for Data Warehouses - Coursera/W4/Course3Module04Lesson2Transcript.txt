@@ -1,0 +1,108 @@
+Welcome to lesson two of module four on
+Materialized View Processing and Design. In this lesson, we will start our
+fund with materialized views. I'm gonna start with
+an important conceptual question that I want you to think
+about throughout this lesson. What are the roles of optimizing SQL
+compilers in materialized view processing? Lesson two extends details about
+traditional views covering less than one with background about materialized views, you will learn motivation
+from materialize views, the create materialize view statement,
+and processing of materialize views. Part of this lesson is
+specific to ORC West QL. But other Enterprise DBMSs
+provide similar features. You have three learning
+objectives in this lesson. You should be able to write statements
+to create materialized views after the lecture. It's a major part of
+creating a materialized view is to write a select statement, you should not have difficulty with
+the create materialized view statement. You should be able to explain
+the processing requirements for materialized views. As a reflective goal, you should think about the complexity
+of materialized view processing. Especially when compared to
+processing of traditional views. To start I will compare traditional
+views to materialized views. A materialized view is stored
+with periodic refreshment. In contrast to a view that
+is derived when used, like a traditional view a materialized
+view involves a select statement so it can contain any content of a database,
+not just row and column sub sets. Unlike a traditional view materialized
+views provide performance improvement and query intense environments,
+not simplification. Materialized views are invisible to
+users in contrast to direct usage of traditional views. Performance improvements from materialized
+use involve substantial processing and difficult design choices in contrast
+to relatively simple processing for traditional views. After these basic ideas you're ready to
+learn about creating materialized views. This example involves
+a materialized view for the sum of dollar sales after
+2010 by store, state and year. The create materialized view statement
+involves more detail than the create view statement. The major parts of each statement
+are the same with a name and underline select statement. The materialized view name MV1
+does not need to be meaningful, as materialized views are not
+used directly by users. A materialized view also has
+materialization properties with the build and refresh keywords and
+the option to enable query rewrite. Build can be immediate as shown
+in this example, or deferred. Refresh can be complete for all rows as
+shown in this example or fast just for change rows. Numerous storage options specific
+to each DBMS can also be specified, although not shown in this example. I wanna execute the create
+materialized use statement using the Oracle SQL Developer. The statement execution provides a message
+that the materialized view was created. You can see details by looking
+at the materialized views object in a database connection. You can see the list of columns
+by opening MVU1 object. If you double click on the MVU1 object, you will open a tab in the worksheet
+with sub-tabs for columns, data, indexes, grants,
+dependencies, details and SQL. Processing in materialized views is much
+more complex than traditional views, involving processes for
+query rewriting, design, and refresh. Query rewrite is the key of
+material view reprocessing. You will learn details about query
+rewriting in lessons three and four, so only the basic idea is provided here. Query writing involves matching a query
+to available, materialized views so that materialized views can be
+substituted for base tables. The optimizing SQL compiler
+evaluates if the rewritten query provides expected performance improvements
+compared to the original query. Design involves selection of the best
+set of materialized views for a given workload. Evaluation of sets of
+candidate materialized views uses query rewriting and cost estimates
+from an optimizing SQR compiler. Refresh involves a method call complete or
+fast in frequency. Most DBMSs, including Oracle, have
+numerous restrictions on fast refresh. For example, only materialized views
+with simple aggregates, such as sum, can be refreshed with the fast option. Refreshing materialized views usually
+occurs after transformations unloading. The frequency of refreshing
+materialized views is part of refresh process management. Oracle provides a powerful tool to
+support materialized view design. This diagram from the Oracle
+12 documentation, depicts the Oracle SQL access adviser. Workloads is your hypothetical form a data
+warehouse schema or actual from executed SQL statements Drive recommendations
+made by the SQL access adviser. An SQL tuning set is a database object
+with work loads, executed SQL statements. Filters can be used to eliminate
+SQL statements from a work load. The SQL access adviser uses the automatic
+tuning optimizer to evaluate recommendations for indexes, materialized
+views, logs of change data and partition choices of materialized views. The automatic tuning adviser
+extends the SQL compiler to perform additional analysis identifying
+steps to improve performance. The SQL Access Adviser has two major uses. Design choices and advice. The primary use is generating
+recommendations for materialized views, indexes and
+partitions in materialized views. Along with managing associated
+workloads and recommendations. Secondary use is advice to improve
+individual materialized views. For example, advice can be steps
+to improve performance for refresh and steps to enable query
+rewrite for a materialized view. As the data warehouse administrator, the biggest impact on materialized
+view design is workload specification. To support workload specification,
+Oracle provides a workload database known as the Automatic Workload Repository
+or AWR for short. The AWR contains execution history of SQL
+statements including the statement text, CPU time, elapsed time, disk reads,
+rows retrieved, and frequency. The AWR is populated by periodic
+snap shots of data base operations. Because workloads can be larger, the
+SQL Access Adviser allows work flows to be filtered by resource consumption,
+priority, users, and columns. You should now be ready to write create
+materialized used statements for additional problems. In example two, you should create
+a materialized view containing the sum of dollar sales for USA stores by
+store state, year, and month. In example three, you should create
+a materialized view containing the sum of dollar sales for Canadian stores
+by store city, year, and month. For both materialized views,
+you should use the options for immediate build, complete refresh and
+enable query rewrite. You can find the solutions for
+both problems in the module four document. This lesson contrasted materialized
+views to traditional views covered in lesson one. Materialized views supports stored,
+derived data for improved query performance. You learned about the create materialized
+view statement in complex processing for using, designing, and
+refreshing materialized views. DBMS vendors, including Oracle, have made major investments to
+support materialized views. In answer to the opening question,
+optimizing SQL compilers play a large role in using and
+designing materialized views. Optimizing SQL compilers generate
+resource cost estimates to evaluate materialized view choices, inquiry
+re-writing, and materialized view design. In addition to evaluation that
+materialize your choices, SQL compilers have been extended
+to perform query rewriting. In lessons three and four you will learn
+details about extensions to SQL compilers to rewrite queries, substituting
+materialized views for base tables. Without this re-writing ability
+materialize use would not be useful for improving query performance.

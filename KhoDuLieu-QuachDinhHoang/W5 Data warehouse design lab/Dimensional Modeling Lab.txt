@@ -1,0 +1,19 @@
+SV thực hiện theo các hướng dẫn và yêu cầu trong file "Dimensional Modelling Assignment.pdf" và nộp lại hai file High-Level-Dimensional-Modeling-Workbook.xlsx và DetailedDimensional-Modeling-Workbook-KimballU.xlsm cuối cùng.
+
+Hạn chót: 22h00 ngày 7/4/2020.
+
+ 
+	
+2013.09-Kimball-Dimensional-Modeling-Techniques.pdf 2013.09-Kimball-Dimensional-Modeling-Techniques.pdf
+ 
+	
+Detailed-Dimensional-Modeling-Workbook-KimballU.xlsm Detailed-Dimensional-Modeling-Workbook-KimballU.xlsm
+ 
+	
+Dimensional Modelling Assignment.pdf Dimensional Modelling Assignment.pdf
+ 
+	
+High-Level-Dimensional-Modeling-Workbook.xlsx High-Level-Dimensional-Modeling-Workbook.xlsx
+ 
+	
+Northwind.bak Northwind.bak 

@@ -1,0 +1,120 @@
+Welcome to Lesson 3 of Module 1 on DBMS
+extensions and example data warehouses. I'm gonna start with an important
+motivational question that I want you to think
+about throughout this lesson. What DBMS extensions are the most
+important in practice data warehouse development? Lesson three provides the first specific
+content about data warehouses for course three. You will learn an overview about
+DBMS features for data warehouses is a context for detailed skills that
+will you develop in other modules. You have three learning
+objectives in this lesson. You should review data warehouse
+characteristics and historical factors that drove the development of data
+warehouse deployment and technology. In your own words, you should be
+able to discuss limitations of database technology, and extensions
+to DBMSes to address limitations. As a reflective goal, you should think about the importance
+of each type of DBMS extension. Let's begin with a brief
+review from course two to provide background to understand DBMS
+limitations and related extensions. I'll focus on the most
+important differences for understanding DBMS limitations. Operational databases largely contain
+current data at the individual level while data warehouses have historical data at
+both the individual and summarize levels. Individual level data
+provide flexibility for responding to wide range of
+business intelligence needs, while summarize data provide fast
+response to repetitive queries. An operational database
+supports transactions and retrievals that typically
+involve only a few rows. In contrast, a data warehouse supports
+business intelligence requests, involving thousands to millions
+of rows in a data warehouse. Operational databases are highly volatile,
+processing large volumes of transactions. In contrast,
+data warehouses are non volatile with periodic refreshment to
+integrate new source data. Refreshment, mostly
+insertion of new fact rows, typically occur during non peak hours. The failure of operational databases
+to support higher level decision making is a combination of inadequacy
+of database technology and limitations in employment of databases. Organizations and
+DBS vendors discovered a single database could not be configured to
+provide adequate performance for both transaction processing and
+business intelligence processing. Organizations discovered that the lack of
+integration among operational databases hindered higher level decision making. This lack of integration was thought a
+designed failure, so operational databases primarily support transaction processing,
+not business intelligence processing. Organizations experience unexpected
+development difficulties and poor performance for
+business intelligence applications. These difficulties were unexpected. Because the promise of non procedural
+specifications, the SQL, and optimizing compilers. Resolutions for performance limitations,
+a lack of integration, involve a combination of
+organizational changes and technology. Although, not focused
+on database technology. As these issues are being resolved, more focus has shifted to
+missing DBMS features. Missing data management features
+did not initially lead to new features in relational DBMSs. Initially, special purpose
+data cube engines and statistical software filled the gap for
+missing data management features. However the commercial dominance
+of relational DBMS is in a lack of a scalability of data cube engines
+push to market to change directions. relational DBMS vendors
+sense market opportunity and devoted large resources for
+research and development. This development efforts has created
+substantial performance improvement for business intelligence processing. And new features for developing
+business intelligence applications. DBMS vendors have responded to development
+difficulties and poor performance through project extensions refined
+over more than one decade. Query language extensions
+were original addressed by the SQL Standards Organization
+with input from vendors and users. The revised SQL standards
+provide a guideline as vendor implementations
+differ substantially. Summary data management, parallel
+processing, and transformation and loading extensions largely fall
+outside of SQL standards, so university research groups and
+vendors have taken the lead. In developing business
+intelligence applications, organizations experienced
+unexpected difficulties. The GROUP BY/HAVING clauses
+were not particularly useful. Much custom coding involving
+complex SQL statements and external tools was required. In addition,
+complex SQL statements execute slowly. The SQL Standards Organization,
+with substantial vendor input, developed extensions to
+the SELECT statement. The general theme of the extensions
+was to combine data retrieval with computations common
+in business intelligence. Subtotal operators were added to
+support computations and pivot tables. For row and column summaries and
+roll up operations. Analytic processing extensions
+were more fundamental, involving extended processing model,
+as well as new functions. Module two covers sub total operators, while module three covers analytic
+processing and functions. Usage of stored query results. Was discussed for operational databases,
+but motivation was weak with highly volatile transaction processing and
+relatively few rows per query. The static environment of data warehouses
+and a large number of rows per query provides a strong motivation for
+storing and reusing query results. Summary data management involves
+stored queries known as materialized views or MVs. Materialize means that the query
+defining the view is stored similar to a base table. Important questions about MVs
+are first a design question. Which MVs to store. Then a processing question,
+how to combine MVs with user queries? And third, update questions,
+when and how to update MVs? Module four covers
+materialized views in Oracle, with most detail about the method for the
+second question, known as query rewriting. Conceptual details are provided for
+the first and third questions. Business intelligence applications
+involve performance demands beyond separate operational databases and
+data warehouses. Parallel processing for
+database operations is required to meet the requirements of
+business intelligence operations. DBMS vendors had to develop parallel
+processing solutions for joins and summary calculations as
+well as data loading. Parallel processing solutions for
+data transformations such as parsing and merging had been developed by firms
+managing large volumes of web data although DBMS vendors are now
+incorporating this technology. Three desirable features of parallel
+processing are transparency, scalability, and usage of commodity
+components and open source software. DBS vendor solutions excel
+in the first two features while solutions from web firms excel
+in the second and third features. Module five covers conceptual details
+about parallel processing solutions. A more recent DBMS extension is
+the extraction, loading, and transformation architecture known as ELT. DBMS vendors claim major
+benefits in using DBMS rather than independent data integration
+engines for transformation and loading. Enterprise DBMS' provide
+superior optimization compare to independent
+data integration engines. Module four covers concepts and
+some details about Oracle data integration tools to compare with the details of data
+integration tools covering course two. This lesson introduced important concepts
+about DBMS extensions for data warehouses. To write a context for detailed skills
+that you will develop in later modules. After a brief review of data warehouse
+characteristics, you learned about the need for DBMS extensions and the type
+of extensions provided by DBMS vendors. In answer to the opening question, I have not seen data about usage of
+data warehouse features in DBMS. I think that summary data management and parallel processing have most
+value in the marketplace. Query language extensions
+have strong potential especially if integrated to
+business intelligence tools. The ELT architecture seems to be gaining
+some traction although independent data integration tool vendors still do
+appear to be the market leaders.

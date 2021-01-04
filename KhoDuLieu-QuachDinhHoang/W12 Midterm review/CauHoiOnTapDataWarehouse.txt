@@ -1,0 +1,49 @@
+Câu hỏi ôn tập môn data warehouse
+
+Tài liệu tham khảo để trả lời câu hỏi
+1. Khóa học về data warehouse trên Coursera 
+	https://www.coursera.org/learn/dwdesign
+	https://www.coursera.org/learn/dwrelational
+2. Kimball Dimensional Modeling Techniques
+	http://www.kimballgroup.com/wp-content/uploads/2013/08/2013.09-Kimball-Dimensional-Modeling-Techniques11.pdf
+
+
+Câu 1	Tại sao operational databases không phù hợp với các ứng dụng hỗ trợ ra quyết định (decision support applications)? So sánh OLTP và OLAP?
+	
+Câu 2	Khi nào top-down data warehouse architecture phù hợp hơn bottom-up data warehouse architecture? Data warehouse khác với data mart như thế nào?
+	
+Câu 3	Data model là gì? Những ưu thế của multidimensional data model so với relational data model cho các ứng dụng liên quan đến business analytics?
+	
+Câu 4	Phân biệt conceptual data model, logical data model và physical data model.
+	
+Câu 5	Data cube, fact table, dimension table là gì? Tại sao một dimension có thể có nhiều phân cấp (multiple hierarchies).
+		
+Câu 6	Trên một data cube, slicing khác với dicing như thế nào? Trên một data cube dimension, drilling-down khác với rolling-up như thế nào? Những lợi ích của pivot operation trên multidimensional databases?
+	
+Câu 7	ROLAP, MOLAP, HOLAP là gì?
+	
+Câu 8	Stars schema là gì? Sự khác biệt giữa fact tables và dimension tables? Snowflake schema khác với star schema như thế nào? Constellation schema là gì?
+	
+Câu 9	Phân biệt 3 loại business process tương ứng với 3 loại fact table (Transactions, Accumulating Snapshots, và Periodic Snapshots)
+	
+Câu 10	Phân biệt 3 loại fact (Additive, Semi- Additive, và Non- Additive)
+
+Câu 11	Giải thích các khái niệm: fact, grain, dimension, conformed dimension, degenerate dimension, role-playing dimension, junk dimension
+
+Câu 12	Giải thích các khái niệm: Surrogate key và business key
+
+Câu 13	Giải thích các khái niệm Slowly Changing Dimensions. Nêu một số cách để giải quyết vấn đề này.
+
+Câu 14	Lợi ích của việc dùng các ETL tool trong việc tích hợp (integration) bảo trì (maintenance) data warehouse
+	
+Câu 15	Mục đích của SQL CUBE operator? Mục đích của SQL ROLLUP operator? Mục đích của SQL GROUPING SETS operator?
+	
+Câu 16	Mục đích của SQL Analytic Functions? Giải thích các hàm ranking RANK(), DENSE_RANK(), NTILE(), và ROW_NUMBER()? Giải thích Cumulative Window?
+	
+Câu 17	Phân biệt Physical Window và Logical Window? Giải thích cumulative distribution? Giải thích hai cumulative distribution function là PERCENT_RANK và CUME_DIST?
+	
+Câu 8	Sự khác biệt giữa traditional view và materialized view? Những tính chất của materialized view?  Tại sao materialized view lại quan trọng đối với data warehouse nhưng không quan trọng lắm đối với operational database?
+	
+
+
+

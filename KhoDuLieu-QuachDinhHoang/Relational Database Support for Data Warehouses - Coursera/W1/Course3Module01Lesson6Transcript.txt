@@ -1,0 +1,74 @@
+Welcome to Lesson 6 of Module 1 on DBMS
+Extensions and Example Data Warehouses. I'm gonna start with an important usage
+question about medical data warehouses. What factors inhibit usage of federated
+medical data warehouses such as SAFTINet? Lesson 6. Write a conceptual background of data
+warehouse of deployed organizations. Provide a context for
+detailed skills in other modules. You will learn about a standard
+medical data warehouse model and a substantial implementation of the model
+to support healthcare researchers. You have three learning
+objectives in this lesson. You should understand the scope
+of moderate size data warehouses. You should get insight about
+development difficulties with cooperation among
+independent data providers. You should reflect about
+the lack of incentives for voluntary participation by data providers
+and usage difficulties by stakeholders. The Observational Medical Outcomes
+Partnership, or OMOP, was a public/private partnership to develop and promote
+standards for electronic medical records. The primary products of the partnership
+were standard vocabulary and a common data model for
+observational medical data. Secondary products for data integration procedures, standard
+queries to use the data model, and data generation procedures to populate
+a data warehouse with simulated data. An active community of users has applied
+a documented usage of these products in conferences and publications. The original OMOP investigators have moved
+to new projects to promote innovation and usage of medical evidence and
+developed an open source tools for observation of medical data. The OMOP common data model
+is a constellation schema containing 37 tables with
+some free standing tables. Each star in the constellation
+contains person and time dimensions. Other dimensions are providers, cohorts, locations, organizations,
+care sites and payer plans. Major fact tables are treatments with
+drug prescriptions and procedures and occurrences of observations, visits,
+conditions, exposures, and deaths. This diagram from the OMOP website, shows the OMOP 5.0 common
+data models specification. This specification contains
+standard errors for clinical data, healthcare economics, healthcare system,
+vocabulary, and derived elements. This diagram shows the tables
+in a common data model, although not organized in
+a traditional schema diagram. The scalable Architecture for Federated
+Translational inquiries Network, knows as SAFTINet, is a substantial implementation
+of the OMOP common data model. SAFTINet was developed to support
+comparative effectiveness research. In quality improvement research using
+data collected from independent providers distributed across geographic regions. SAFTINet provides data integration
+tools to transform data from providers in a query portal for
+researchers using a data warehouse. The SAFTINet data model is a subset
+of the OMOP common data model. SAFTINet contains dimensions for person, provider, organization,
+care site, and time. These dimensions are really the fact
+tables for visits, conditions, deaths, procedures, and observations. Although the data model seems modest,
+lack of incentives for data providers and
+data integration difficulties prevented development of a large
+subset of the common data model. SAFTINet was developed as a research
+project so the tedious details of data integration and the centers for
+data providers were difficult to manage. The organizational effort
+to establish SAFTINet is at least as much of an achievement
+as the data warehouse development. SAFTINet is populated with data
+from 14 healthcare organizations. 100 primary care practices,
+500 providers and 400,000 patients. Claims data comes from
+three different US states. Governance committees were created to
+coordinate participation by data providers and uses by researchers. SAFTINet has usage barriers with
+approvals by internal review boards and data providers. Lesson 6 presents standards for medical
+data warehouses to provide a context or detailed concepts and
+skills covering other modules. The observational medical outcomes
+partnership, known as OMOP created a standard vocabulary Common Data Model,
+data integration procedures, and query suite to support development and medical
+data warehouses with observational data. You're encouraged to learn more
+details from the OMOP website. The scalable architecture for federated translational inquiries network,
+known as SAFTINet. Implemented a subset of the OMOP Common
+Data Model to support medical researchers who want access to medical observations
+from a diverse collection of providers, patients, and organizations. An answer to the opening question. Internal review boards,
+and lack of incentives for data providers inhibit usage of SAFETNET. SAFTINet from a diverse network of
+patients, providers, and locations. Due to usage difficulties,
+this promise has not been entirely met. Each research project must obtain
+clearance by an internal review board. Internal review boards require detailed
+justification about data requested and safeguards to meet strict
+privacy standards. Data providers lack incentives
+to participate in SAFTINet and approve access to data. Research projects using safety net. Can only provide intangible and
+long term benefits to data providers. Thus, safety net's impact is more
+limited than the Colorado education data warehouse. Although lessons learned from the safety
+net experience will be valuable in the future.

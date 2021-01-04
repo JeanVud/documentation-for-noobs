@@ -1,0 +1,98 @@
+Welcome to lesson two of module
+five on physical design and governance on data warehouses. Let's have fun learning about an important
+parallel processing framework. Named after a stuffed toy elephant. I'm going to start with
+an important conceptual question that I want you to think
+about throughout this lesson. How does parallel processing in Hadoop
+differ from parallel database processing? Lesson two continues with the conceptual
+background about storage and processing architectures from lesson one. Lesson two covers scalable,
+parallel processing approaches. It's exemplified by Hadoop. The coverage in this
+lesson focuses on Hadoop, an open source project
+becoming widely used for large data sets, as well as being
+incorporated into date integration tools. You have three learning
+objectives in this lesson. You should discuss historical development
+of scalable parallel processing for large datasets. You should explain components of Hadoop,
+a prominent open source project for scalable parallel processing. Finally, you should discuss usage of
+Hadoop for data integration tasks. Scalable parallel processing for large datasets it's become an important
+development since the early 2000s. Work on processing of large data sets and websearch engines was the original
+impetus for scalable parallel processing. Three important milestones were project
+notch and open source websearch engine. The Google file system in
+the map reduced algorithm, developed by Google software engineers. After this initial period,
+direct work on Hadoop began. Hadoop was created in 2005 by
+Doug Cutting, working at Yahoo, and Mike Cafarella a university professor. As an open source project of
+the Apache Software Foundation. Hadoop was the name of the stuffed
+elephant of Cutting's son. Cloudera was the first company to
+provide evaluated commercial services using Hadoop. Following closely behind Cloudera, dozens of start-up companies have
+been funded by venture capital firms. In 2013,
+Hadoop was extended into Hadoop 2. Hadoop has become synonymous for scalable
+parallel processing for large datasets. Hadoop, an open source project of
+the Apache software foundation, supports large scale computing using commodity
+components but with hardware and software. The HADOOP project provides
+an application programming Interface in server support for
+parallel processing and job management. Data use in a HADOOP job are located
+on the distributed file system. HADOOP 2, in extension of original HADOOP
+project, supports multiple task models for parallel processing. The original Hadoop project only
+supported one parallel processing model. The original Hadoop project
+has now evolved into Hadoop 2, with more general parallel
+processing capabilities. This diagram depicts the evolution
+of Hadoop 1 to Hadoop 2. Hadoop 1 provided only a single
+parallel processing model. Not produce. Hadoop 2 provides extensible parallel
+processing models beyond that produce. To generalize the processing model, Hadoop
+2 move the resource management functions from that produce to a dedicated
+component known as yet another resource negotiator or
+YARN for short. MapReduce and other parallel
+processing models us YARN for scheduling and applications management. MapReduce has been extended with PIG,
+a programming language and optimizing compiler for parallel batch
+processing using MapReduce functions. HIVE provides a simple query language for
+data integration tasks in a compiler generated map reduced function calls
+in addition, other parallel processing models can be used with different data
+formats than provided by MapReduce. As the original parallel
+processing model for Hadoop, MapReduce remains the most widely used
+despite generalization in Hadoop 2. MapReduce provides two customizable
+components and three standard components to decompose complex batch processing
+tasks into small parts for parallel processing. The customizable map component extracts
+important parts of an input file into key value pairs. Standard components for
+partitioning, sorting, and grouping functions Pipeline the key
+value pairs for parallel processing. The customizable reduce component,
+aggregates, filters and or transforms key value comparers for
+final processing. The Mapreduce framework requires
+dependency free components, so that no state is shared among components. MapReduce has been applied to many tasks
+to process large data sets of web pages. For example, to count web address
+frequency in a large collection of web pages, the Map component
+extracts web addresses and the reduce component adds access
+counts for matching web addresses. The distributive file system
+provides a reliable and scalable data storage using
+clusters of commodity servers. This diagram shows major components
+of the distributive file system. A namenode is a controller for cluster managing all descriptive
+data about blocks in each data node. The secondary name node maintains a log
+and periodic replications for reliability. Data nodes store blocks of data for
+input processing and final results. In practice, the distributed file
+system has scaled to 200 petabytes with a single cluster of more than 4,000
+servers, managing about a billion files. A key question for
+data warehouse administrators and analysts is the utility of Hadoop for
+data integration. Hadoop 2 with a hive query language
+extends the reach of traditional data integration processing for
+large scale map reduce processing. Hadoop can transform large data
+sets often containing large, unstructured data such as web blogs and
+images. Before Hadoop these large data sets
+were difficult to efficiently transform. After processing transformed datasets
+can then be loaded into a data warehouse possibly with additional
+transformations in integration. Data integration tools and
+Enterprise DBMSs, have started to provide Hadoop components
+to integrate map reduce and other parallel processing models, intadate integration
+work flows, and other database processing. Lesson two, continue conceptual material,
+that physical design technologies for data warehouses. You learned about scalable parallel
+processing of large data sets utilizing commodity components. This lesson covered basic
+concepts of Hadoop, an open source project of
+the Apache Software Foundation, initially developed for processing
+large data sets for web search engines. Hadoop now has wide application for
+extended data integration, to transform large data sets that could
+be integrated with other data sources. In answer to the opening question, parallel processing Hadoop compliments
+parallel database processing, but integration could improve software
+development productivity. Even with generalization in Hadoop 2, parallel processing is still
+focused on batch processing. Enterprise DBMSs provide parallel
+processing for joins, grouping, and analytical operations used in queries,
+not batch processing of large datasets. Optimizing SQL compilers make
+parallel processing transparent. An important feature absent in Hadoop,
+integration of Hadoop with demesses in related data integration tools should
+improve transparency, parallel processing, and combine parallel processing models in
+Hadoop with database parallel processing.

@@ -1,0 +1,93 @@
+Welcome to lesson two of module three
+on the Oracle SQL Analytic Functions. Lets continue our fun
+with analytic functions. I'm gonna start with
+an important learning question that I want you to think
+about throughout this lesson. What difficulties have you encountered so
+far with analytic functions? Lesson two extends the introductory
+presentation of analytic functions from lesson one. Lesson two covers extended syntax for
+partitioning and compares ranking functions useful in
+business intelligence applications. All of the coverage in this
+module is specific to Oracle SQL. Other enterprise DBMSs
+provide similar capabilities. You have three learning
+objectives in this lesson. As the primary goal, you should be ready to write SELECT
+statements using partitioning. You should understand conceptual
+differences among ranking functions so that you can use them appropriately. As a reflective goal, you should think about the evaluation
+order of SELECT clauses. To start the details of this lesson, let's review the processing order
+of clauses in a SELECT statement. Analytic function processing
+occurs after row and group processing, but
+before a final result processing. Lesson one covered analytic
+functions evaluated on an entire result table as a whole. Lesson two covers analytic functions
+evaluated on partitions of result tables. Partitioning can be a confusing
+part of analytic functions. Partitioning occurs twice
+in a SELECT statement with both the GROUP BY clause and
+partitioning in an analytic function. This situation is common because analytic
+functions are often applied to row summaries created by the GROUP BY clause. You should remember that
+analytic function processing occurs after GROUP BY processing, with analytic functions often evaluated
+on partition as a GROUP BY results. Let's expand our focus to the extended
+syntax with partitioning. Partitioning is optional
+in an analytic function, as noted by the square
+brackets in the syntax. Partition is specified by the PARTITION BY
+keywords, followed by a list of columns, similar to the GROUP BY clause. The order and specification remains
+the same as in a basic syntax. To demonstrate the syntax, let's look at a partial statement
+with just a analytic function part. This example extended from Lesson one,
+with a PARTITION BY clause. The RANK function is evaluated on sets
+of rows with the same CustState value. The RANK function values start
+over with each CustState value. For example, if there are ten CustState
+values in the results before analytic function evaluation, the RANK function
+will generate ten different rankings. Separate rankings will be determined for
+all rows with the same CustState value. Example one, extends example two
+of lesson one with partitioning. Example one ranks customers
+by the sum of sale dollars with partitioning on CustState. In a SELECT statement, you should note the PARTITION BY keyboard
+specification using a CustStateColumn. The ORDER BY keyword ensures that
+the results are sorted on CustState. Within each state the RANK function
+arranges rose by ranking value. I will now execute this statement
+using the Oracle SQL developer. The result contains nine rows
+with four columns in each row. Note that the ranking restarts for
+each customer state. Oracle provides additional
+ranking functions besides rank. The dense rank function differs from
+the rank function on duplicate values. Rank leaves a gap on the next
+value we have to duplicates. DENSE_RANK does not create gaps. For example, golf leaderboards
+are typically reported using gaps. A leaderboard with golf scores of -10,
+-9, -9 and -8 would be reported with gaps. That is a rank function as 1, 2, 2, and 4. Without gaps,
+that is using the DENSE_RANK function, the leaderboard is reported as 1,
+2, 2, and 3. The NTILE and ROW_NUMBER functions
+are less widely used than the RANK and DENSE_RANK functions. The NTILE function divides
+rows into equal divisions. For example, NTILE four divides rows
+into four divisions or quartiles. ROW_NUMBER generates a total order of rows with row numbers one
+to the number of rows. Example two demonstrates each ranking
+function to depict differences. Each analytic function uses the same
+criteria, descending sum of unit sales. The analytic functions are valued over
+the entire GROUP BY result on CustZip. No partitioning is specified to
+focus on just analytic functions. I will now execute this statement
+using the Oracle SQL Developer. The result contains nine rows,
+with six columns in each row. Note that RANK and DENSE_RANK functions
+differ on the second last row. The previous two rows have the same
+sum of sales value, 1,272. The RANK function's 8,
+while the DENSE_RANK is 7. NTILE four groups nine
+rows into four divisions with the first division containing the
+first three rows, and the other divisions, two to four containing two rows each. The ROW_NUMBER function generates
+consecutive numbers of 1 to 9 so that each row has a unique
+number in the result. You should now be ready to write SELECT
+statements for some additional problems. In example 3, you should use the DENSE_RANK function on
+item brands partitioning on year of sale. The ranking criterion is the descending
+count of rows after joining the SS item and SS sales tables. The analytic function should only be
+applied to brands with more than five sales per year. In example 4, you should use the RANK and
+DENSE_RANK functions. The criterion is descending sum of 2010
+dollar sales with partition on year. You can find the solutions
+in a Module three document. This lesson extended your background
+about analytic functions from lesson one. You learned about extended syntax for
+valuation of the analytic functions, over partitions,
+using the partition by keywords. You also learned additional ranking
+functions, including DENSE_RANK, NTILE, and ROW_NUMBER. You are encouraged to write
+SELECT statements for the practice problems to apply
+the details of the lesson. An answer to the opening question,
+analytic functions can be confusing even if you have a good
+background in query formulation. When I first learned about analytic
+functions, I was confused about similar operations that occur with
+analytic function processing and other parts of a SELECT statement. Partitioning and grouping seems similar. Ordering analytic functions seems
+similar to ordering a final results. Understanding the extended processing
+model helped me clarify the meanings of analytic functions and
+become skilled with query formulation. Analytic function processing
+occurs after GROUP BY processing. Partitioning in analytic functions is
+often applied to GROUP BY results. Ordering is the criteria for
+evaluating analytic functions, rather than the order of the final result.

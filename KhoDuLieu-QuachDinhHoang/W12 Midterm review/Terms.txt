@@ -1,0 +1,188 @@
+aggregate function
+	a summary or statistical function. The standard aggregate functions in SQL are MIN, MAX, COUNT, SUM, and AVG.
+associative entity type
+	a weak entity that depends on two or more entity types for its primary key. An associative entity type with more than two identifying relationships is known as an M-way associative entity type. See also M-way relationship, identifying relationship, and weak entity.
+associative entity type
+	a weak entity that depends on two or more entity types for its primary key. An associative entity type with more than two identifying relationships is known as an M-way associative entity type. See also M-way relationship, identifying relationship, and weak entity.
+attribute
+	a property of an entity type or relationship. Each attribute has a data type defining allowable values and operations. Attribute is synonymous with field and column.
+bottom-up data warehouse architecture
+	an architecture for a data warehouse in which data marts are built for user departments. If a need for an enterprise data model emerges, the data marts will evolve to a data warehouse. See also two-tier data warehouse architecture and three-tier data warehouse architecture.
+candidate key
+	a minimal superkey. A superkey is minimal if removing any columns makes it no longer unique.
+cardinality
+	a constraint on the number of entities participating in a relationship. In an entity relationship diagram, the minimum and the maximum number of entities are specified for both directions of a relationship.
+completeness constraint
+	a constraint about generalization hierarchies. A completeness constraint means that every entity in a supertype has a related entity in one of the subtypes. In other words, the union of the set of entities in the subtypes equals the set of entities in the supertype.
+conceptual schema
+	a data description that covers all entities and relationships in a database. The conceptual schema is concerned with the meaning of the database, not its physical implementation. See also Schema, Internal Schema, External View, and Three Schema Architecture.
+constellation schema
+	a data modeling representation for multidimensional databases. In a relational database, a constellation schema contains multiple fact tables in the center related to dimension tables. Typically the fact tables share some dimension tables. See also snowflake schema, star schema, fact table, and dimension table.
+CUBE operator
+	an operator that augments the normal GROUP BY result with all combinations of subtotals. The SQL:2003 standard provides the CUBE operator as an extension of the GROUP BY clause to support multidimensional data. The CUBE operator is appropriate to summarize columns from multiple dimensions rather than columns representing different levels of a single dimension.
+data cube
+	a multidimensional format in which cells contain numeric data called measures organized by subjects called dimensions. A data cube is sometimes known as a hypercube because conceptually it can have an unlimited number of dimensions.
+data independence
+	a database should have an identity separate from the applications (computer programs, forms, and reports) that use it. The separate identity allows the database definition to be changed without affecting related applications.
+data mart
+	a subset or view of a data warehouse, typically at a department or functional level, that contains all the data required for decision support tasks of that department. In addition, a data mart insulates departmental users from data used by other departments. In some organizations, a data mart is a small data warehouse rather than a view of a larger data warehouse.
+data mining
+	the process of discovering implicit patterns in data stored in a data warehouse and using those patterns for business advantage such as predicting future trends.
+data model
+	a graphical model depicting the structure of a database. A data model contains entity types and relationships among entity types. See also environment interaction model and process model.
+data warehouse
+	a central repository for summarized and integrated data from operational databases and external data sources.
+database management system (DBMS)
+	a collection of components that support data acquisition, dissemination, maintenance, retrieval, and formatting. An enterprise DBMS supports databases that are critical to an organization. A desktop DBMS supports databases for small workgroups and small businesses. An embedded DBMS is part of a larger system such as a device or application. Embedded DBMSs provide limited features but have low memory, processing, and storage requirements.
+denormalization
+	combining tables so that they are easier to query. Denormalization is the opposite of normalization. Denormalization can be useful to improve query performance or to ignore a dependency that does not cause significant storage anomalies.
+dice
+	a data cube operator in which a dimension is replaced by a subset of its values. See also slice.
+dimension
+	a label or subject that organizes numeric data in a data cube. A dimension contains values known as members such as a location dimension having members for countries. Dimensions may be organized in hierarchies composed of levels to support the data cube operations of drill-down and roll-up. A dimension hierarchy may be ragged showing relationships among members of the same dimension level.
+dimension table
+	a table in a star schema or snowflake schema that stores dimensions or subjects used to aggregate facts.
+disjointness constraint
+	a constraint about generalization hierarchies. A disjointness constraint means that the subtypes do not share any common entities. In other words, the intersection of the sets of entities in the subtypes is empty.
+drill-down
+	a data cube operator that supports navigation from a more general level of a dimension to a more specific level of a dimension. See also roll-up.
+enterprise data model (EDM)
+	a conceptual data model of an organization. An enterprise data model can be used for data planning (what databases to develop) and decision support (how to integrate and transform operational databases and external data sources).
+entity
+	a cluster of data usually about a single topic that can be accessed together. An entity can denote a person, place, event, or thing.
+entity integrity
+	a constraint involving primary keys. No two rows of a table can contain the same value for the primary key. In addition, no row can contain a null value for any columns of a primary key.
+entity type
+	a collection of entities (persons, places, events, or things) of interest in an application, represented by a rectangle in an entity relationship diagram.
+ETL tools
+	software tools for extraction, transformation, and loading of change data from data sources to a data warehouse. ETL tools eliminate the need to write custom coding for many data warehouse maintenance tasks.
+existence dependency
+	an entity that cannot exist unless another related entity exists. A mandatory relationship produces an existence dependency. See also mandatory relationship.
+external view
+	a description of derived data appropriate for a given user group. Also known as external schema and view. See also Schema and Three Schema Architecture.
+fact table
+	a table in a star schema or snowflake schema that stores numeric values of relevance to a decision maker. See also star schema and snowflake schema.
+foreign key
+	a column or combination of columns in which the values must match those of a candidate key. A foreign key must have the same data type as its associated candidate key. In the CREATE TABLE statement of SQL:2003, a foreign key must be associated with a primary key rather than merely a candidate key.
+forward engineering
+	the ability to generate definitions for a target database management system from an ERD and data dictionary properties. See also CASE tool and reverse engineering.
+functional dependency (FD)
+	a constraint about two or more columns of a table. X determines Y (X → Y) if there exists at most one value of Y for every value of X. A functional dependency is similar to a candidate key constraint because if X and Y are placed in a separate table, X is a candidate key.
+group condition
+	a comparison involving an aggregate function such as SUM or COUNT. Group conditions cannot be evaluated until after the GROUP BY clause is evaluated.
+GROUPING SETS operator
+	an operator in the GROUP BY clause that requires explicit specification of column combinations. The GROUPING SETS operator is appropriate when precise control over grouping is required. The SQL:2003 standard provides the GROUPING SETS operator as an extension of the GROUP BY clause to support multidimensional data.
+HOLAP
+	an acronym for Hybrid On-Line Analytical Processing. HOLAP is an implementation approach that combines the MOLAP and the ROLAP storage engines. HOLAP involves both relational and multidimensional data storage as well as combining data from both relational and multidimensional sources for data cube operations. See also MOLAP and ROLAP.
+identification dependency
+	involves a weak entity and one or more identifying relationships. See also weak entity and identifying relationship.
+identifying relationship
+	a relationship that provides a component of the primary key to a weak entity. See also weak entity and identification dependency.
+internal schema
+	a description of the physical implementation of a database. See also schema, conceptual schema, external view, and Three Schema Architecture.
+mandatory relationship
+	a relationship with a minimum cardinality of one or more. A mandatory relationship produces an existence dependency on the entity type associated with the minimum cardinality of one. See also Optional Relationship and Existence Dependency.
+many-to-many (M-N) relationship
+	in the Entity Relationship Model, a relationship in which objects of each entity type can be related to many objects of the other entity type. M-N relationships have maximum cardinalities of more than one in each direction. In the Relational Model, two 1-M relationships and a linking or associative table represent an M-N relationship. See also one-to-many relationship and relationship.
+materialized view
+	a stored view that must be periodically synchronized with its source data. Relational DBMSs provide materialized views with summarized data for fast query response. See also query rewriting and view.
+metadata
+	data that describe other data including the source, use, value, and meaning of the data. See also data dictionary.
+modification anomaly
+	an unexpected side effect that occurs when changing the data in a table with excessive redundancies.
+MOLAP
+	an acronym for Multidimensional On-Line Analytical Processing. MOLAP is a storage engine that directly stores and manipulates data cubes. MOLAP engines generally offer the best query performance but suffer from limitations in the size of data cubes supported.
+M-way (multiway) relationship
+	a relationship involving more than two entity types. In some ERD notations such as the Crow's Foot, an M-way relationship is represented as an M-way associative entity type. An M-way associative entity type has more than two identifying relationships.
+normal form
+	a rule about allowable dependencies.
+normalization
+	the process of removing redundancies from tables so that the tables are easier to change. To normalize a table, list the functional dependencies and make tables that satisfy a normal form, usually third normal form (3NF) or Boyce-Codd normal form (BCNF).
+null value
+	a special value that represents the absence of an actual value. A null value can mean that the actual value is unknown or does not apply to the given row.
+OLAP (online analytical processing)
+	general name of technology to support multidimensional databases. OLAP technology encompasses the multidimensional data model and implementation approaches.
+one-to-many (1-M)
+	relationship in the Entity Relationship Model, a relationship in which the maximum cardinality is 1 in one direction and M in the other direction. In the Relational Data Model, a referential integrity constraint usually indicates a 1-M relationship. See also relationship and many to many relationship.
+operational database
+	a database to support the daily functions of an organization. Operational databases directly support major functions such as order processing, manufacturing, accounts payable, and product distribution.
+oper (operational) mart
+	a just-in-time data mart usually built from one operational database in anticipation or in response to major events such as disasters and new product introductions. An oper mart supports peak demand for reporting and business analysis that accompanies a major event. See also data mart.
+optional relationship
+	a relationship with a minimum cardinality of zero. An optional relationship means that entities can be stored without participation in the relationship. See also mandatory relationship.
+pivot
+	a data cube operator in which the dimensions in a data cube are rearranged. See also data cube.
+primary key
+	a specially designated candidate key. The primary key for a table cannot contain null values.
+query rewriting
+	a substitution process in which a materialized view replaces references to fact and dimension tables in a query. In addition to performing the substitution, the query optimizer evaluates whether the substitution will improve performance over the original query. See also materialized view.
+referential integrity
+	an integrity constraint involving a candidate key in one table with the related foreign key of another table. Only two kinds of values can be stored in a foreign key: (1) a value matching a candidate key value in some row of the table containing the associated candidate key or (2) a null value. See also primary key, candidate key, and foreign key.
+relation
+	synonymous with table. A term typically used in academic research about databases.
+relational algebra
+	a set of operators to manipulate relational databases. Each operator uses one or two tables as input and produces a new table as output.
+relational data model
+	using tables, matching values for connections among tables, and table operators to represent a collection of data.
+relational DBMS
+	a system that uses the Relational Data Model to manage collections of data.
+relationship
+	in the Entity Relationship Model, a relationship is a named association among entity types. In the Relational Model, a relationship is a connection among tables shown by column values in one table that match column values in another table. Referential integrity constraints and foreign keys indicate relationships in the Relational Model. See also one-to-many relationship, manyto- many relationship, and referential integrity.
+reverse engineering
+	the ability to extract definitions from a target database management system and use the definitions to create an ERD and data dictionary properties. See also CASE tool and forward engineering.
+ROLAP
+	an acronym for Relational On-Line Analytical Processing. ROLAP involves relational DBMS extensions to support multidimensional data. ROLAP engines support a variety of storage and optimization techniques for summary data retrieval.
+roll-up
+	a data cube operator that supports navigation from a more specific level of a dimension to a more general level of a dimension. The roll-up operator requires a hierarchical dimension. See also drill-down.
+ROLLUP operator
+	an operator in the GROUP BY clause that augments the normal GROUP BY result with a partial set of subtotals. The SQL:2003 standard provides the CUBE operator as an extension of the GROUP BY clause to support multidimensional data. The ROLLUP operator is appropriate to summarize columns from the same dimension hierarchy.
+schema
+	a definition of the conceptual, external, or internal parts of a database. At the conceptual level, a schema is a diagram depicting the entities and relationships in a database. See also the Three Schema Architecture, external view, conceptual schema, and internal schema.
+schema mapping
+	describes how a schema at a higher level is derived from a schema at a lower level. A mapping provides the knowledge to convert a request from a higher schema representation to a lower schema representation. See also Three Schema Architecture and schema.
+row condition
+	a comparison not involving an aggregate function. Row conditions are evaluated in the WHERE clause.
+self-referencing relationship
+	a relationship involving the same table or entity type. Self-referencing relationships represent associations among members of the same set. Also known as a unary, reflexive, or recursive relationship.
+slice
+	a data cube operator in which a dimension is replaced by a single member value or a summary of its member values. See also dice.
+snowflake schema
+	a data modeling representation for multidimensional databases. In a relational database, a snowflake schema has multiple levels of dimension tables related to one or more fact tables. You should use the snowflake schema instead of the star schema for small dimension tables that are not in third normal form. See also star schema, constellation schema, fact table, and dimension table.
+SQL
+	an acronym for the Structured Query Language. SQL is an industry-standard database language that includes statements for database definition (such as the CREATE TABLE statement), database manipulation (such as the SELECT statement), and database control (such as the GRANT statement). SQL began as a proprietary language developed by IBM. SQL is now a widely supported international standard for databases.
+star schema
+	a data modeling representation for multidimensional databases. In a relational database, a star schema has a fact table in the center related to dimension tables. See also snowflake schema, constellation schema, fact table, and dimension table.
+stored procedure
+	a collection of statements that are managed by a DBMS. Stored procedures extend the capabilities of SQL. Most DBMSs provide a proprietary language in which to write stored procedures.
+subtype
+	a child entity type in a generalization hierarchy. A subtype represents a more specialized entity type than its supertype.
+summarize
+	an operator of relational algebra that compresses the rows of a table. A summarize operation produces a table with rows that summarize the rows of the input table. Aggregate functions are used to summarize the rows of the input table.
+superkey
+	a column or combination of columns containing unique values for each row. The combination of every column in a table is always a superkey because rows in a table must be unique.
+supertype
+	a parent entity type in a generalization hierarchy. A supertype represents a more general entity type than its subtypes.
+ternary relationship
+	a relationship involving three entity types. In some ERD notations such as the Crow's Foot notation, a ternary relationship is represented as an associative entity type with three 1-M relationships.
+Three Schema Architecture
+	an architecture for compartmentalizing database descriptions. The Three Schema Architecture contains the external or user level, the conceptual level, and the internal or physical level. The Three Schema Architecture was proposed as a way to achieve data independence.
+three-tier data warehouse architecture
+	an architecture for a data warehouse in which user departments access data marts rather than the data warehouse. An extraction process involving the data warehouses periodically refreshes the data marts. See also two-tier data warehouse architecture and bottom-up data warehouse architecture.
+traditional set operators
+	the union, intersection, and difference operators of relational algebra.
+two-tier data warehouse architecture
+	an architecture for a data warehouse in which user departments directly use the data warehouse rather than smaller data marts. See also three-tier data warehouse architecture and bottom-up data warehouse architecture.
+Type I nested query
+	a nested query in which the inner query does not reference any tables used in the outer query. Type I nested queries can be used for some join problems and some difference problems.
+Type II nested query
+	a nested query in which the inner query references a table used in the outer query. Type II nested queries can be used for difference problems but should be avoided for join problems.
+updatable view
+	a view that can be used in SELECT statements as well as UPDATE, INSERT, and DELETE statements. When modifying the rows of an updatable view, the DBMS translates the view modifications into modifications to rows of the base tables.
+view
+	virtual or derived table. A view is derived from base or physical tables using a query. See also materialized view.
+view materialization
+	a method to process a query on a view by executing the query directly on the stored view. The stored view can be materialized on demand (when the view query is submitted) or periodically rebuilt from the base tables. For data warehouses, materialization is the preferred strategy for processing view queries.
+view modification
+	a method to process a query on a view involving the execution of only one query. A query using a view is translated into a query using base tables by replacing references to the view with its definition. For transaction databases, view modification is the preferred strategy for processing most view queries.
+weak entity
+	an entity type that borrows part or all of its primary key from another entity type. A weak entity is also existent dependent. See also identification dependency and identifying relationship.

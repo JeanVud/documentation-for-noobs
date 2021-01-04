@@ -1,0 +1,7 @@
+Làm bài tập Week 4 (thư mục W4) trong file "Relational Database Support for Data Warehouses - Coursera.zip". 
+
+SV trả lời các câu hỏi trong file Course3Module4Assignment.doc bằng cách viết trực tiếp code SQL lên file này và chụp lại màn hình kết quả.
+
+Đổi tên file lại thành STT_Ho_Dem_Ten_Materialized_Views.doc trước khi nộp.
+
+Hạn chót: 22h00 ngày 24/05/2020.

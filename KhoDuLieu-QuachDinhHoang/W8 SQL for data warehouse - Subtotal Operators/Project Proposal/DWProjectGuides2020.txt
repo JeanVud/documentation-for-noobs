@@ -1,0 +1,46 @@
+Tiêu chí chấm điểm
+	Đề xuất (proposal) : 10%
+	Trình bày (presentation): 30%
+	Báo cáo (report): 60%
+1. Chọn chủ đề
+	- Chọn từ danh sách đề tài gợi ý do GV đưa, hoặc
+	- Tự đề xuất chủ đề mình quan tâm hoặc cảm thấy thú vị
+2. Thành lập nhóm
+	- Các thành viên trong nhóm nên thật sự làm việc cùng nhau.
+	- Báo cáo phải ghi rõ ai làm việc gì.
+3. Tìm các tài liệu liên quan đến chủ đề
+	- GV sẽ gợi ý, cung cấp các tài liệu chính
+	- SV phải tìm và đọc thêm
+4. Viết bản đề xuất đề tài (proposal)
+	- SV phải viết bản đề xuất (khoảng 1-2 trang) trước khi tìm hiểu chi tiết
+	- Bản đề xuất nên bao gồm một số mục sau:
+		(1) Giới thiệu sơ lược về chủ đề (introduction)
+		(2) Tại sao nó quan trọng, tại sao nhóm muốn tìm hiểu nó (motivation)
+		(3) Các công việc mà nhóm dự định thực hiện (details)
+		(4) Tài liệu tham khảo chính (references)
+		(5) Phác thảo kế hoạch làm việc, ai làm việc gì (plan)
+5. Thực hiện
+	- Trong quá trình làm các thành viên nên trao đổi với nhau, hoặc trao đổi với các bạn trong lớp hoặc với GV.
+	- Cần ghi chú lại trong quá trình thực hiện (điều này sẽ giúp ích rất nhiều khi soạn slide để trình bày cũng như khi viết báo cáo)
+6. Thuyết trình (presentation)
+	- Mục đích của buổi thuyết trình là:
+		(1) Giới thiệu chủ đề nhóm tìm hiểu với những nhóm khác và học hỏi thêm về các chủ đề mà những nhóm khác trình bày.
+		(2) Cơ hội để thực hành kỹ năng thuyết trình (rất quan trọng cho công việc sau này)
+		(3) Tiếp nhận những phản hồi từ các nhóm khác và GV về những gì mà nhóm đã làm để bổ sung trong báo cáo
+	- Cấu trúc của bài thuyết trình nên gồm các phần sau:
+		(1) Giới thiệu sơ lược về chủ đề (what - introduction)
+		(2) Tại sao nó quan trọng, tại sao nhóm muốn tìm hiểu nó (why - motivation)
+		(3) Các công việc mà nhóm đã thực hiện (how - details)
+		(4) Kết luận (conclusion)
+	- Điểm cho bài thuyết trình sẽ được chấm dựa trên các tiêu chí sau:
+		(1) Slide được trình bày rõ ràng (hình ảnh, minh họa, ví dụ thường hiệu quả hơn là text), nói lưu loát (không nên chỉ nhìn vào máy tính và đọc slide, hoặc quay lưng lại người nghe khi thuyết trình, nên tập thuyết trình trước ở nhà để nắm rõ nội dung cần trình bày cũng như trình bày lưu loát hơn). Tham khảo bài báo: How to Give a Good Talk, Uri Alon, Molecular Cell, 2009.
+		(2) Bài thuyết trình có đầy đủ các phần như cấu trúc ở trên
+		(3) Hoàn thành bày thuyết trình đúng thời gian cho phép (không sớm, không trễ). Nên dành thời gian suy nghĩ về cách trình bày hiệu quả nhất để giúp người nghe hiểu được nội dung mà nhóm đã tìm hiểu.
+7. Viết báo cáo (report)
+	- Báo cáo nên theo cấu trúc của bài thuyết trình nhưng được viết chi tiết hơn.
+	- Báo cáo phải trích dẫn các nguồn mà nhóm đã sử dụng (phần nào của báo cáo tham khảo, sử dụng tài liệu gì).
+	- Không có giới hạn về độ dài của báo cáo. Tuy nhiên, báo cáo không nên quá 10-20 trang. Báo cáo nên viết rõ ràng, ngắn gọn nhưng đủ ý.
+	- Báo cáo sẽ được chấm điểm dựa vào các tiêu chí sau:
+		(1) Viết rõ ràng (báo cáo được trình bày rõ ràng, câu rõ ý, không sai ngữ pháp, chính tả), định dạng thống nhất.
+		(2) Nội dung thực hiện (những công việc mà nhóm đã tìm hiểu)
+		(3) Độ khó cũng như chất lượng công việc

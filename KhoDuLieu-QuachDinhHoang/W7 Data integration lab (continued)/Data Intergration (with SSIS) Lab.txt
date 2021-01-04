@@ -1,0 +1,15 @@
+Sinh viên thực hiện theo các hướng dẫn và yêu cầu trong file đính kèm.
+
+Hạn chót: 22h00 ngày 03/05/2020.
+ 
+	
+Data Integration (with SSIS) Lab.pdf Data Integration (with SSIS) Lab.pdf
+ 
+	
+DateStage.xlsx DateStage.xlsx
+ 
+	
+NorthwindDailyInventoryLevelsOneWeek.csv NorthwindDailyInventoryLevelsOneWeek.csv
+ 
+	
+NorthwindDW.sql NorthwindDW.sql 

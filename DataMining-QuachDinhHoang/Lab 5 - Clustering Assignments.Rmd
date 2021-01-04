@@ -1,0 +1,93 @@
+---
+title: "Lab 5 - Clustering Assignments"
+author: "Quách Đình Hoàng"
+date: "2020/11/27"
+output: 
+  pdf_document:
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Câu hỏi 1
+Ở phần hướng dẫn, ta thực hiện lại các thuật toán `kmeans` và `hclust` cho tập dữ liệu `USArrests`. Hãy thực hiện lại các bước đã mô tả ở trên nhưng áp dụng hàm `scale()` trên dữ liệu trước áp dụng thuật toán các `kmeans`, `hclust`
+
+#### a.	Áp dụng hàm `scale()` trên dữ liệu trước khi thực hiện lại các bước ở mục 2 trong phần hướng dẫn.
+
+#### b.	Không áp dụng hàm `scale()` nhưng áp dụng PCA trên dữ liệu, sau đó thực hiện k-means với số cụm là 4 trên trên 2 thành phần chính đầu tiên và minh họa kết quả dùng hàm `plot`. Bình luận kết quả thu được.
+
+#### c.	Áp dụng hàm `scale()` trên dữ liệu trước khi thực hiện gom cụm phân cấp dùng các phương pháp `single`, `complete`, `average` và `median` trên tập dữ liệu `USArrests`.
+
+#### d.	Cắt dendrogram để thu được 2, 3, 4 cụm. Cho biết kết quả gom cụm tương ứng.
+
+#### e.	Hãy cho biết ảnh hưởng của việc scaling đối với các kết quả thu được? Ta có nên thực hiện scaling trước khi áp dụng các thuật toán? Hãy chứng minh câu trả lời của bạn.
+
+#### f.	So sánh Dunn index của các kết quả gom cụm khi áp dụng các thuật toán trên.
+
+#### g.	So sánh chỉ số Silhouette của các kết quả gom cụm khi áp dụng các thuật toán trên.
+
+
+### Câu hỏi 2
+Thực hiện thuật toán `kmeans` và `hclust` và `dbscan` cho tập dữ liệu `iris`.
+
+#### a.	Áp dụng `kmeans` với k = 3 trên tập dữ liệu `iris` sau khi loại bỏ nhãn (thuộc tính `Species`) khỏi tập dữ liệu.
+
+#### b.	Áp dụng `hclust` và cắt dendrogram với k = 3 trên tập dữ liệu `iris` sau khi loại bỏ nhãn (thuộc tính `Species`) khỏi tập dữ liệu.
+
+#### c. Áp dụng `dbscan` trên tập dữ liệu `iris` sau khi loại bỏ nhãn (thuộc tính Species) khỏi tập dữ liệu.
+Hãy thử nghiệm với các tham số `eps` và `minPts` khác nhau và chọn các tham số bạn cho là tốt nhất. Bạn có chiến lược nào để chọn các tham số này không?
+
+#### d.	Sử dụng thuộc tính `Species` làm nhãn cụm thật sự, hãy tính và so sánh Precison, Recall, và F-measure của kết quả gom cụm khi dùng `kmeans`, `hclust` và `dbscan`.
+
+Giả sử tập dữ liệu $D$ có $n$ phần tử $x_i$ được phân hoạch thành $p$ nhóm (ở đây ứng với số loài). Gọi $y_i \in \{1, 2, · · · , p\}$ là nhóm thật sự (ground-truth labels) cho mỗi phần tử. Ground-truth clustering được cho bởi $T = \{T_1, T_2, \cdots , T_p\}$, với $T_j$ bao gồm tất cả các phần tử có nhãn $j$, nghĩa là, $T_j = \{ x_i \in D | y_i = j \}$. Mặt khác, gọi $C = \{ C_1, C_2, \cdots, C_k \}$ là một kết quả gom cụm của $D$ thành $k$ cụm (cluster), qua một thuật toán gom cụm nào đó, và $\hat{y_i} \in \{ 1, 2, \cdots, k \}$ là cluster label cho $x_i$. Ta sẽ xem $T$ là một phân hoạch chuẩn (ground-truth partitioning) và mỗi $T_i$ là một phân vùng (partition). Ta gọi $C$ là một kết quả gom cụm (clustering), với mỗi $C_i$ là một cụm (cluster). Giả sử ground truth là biết trước, một thuật toán gom cụm sẽ thực hiện gom cụm trên $D$ với số cụm chính xác, tức với $k = p$. Tuy nhiên, để giữ tính tổng quát, ta cho phép $k \ne p$.
+
+
+\begin{table}
+    \caption{Contingency table of clustering results}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Clusters/Species & $T_1$ & $T_2$ & $\cdots$ & $T_p$ \\
+    \hline
+    $C_1$ & $n_{11}$ & $n_{12}$ & $\cdots$ & $n_{1p}$\\
+    \hline
+    $C_2$ & $n_{21}$ & $n_{22}$ & $\cdots$ & $n_{2p}$\\
+    \hline
+    $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$\\
+    \hline
+    $C_k$ & $n_{k1}$ & $n_{k2}$ & $\cdots$ & $n_{kp}$\\
+    \hline
+    \end{tabular}
+    \label{tab:contingency_table}
+\end{table}
+
+
+Các độ đo đánh giá kết quả gom cụm cố gắng nắm bắt mức độ mà các phần tử từ cùng một phân vùng (partition) xuất hiện trong cùng một cụm (cluster) và mức độ mà các phần tử từ các phân vùng (partition) khác nhau được nhóm thành các cụm (cluster) khác nhau. Những độ đo này dựa trên $k \times p$ contingency table $N$ (xem Table \ref{tab:contingency_table}) được thành lập dựa vào một kết quả gom cụm (clustering) $C$ và một phân hoạch chuẩn (ground-truth partitioning) $T$, được định nghĩa như sau:
+
+$$N(i, j) = n_{ij} = |C_i \cap T_j|$$
+
+- $Recall$ là tỷ lệ đối tượng cùng loài được gán cùng cụm. 
+
+- $Precision$ là tỷ lệ đối tượng được gán cùng cụm thuộc cùng loài. 
+
+- $F{\text -}measure$ là một độ đo cân bằng giữa $Precision$ và $Recall$ và được tính bằng trung bình điều hòa giữa $Precision$ và $Recall$. Đây là một độ đo thường được sử dụng để so sánh các thuật toán gom cụm với nhau.
+
+Các độ đo $Precision$, $Recall$, và $F{\text -}measure$ được tính từ Table \ref{tab:contingency_table} dùng các công thức sau:
+
+
+\begin{equation}
+precision = \frac{{\sum\limits_{i = 1}^k {\mathop {{\rm{max}}}\limits_{j \in \left\{ {1, \ldots p} \right\}} \{n_{ij}\} } }}{{\sum\limits_{i = 1}^k {\sum\limits_{j = 1}^p {n_{ij} } } }}
+\end{equation}
+
+\begin{equation}
+recall = \frac{{\sum\limits_{j = 1}^p {\mathop {{\rm{max}}}\limits_{i \in \left\{ {1, \ldots ,k} \right\}} \{n_{ij}\} } }}{{\sum\limits_{i = 1}^k {\sum\limits_{j = 1}^p {n_{ij} } } }}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+F{\text -}measure = \frac{{2 \cdot precision \cdot recall}}{{precision + recall}}
+\end{split}
+\end{equation}
+

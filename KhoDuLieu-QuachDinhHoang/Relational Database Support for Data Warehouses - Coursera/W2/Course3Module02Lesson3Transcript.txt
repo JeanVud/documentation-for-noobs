@@ -1,0 +1,88 @@
+Welcome to lesson three of module two,
+on the SQL subtotal operators. Let's continue our fun,
+with subtotal operators. I'm gonna start with
+an important usage question, that I want you to think
+about throughout this lesson. Is the SQL rollup operator more widely
+used, than the SQL cube operator? Lesson 3, continues the study of
+subtotal operators from Lesson 2. Lesson 3, covers characteristics
+of the roll up operator. Example, statements with the ROLLUP
+operator in the group by clause. Calculations about ROLLUP operations,
+and equivalence of union and ROLLUP operations. You have four learning
+objectives in this lesson. Your primary goal is to write select
+statements with the ROLLUP operator after this section. To demonstrate understanding
+of the ROLLUP operator, you should be able to write the equivalent
+select statements with the union operator, and perform simple calculations
+about ROLLUP results. As a more reflective goal, you should think about the importance
+of the ROLLUP operator. Let's begin with basic characteristics
+about the ROLLUP operator. The ROLLUP operator,
+generates a partial set of subtotals for a collection of columns. It is appropriate for hierarchically related columns, that can
+be part of a hierarchical dimension. The order dependent column specification,
+proceeds from the coarsest or broadest column, to the finest or
+narrowest column. You can understand the results
+of a ROLLUP operation, they comparison to
+the normal group by results. They only syntax difference in
+the abbreviated statements, is the ROLLUP operator
+in a group by clause. Complete select statements,
+appear later in the lesson. The ROLLUP result contains
+additional rows for sub totals. The first 6 rows are identical
+in both results. Dashes in the ROLLUP results,
+indicate sub total rows. For example, the seventh row shows
+the sum of sales as 325 in 2012, across all months. The last row with two dashes,
+shows the grand total of 675. This ROLLUP result,
+grouping on 2 columns, year and month, contains 2 sets of subtotal rows,
+subtotals for year and the grand total. This example, shows a complete select
+statement using the ROLLUP operator. This statement summarizes store sales,
+by year and month between 2012 and 2013 in the USA and
+Canada with three computed columns, sum, count and min of dollar sales. The ROLLUP operator generates
+partial subtotal rows, so it meets the problem requirement. The only new syntax in this statement,
+is the ROLLUP operator with a list of columns, time year and
+time month, after the group by clause. The order by clause provides a convenient
+order to view subtotal rows. I will now execute this statement,
+using the Oracle SQL developer. The result contains 11 rows,
+with five columns in each row. Blank value in a row, indicate a summary
+across all values of the column. For example, the fifth row, shows a sum
+of sales for 2012, across all months. The final row, with blank values for both grouping columns, shows the grand
+total for all years and months. To understand the ROLLUP operator, you should be able to perform
+some simple calculations, that the number of subtotal rows and
+the number of groups of subtotal rows. With 2 columns, a ROLLUP operation
+generates a maximum of N times, M rows in a normal group by result,
+plus N plus one subtotal rows. In which N, is the number of unique
+values in the outermost column. For 3 columns, the maximum number of sub
+total rows increases to N x M + N + 1. A ROLLUP operation of 2 columns, generates 2 sets of sub total rows for
+Col1 in the grand total. A ROLLUP operation of k columns
+generates k + 1 groups of subtotal rows, including a normal set of group by rows. The next part of the lesson,
+shows the of a ROLLUP operation, using union operations for
+each group of subtotal rows. The ROLLUP operator is not primitive,
+but still very useful. You can derive a ROLLUP operation with
+union operators, combining select blocks, with each select block generating
+a group of sub total rows. However, the ROLLUP operator
+is more convenient, than using more complex SQL
+statements with a union operator. Optimizing SQL compilers, can also
+generate more efficient plans, first, select statement with a ROLLUP operation, than a more complex select statement,
+with union operations. This example, shows a partial
+select statement for brevity. You can find the complete statement, in the document in the module
+2 area of the course website. The first select block, is a normal group
+by clause, without a cube operator. The next select block,
+generates subtotal roles for time year using null values for
+time month. Due to the union compatibility
+requirement, each select block must have the same number of columns with
+positional correspondents among columns. The final select block, generates
+the grand total with null values for both grouping columns,
+and no group by clause. I will now execute the complete statement,
+using the Oracle SQL developer. The result contains
+the same number of rows, as the ROLLUP example previously shown. To extend your understanding
+as a ROLLUP operator, you should work additional problems. You can work these problems
+with 3 grouping columns. The class website contains a solution for
+these problems. This was other practise problems for
+module two. This lesson, continue the presentation of
+SQL sub total operators form lesson 2. SQL sub total operators, including the ROLLUP operator,
+supports sub total computations. Similar subtotal computations
+in pivot tables. The ROLLUP operator,
+generates a partial set of subtotals for hierarchically related columns. Although the ROLLUP operator's not
+primitive, it is convenient to write and easier to analyze by optimizing compilers. In answer to the opening question, the ROLLUP operator seems more
+widely used than the cube operator. The ROLLUP operator, supports subtotals
+that are common for higher hierarchical dimensions, with navigation
+operators to drill down and ROLLUP. In addition, the ROLUP operator
+works well with more than 3 columns, unlike the cube operator. In the next lesson, you will learn about
+another sub-total operator that provides a precise control of sub-totals, unlike
+the predefined choices in the cube and ROLLUP operators.

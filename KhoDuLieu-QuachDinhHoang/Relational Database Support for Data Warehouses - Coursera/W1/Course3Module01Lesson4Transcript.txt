@@ -1,0 +1,109 @@
+Welcome to Lesson 1 of Module 4 on DBMS
+extensions and example data warehouses. I'm gonna start with a background question
+about the inventory data warehouse that you will use in assignments
+in Modules 2, 3, and 4. What is the origin of the inventory
+data warehouse design? Lesson 4 reviews basic
+concepts in Course 2. Lesson 4 presents table design or schema
+patterns that are typically used for data warehouse designs. You will review three schema patterns for
+data cubes from Course 2, and see these patterns to the data
+warehouses used in practice problems and graded assignments, in later modules. You have three learning
+objectives in this lesson. You should review schema patterns for
+data warehouses as preparation for query formulation skills
+covered in Modules 2, 3, and 4. To prepare you for
+the ungraded exercises and graded assignments in these modules,
+you should study the table designs for the store sales data warehouse and
+inventory data warehouse. The traditional schema pattern for
+data warehouse is known as a star schema, consisting of one fact
+entity type per table, surrounded by the dimension entity types
+or tables in one-to-many relationships. The star schema represents
+a single data cube. This ERD consists of four
+dimension entity types. Item, Customer, Store, and TimeDim, along with one transaction fact
+entity type called, Sales. When converted to a table design,
+the Sales table's foreign keys to each dimension table, Item,
+Customer, Store, and TimeDim. In some designs, the fact entity type
+depends on the related dimension entity type's first primary key. Since fact tables can have many
+relationships, it is generally preferred to have an artificial identifier rather
+than a large combined primary key. In this example, SalesNo is an artificial
+identifier for the sales entity type. The previous star schema only represents
+the data cube for sales tracking. Additional star schemas
+may be required for data cubes involving other types of sales,
+inventory, and shipping. For related business processes that share
+some of the dimensions, a star schema can be extended into a constellation schema
+with multiple fact entity types. This constellation ERD diagram
+contains two fact entity types, Sales and Inventory,
+along with five dimension and two types,
+shared among the fact entity types. The constellation pattern is important, because it shows shared dimensions
+to represent multiple data cubes. A data warehouse for medium size
+business may have many data cubes. The previous constellation schema can be
+extended for additional dimensions and facts, however the constellation schema
+can be too difficult to display on a page. This diagram provides an overview of
+a more complex schema diagram for a retail firm with both store sales and
+online subscription sales. Lead, Package, and
+Format are new dimensions. For a complex constellation diagram, a matrix provides a convenient
+mapping of dimensions and facts. This matrix shows a mapping of
+the simplified schema diagram shown previously. Item and
+TimeDim are shared in all three schemas. Most dimensions appear in two schemas. Shared dimensions are conformed or
+standardized across schemas. Supplier and
+Store are used in only one schema each. Even a matrix becomes unwieldy for
+a modern size data warehouse. A modern size data warehouse
+can have 10 facts and 30 plus dimensions, making the matrix
+too large to show on a standard page. The matrix can be partitioned
+to display on several pages or zoomed from a high level with
+dimensions and facts grouped. A snowflake schema has multiple levels of
+a dimension entity types related to one or more fact entity types. In this ERD, the store dimension has been
+split into two entity types, Store and Division, along with a one-to-many
+relationship from Division to Store. You should consider the snowflake
+schema instead of the star schema for small dimension tables that
+are not fully normalized. The store table in the previously shown
+star schema is not fully normalized, because Division ID, the term is
+Division Name and Division Manager. Since the store table is relatively small,
+query performance will not suffer much with the need to join the division
+table in a snowflake design. For large dimension tables, such as
+customer, however, query performance may suffer with extra join operations
+required in a snowflake design. If you completed Course 2, you should be familiar with
+the store sales data warehouse. You used this data warehouse
+in the guided tutorial for pentaho data integration,
+presented in Module 5. Each table has the SS
+prefix to avoid conflicts with other table names in Oracle schema. The store sales data warehouse is used for the practice problems in Modules 2,
+3, and 4. The store sales data warehouse corresponds
+to the snowflake schema previously shown. This Oracle relational database diagram has foreign keys instead
+of named relationships. All foreign keys are required, matching
+the mandatory relationships in the ERD. The inventory data warehouse
+supports business intelligence about inventory cycles. Inventory bought, sold, consumed, and produced, is the heart of any
+manufacturing or distribution company. Inventory transactions are frequent and
+common. The volume and significance of inventory
+transactions makes them important in a data warehouse design. The work order, sales,
+and purchase life cycles, affect the perpetual inventory
+balance as shown in this diagram. In addition, inventory transactions
+including adjustments, transfers, issues, and reclassifications,
+affect the perpetual inventory balance. You will use the inventory data warehouse
+for assignments in Modules 2, 3, and 4. If you completed the assignment
+in Module 5 or Course 2, you should be already familiar
+with the inventory data warehouse. The fact table, Inventory Fact, contains
+several measures along with relationships to associate dimension tables. Several dimension tables are directly
+related to the Inventory Fact table. Other dimension tables
+such as ITEM CAT CODE1 are indirectly related to the inventory
+fact table in a snowflake design. The snowflake schema
+design provides a template that can be customized to
+individual organizations. Dimension tables such as ADD CAT CODE1, allow an organization to customize
+a design to specific requirements. Data generation procedures create
+reasonable size tables for more realistic usage of the inventory
+data warehouse in assignments. Before starting on assignments in Module's
+2, 3, and 4, you need to create and populate the inventory
+data warehouse tables. The course website contains files with
+a create table and search statements for each table, so you do not need to
+use the data generation procedures. Lesson 4 reviewed your background about
+schema patterns from Course 2 and presented data warehouses used in
+practice problems and graded assignments. You reviewed three schema patterns. The star schema, constellation schema and
+snowflake schema, and learned about representations for
+large schemas. This lesson also presented table designs
+through the store sales data warehouse using practice problems, and the inventory
+data warehouse using graded assignments. You will use both data warehouses
+in Modules 2, 3, and 4. In answer to the opening question, the
+inventory data warehouse was created by a former database student for
+an independent study project. The former student had a strong background
+about inventory transaction cycles through his work with a one world product of the
+former JDEdwards, now a part of Oracle. The Oracle product,
+known as JDEdwards EnterpriseOne, contains more than 80 application modules
+to support industry solutions for manufacturing, packaged goods,
+and project services.
