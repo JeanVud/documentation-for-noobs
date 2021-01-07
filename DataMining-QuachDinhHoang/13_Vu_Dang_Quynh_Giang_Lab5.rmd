@@ -1,12 +1,12 @@
 ---
 title: "Lab 5 - Clustering Assignments"
-author: "Quách Đình Hoàng"
-date: "2020/11/27"
+author: "Vũ Đặng Quỳnh Giang 17133015"
+date: "2020/12/20"
 output:
-  html_document:
-    df_print: paged
   pdf_document:
     latex_engine: xelatex
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -17,32 +17,152 @@ knitr::opts_chunk$set(echo = TRUE)
 Ở phần hướng dẫn, ta thực hiện lại các thuật toán `kmeans` và `hclust` cho tập dữ liệu `USArrests`. Hãy thực hiện lại các bước đã mô tả ở trên nhưng áp dụng hàm `scale()` trên dữ liệu trước áp dụng thuật toán các `kmeans`, `hclust`
 
 #### a.	Áp dụng hàm `scale()` trên dữ liệu trước khi thực hiện lại các bước ở mục 2 trong phần hướng dẫn.
+```{r, echo=TRUE}
+USA_scale <- scale(USArrests)
+library(NbClust)
+nb <- NbClust(USA_scale, diss=NULL, distance = "euclidean", min.nc=2, max.nc=10, method = "kmeans")
+```
 
+```{r, echo=TRUE}
+set.seed(17133015)
+res <- kmeans(USA_scale, 2, nstart = 20)
+print(res)
+```
+```{r, echo=TRUE}
+USArrestsWithCluster <- cbind(USA_scale, cluster = res$cluster)
+USArrestsWithCluster
+```
 #### b.	Không áp dụng hàm `scale()` nhưng áp dụng PCA trên dữ liệu, sau đó thực hiện k-means với số cụm là 4 trên trên 2 thành phần chính đầu tiên và minh họa kết quả dùng hàm `plot`. Bình luận kết quả thu được.
-
+```{r, echo=TRUE}
+USA_PCA <- princomp(USArrests)
+summary(USA_PCA)
+plot(USA_PCA$scores[,1:2], col=res$cluster, main="Clustering results (with PCA)")
+```
+```{r, echo=TRUE}
+set.seed(17133015)
+res <- kmeans(USArrests, 4, nstart = 20)
+print(res)
+```
 #### c.	Áp dụng hàm `scale()` trên dữ liệu trước khi thực hiện gom cụm phân cấp dùng các phương pháp `single`, `complete`, `average` và `median` trên tập dữ liệu `USArrests`.
-
+```{r, echo=TRUE}
+hc.single <- hclust(dist(USA_scale), "single")
+plot(hc.single, main="Single", xlab="", sub ="", cex =.9)
+```
+```{r, echo=TRUE}
+hc.complete <- hclust(dist(USA_scale), "complete")
+plot(hc.complete, main="Complete", xlab="", sub ="", cex =.9)
+```
+```{r, echo=TRUE}
+hc.average <- hclust(dist(USA_scale), "average")
+plot(hc.average, main="Average", xlab="", sub ="", cex =.9)
+```
+```{r, echo=TRUE}
+hc.median <- hclust(dist(USA_scale), "median")
+plot(hc.median, main="Median", xlab="", sub ="", cex =.9)
+```
 #### d.	Cắt dendrogram để thu được 2, 3, 4 cụm. Cho biết kết quả gom cụm tương ứng.
-
+```{r, echo=TRUE}
+cutree(hc.single, 2)
+```
+```{r, echo=TRUE}
+cutree(hc.single, 3)
+```
+```{r, echo=TRUE}
+cutree(hc.single, 4)
+```
+```{r, echo=TRUE}
+cutree(hc.complete, 2)
+```
+```{r, echo=TRUE}
+cutree(hc.complete, 3)
+```
+```{r, echo=TRUE}
+cutree(hc.complete, 4)
+```
+```{r, echo=TRUE}
+cutree(hc.average, 2)
+```
+```{r, echo=TRUE}
+cutree(hc.average, 3)
+```
+```{r, echo=TRUE}
+cutree(hc.average, 4)
+```
+```{r, echo=TRUE}
+cutree(hc.median, 2)
+```
+```{r, echo=TRUE}
+cutree(hc.median, 3)
+```
+```{r, echo=TRUE}
+cutree(hc.median, 4)
+```
 #### e.	Hãy cho biết ảnh hưởng của việc scaling đối với các kết quả thu được? Ta có nên thực hiện scaling trước khi áp dụng các thuật toán? Hãy chứng minh câu trả lời của bạn.
 
 #### f.	So sánh Dunn index của các kết quả gom cụm khi áp dụng các thuật toán trên.
-
+```{r, echo=TRUE}
+library(clValid)
+d <- dist(USA_scale, method="euclidean")
+hc.single <- hclust(d, "single")
+hc.single.cluster <- cutree(hc.single, k = 2)
+dunn(d, hc.single.cluster)
+```
+```{r, echo=TRUE}
+dunn(d, res$cluster)
+```
 #### g.	So sánh chỉ số Silhouette của các kết quả gom cụm khi áp dụng các thuật toán trên.
-
-
+```{r, echo=TRUE}
+d <- dist(USA_scale, method="euclidean")
+hc.single <- hclust(d, "centroid")
+hc.single.cluster <- cutree(hc.single, k = 2)
+cl1 <- silhouette(hc.single.cluster, d)
+mean(cl1[, 3])
+```
+```{r, echo=TRUE}
+cl2 <- silhouette(res$cluster, d)
+mean(cl2[, 3])
+```
 ### Câu hỏi 2
 Thực hiện thuật toán `kmeans` và `hclust` và `dbscan` cho tập dữ liệu `iris`.
 
 #### a.	Áp dụng `kmeans` với k = 3 trên tập dữ liệu `iris` sau khi loại bỏ nhãn (thuộc tính `Species`) khỏi tập dữ liệu.
-
+```{r, echo=TRUE}
+irisN = iris[iris$Species=="setosa",1:4]
+set.seed(17133015)
+iris.cluster <- kmeans(irisN, center = 3, nstart = 20)
+print(iris.cluster)
+```
 #### b.	Áp dụng `hclust` và cắt dendrogram với k = 3 trên tập dữ liệu `iris` sau khi loại bỏ nhãn (thuộc tính `Species`) khỏi tập dữ liệu.
-
+```{r, echo=TRUE}
+library(dendextend)
+hc.centroid <- hclust(dist(irisN), "centroid")
+plot(hc.centroid, main="Centroid Linkage", xlab="", sub ="", cex =.9)
+```
+```{r, echo=TRUE}
+den <- as.dendrogram(hclust(dist(irisN[1:3,])))
+labels_colors(den) <- 1:3
+labels_colors(den)
+```
+```{r, echo=TRUE}
+plot(den, main = "dendrogram")
+```
 #### c. Áp dụng `dbscan` trên tập dữ liệu `iris` sau khi loại bỏ nhãn (thuộc tính Species) khỏi tập dữ liệu.
 Hãy thử nghiệm với các tham số `eps` và `minPts` khác nhau và chọn các tham số bạn cho là tốt nhất. Bạn có chiến lược nào để chọn các tham số này không?
-
+```{r, echo=TRUE}
+plot(irisN, pch=20)
+```
+```{r, echo=TRUE}
+library(dbscan)
+scan <- dbscan(irisN, eps = 0.5, minPts = 8) 
+scan
+```
+```{r, echo=TRUE}
+plot(irisN, col = scan$cluster + 1L, pch = scan$cluster + 1L)
+```
 #### d.	Sử dụng thuộc tính `Species` làm nhãn cụm thật sự, hãy tính và so sánh Precison, Recall, và F-measure của kết quả gom cụm khi dùng `kmeans`, `hclust` và `dbscan`.
-
+```{r, echo=TRUE}
+cutree(hc.median, 4)
+```
 Giả sử tập dữ liệu $D$ có $n$ phần tử $x_i$ được phân hoạch thành $p$ nhóm (ở đây ứng với số loài). Gọi $y_i \in \{1, 2, · · · , p\}$ là nhóm thật sự (ground-truth labels) cho mỗi phần tử. Ground-truth clustering được cho bởi $T = \{T_1, T_2, \cdots , T_p\}$, với $T_j$ bao gồm tất cả các phần tử có nhãn $j$, nghĩa là, $T_j = \{ x_i \in D | y_i = j \}$. Mặt khác, gọi $C = \{ C_1, C_2, \cdots, C_k \}$ là một kết quả gom cụm của $D$ thành $k$ cụm (cluster), qua một thuật toán gom cụm nào đó, và $\hat{y_i} \in \{ 1, 2, \cdots, k \}$ là cluster label cho $x_i$. Ta sẽ xem $T$ là một phân hoạch chuẩn (ground-truth partitioning) và mỗi $T_i$ là một phân vùng (partition). Ta gọi $C$ là một kết quả gom cụm (clustering), với mỗi $C_i$ là một cụm (cluster). Giả sử ground truth là biết trước, một thuật toán gom cụm sẽ thực hiện gom cụm trên $D$ với số cụm chính xác, tức với $k = p$. Tuy nhiên, để giữ tính tổng quát, ta cho phép $k \ne p$.
 
 
