@@ -2,7 +2,9 @@
 title: "Analysis Template"
 author: "Your name"
 date: "dd/mm/yyyy"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ## SOURCE: 
@@ -13,7 +15,7 @@ https://www.kaggle.com/jennifercrockett/marketing-analytics-eda-task-final/data#
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r load-packages, message=FALSE}
+```{r load-packages, message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
 
@@ -27,28 +29,26 @@ data <- read.csv("D:/8570w/documentation-for-noobs/RProgrammingDataAnalysis-Quac
 
 str(data)
 
-head(data, 10)
+#head(data, 10)
 ```
 
-``` {r}
+```{r warning=FALSE}
 
 library(tidyverse)
 library(Rfast)
 
 cols <- grep("Purchases", colnames(data)) # source: https://stackoverflow.com/a/62698637/8709178
 
-cols
-
-## sum rows 4 to 5
+## sum rows with 'Purchases" in name
 data$Total <- rowsums(as.matrix(data[,cols]))
-
-data$Total
 ```
 
 ```{r}
 countryPurchases <- aggregate(data$Total, by=list(Country=data$Country), FUN=sum)
 
 countryPurchases <- setNames(aggregate(data$Total, by=list(Country=data$Country), FUN=sum), c("Country", "Total"))
+
+countryPurchases
 ```
 
 
