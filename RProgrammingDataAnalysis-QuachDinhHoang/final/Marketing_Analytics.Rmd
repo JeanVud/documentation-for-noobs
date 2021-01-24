@@ -5,6 +5,10 @@ date: "dd/mm/yyyy"
 output: html_document
 ---
 
+## SOURCE: 
+
+https://www.kaggle.com/jennifercrockett/marketing-analytics-eda-task-final/data#Section-02:-Statistical-Analysis
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
