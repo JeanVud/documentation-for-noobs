@@ -2,9 +2,13 @@
 title: "Lab 5 - Clustering Assignments"
 author: "Quách Đình Hoàng"
 date: "2020/11/27"
+<<<<<<< HEAD
 output:
   html_document:
     df_print: paged
+=======
+output: 
+>>>>>>> 2bcc27c9906d45ffd89f78a3c64bbb60e2e25807
   pdf_document:
     latex_engine: xelatex
 ---
