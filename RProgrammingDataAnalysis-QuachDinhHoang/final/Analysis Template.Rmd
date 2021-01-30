@@ -1,0 +1,244 @@
+---
+title: "Analysis Template"
+author: "Your name"
+date: "dd/mm/yyyy"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+```
+
+## Giới thiệu
+Giới thiệu về cách dữ liệu được thu thập. 
+
+
+## Dữ liệu
+```{r, eval=FALSE}
+data <- read.csv("./data/filename.csv")
+str(data)
+head(data, 10)
+```
+
+## Các biến
+Mô tả tên các biến và ý nghĩa.
+
+- Var 1: ...
+
+- Var 2: ...
+
+- ...
+
+- Var k: ...
+
+
+## Câu hỏi
+Mô tả các câu hỏi mà nhóm sẽ dùng tập dữ liệu để trả lời.
+
+Q1. ...
+
+Q2. ...
+
+Q3. ...
+
+
+## Hiểu vấn đề
+Trước khi bắt đầu xem xét các câu hỏi cụ thể, chúng ta sẽ xem xét một số đặc điểm chung của vấn đề, chẳng hạn như cấu trúc dữ liệu, cách dữ liệu được thu thập và thiết kế nghiên cứu tổng thể.
+
+### Xem lướt qua dữ liệu
+- Chúng ta sẽ bắt đầu bằng cách trả lời một số câu hỏi về dữ liệu. Trả lời một số câu hỏi đơn giản trên dữ liệu để hiểu hơn về dữ liệu. 
+
+### Thiết kế nghiên cứu 
+Bước tiếp mô tả cách lấy mẫu và thiết kế nghiên cứu, những vấn đề này có ý nghĩa về tính tổng quát hóa của kết quả và loại kết luận bạn có thể rút ra từ chúng.
+
+#### Xác định loại nghiên cứu
+- Nghiên cứu này là một nghiên cứu quan sát (observational study) hay thí nghiệm (experiment)?
+ 
+
+#### Xác định cách lấy mẫu
+- Mô tả ngắn gọn những gì mà phát biểu bài toán cho chúng ta biết về cách các cá nhân trong tập dữ liệu được chọn để đưa vào mẫu (simple random sampling, cluster sampling, stratified sampling, multistage sampling).
+
+
+## Suy ngẫm về câu hỏi
+- Trong bước đầu tiên này, chúng ta nghĩ về câu hỏi và sử dụng trực giác và/hoặc kinh nghiệm của mình để thử và dự đoán kết quả sẽ hiển thị. Sau đó, chúng ta sẽ so sánh những gì chúng ta nghĩ ban đầu với những gì chúng ta thực sự tìm thấy khi chúng ta phân tích dữ liệu.
+
+
+- Trước khi phân tích dữ liệu và khám phá các câu hỏi, hãy cố gắng dự đoán những gì dữ liệu sẽ thể hiện (sử dụng kinh nghiệm và trực giác của riêng bạn).
+
+
+## Phân tích dữ liệu
+- Trong bước này, chúng ta chọn và tiến hành các phân tích cần thiết để giải quyết câu hỏi hiện tại.
+
+### Xác định các biến có liên quan
+- (Các) biến nào trong số những biến trong tập dữ liệu có liên quan đặc biệt đến câu hỏi hiện tại? (Các) biến này thuộc loại nào (quantitative hay categorical)?
+
+
+### Phân tích thăm dò (Exploratory Analysis)
+- Bây giờ chúng ta đã xác định và phân loại (các) biến có liên quan, chúng ta sử dụng phương pháp phân tích dữ liệu thăm dò để giúp chúng ta tóm tắt các đặc điểm quan trọng của dữ liệu.
+
+#### Xác định các biểu đồ và tóm tắt số phù hợp
+- Trong các biểu đồ sau, biểu đồ nào là phù hợp cho (các) biến này? 
+
+  - Side-by-side boxplots
+  
+  - Scatterplot
+  
+  - Two-way Table
+  
+  - Pie chart 
+
+  - Histogram
+
+
+- (Các) tóm tắt số có ý nghĩa để bổ sung cho biểu đồ trên là gì? 
+
+  - Five-numbers summary
+  
+  - Phần trăm theo nhóm
+  
+  - Hệ số tương quan
+  
+  - Phần trăm theo điều kiện
+
+
+- Sử dụng biều đồ và tóm tắt số này, bạn sẽ làm được điều nào sau đây:
+
+  - Mô tả các đặc trưng của một phân bố cho biến số
+  
+  - Mô tả các đặc trưng của một phân bố cho biến phân loại
+  
+  - Mô tả mối quan hệ của hai biến số
+  
+  - Mô tả mối quan hệ của hai biến phân loại
+  
+  - Mô tả phân bố của một biến số theo các nhóm của một biến phân loại
+
+
+#### Thực hiện phân tích thăm dò
+```{r, eval=FALSE}
+# Viết code của bạn ở đây để thực hiện phân tích thăm dò
+
+```
+
+**Chú ý**: bạn cần xử lý thêm nếu tập dữ liệu có các giá trị bị thiếu ("NA", "N/A", "null", "*", "", ...). Xem thêm ở [removing-blanks-nas](https://community.rstudio.com/t/removing-blanks-nas/27887/3)
+
+
+
+#### Báo cáo kết quả
+- Sử dụng biểu đồ và tóm tắt số để nhận xét các đặc điểm của phân bố (các) biến đang quan tâm.
+
+
+
+### Suy diễn
+- Chúng ta đã biết được các đặc trưng quan trọng của dữ liệu sử dụng phân tích dữ liệu thăm dò. Bây giờ chúng ta chuyển sang đánh giá độ mạnh của bằng chứng do dữ liệu cung cấp bằng cách sử dụng các kiểm định thống kê.
+
+#### Xác định loại suy diễn
+- Suy diễn thống kê cho câu hỏi hiện tại thuộc loại nào sau đây?
+
+  - Ước lượng population mean
+  
+  - Ước lượng population proportion
+  
+  - So sánh hai population mean
+  
+  - So sánh hai population proportion
+  
+  - So sánh nhiều hơn population mean
+
+  - Xác định mối quan hệ giữa hai biến phân loại
+  
+  - Xác định mối quan hệ giữa hai biến số
+
+
+- Kiểm định thống kê phù hợp cho câu hỏi hiện tại?
+
+  - one sample z-test for the mean ($\mu$)
+  
+  - one sample t-test for the mean ($\mu$)
+  
+  - one sample z-test for the proportion ($p$)
+  
+  - two sample t-test for two means ($\mu_1, \mu_2$)
+  
+  - two sample z-test for two proportions ($p_1, p_2$)
+  
+  - paired t-test for the mean difference ($\mu_d$)
+  
+  - chi-squared test for independence 
+  
+  - ANOVA F-test
+  
+  - regression t-test for the slope
+
+
+- Xác định các giả thuyết
+
+  - Null hypothesis: $H_0:$ ???
+
+  - Alternative hypothesis: $H_A:$ ???
+
+
+
+#### Thực hiện phân tích
+- **Tính test statistic**
+```{r, eval=FALSE}
+# Viết code của bạn ở đây để tính test statistics (giá trị z, t, chi-square, ...) 
+
+```
+
+- **Tính p-value**
+```{r, eval=FALSE}
+# Viết code của bạn ở đây để tính p-value, confidence interval
+
+```
+
+- **Kiểm tra lại bằng các hàm kiểm định trong R**
+
+  - Một số hàm kiểm định phổ biến trong R là `t.test()`, `prop.test`, `aov()`, `chisq.test()`, ...
+
+```{r, eval=FALSE}
+# Viết code của bạn ở đây để thực hiện các kiểm định
+
+```
+
+
+#### Báo cáo kết quả
+- Cho biết $p$-value của kiểm định? 
+
+- Từ $p$-value ta sẽ quyết định bác bỏ hay chấp nhận $H_0$?
+
+## Kết luận
+- Trong bước này, chúng ta giải thích kết quả nhận được từ các phân tích trong bối cảnh của câu hỏi hiện tại.
+
+- Kết quả bạn nhận được cho thấy điều gì?
+
+  - Phân tích thăm dò cho thấy điều gì?
+  
+  - Kiểm định thống kê có cung cấp bằng chứng mạnh mẽ về những điều bạn đã quan sát thấy ở phân tích thăm dò hay không?
+
+
+- Dữ liệu có cung cấp bằng chứng về mối quan hệ nhân quả hay không? Giải thích câu trả lời của bạn.
+
+- Liên hệ các nhận xét bạn đã đưa ra trước khi phân tích dữ liệu bằng cách nhận xét về cả hai điều sau:
+
+  - Kỳ vọng của bạn khác (hoặc không khác) như thế nào so với kết quả thực tế?
+  
+  - Nếu nó có liên quan hoặc có ý nghĩa trong ngữ cảnh, hãy nghĩ ra cách mà những kết quả này có thể được sử dụng trong thực tế.
+
+
+
+## Tổng kết
+- Trong phần cuối cùng của quá trình phân tích dữ liệu, chúng ta tóm tắt công việc của mình và xem xét các hàm ý và hạn chế có thể có trong kết luận của chúng ta.
+
+- Bạn đã giải quyết tất cả các câu hỏi riêng lẻ, hãy viết một báo cáo tóm tắt ngắn về những phát hiện chính mà bạn đã khám phá bằng cách sử dụng dữ liệu.
+
+- Thảo luận về điểm mạnh và điểm yếu trong kết luận của bạn. Đặc biệt, hãy giải quyết từng vấn đề sau:
+
+  - Thiết kế này có cho phép bạn đưa ra kết luận nhân quả không? Tại sao hoặc tại sao không?
+  
+  - Cách lấy mẫu trong nghiên cứu có cho phép bạn tổng quát hóa kết quả đối với quần thể như thế nào?
+

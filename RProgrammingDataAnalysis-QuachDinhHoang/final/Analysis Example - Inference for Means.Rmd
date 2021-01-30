@@ -1,0 +1,366 @@
+---
+title: "Analysis Example - Inference for Means"
+date: "7/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+```
+
+## Giới thiệu
+Vào cuối học kỳ, một giảng viên môn "Nhập môn thống kê" muốn hiểu rõ hơn về kết quả học tập của sinh viên bằng cách phân tích dữ liệu về điểm của môn học. Giảng viên đã dạy 3 lớp khác nhau. Vì mỗi lớp, tùy thuộc vào thời gian giảng dạy, thu hút các loại sinh viên khác nhau (về chuyên ngành, độ tuổi, toàn thời gian / bán thời gian, ...) nên giảng viên đó đã chọn một mẫu ngẫu nhiên gồm 35 sinh viên từ mỗi lớp để đảm bảo chúng là đại diện thích hợp.
+
+
+## Dữ liệu
+```{r, eval=FALSE}
+data <- read.csv("./data/gradebook.csv")
+str(data)
+head(data, 10)
+```
+
+## Các biến
+- Midterm1: Điểm giữa kỳ lần 1 của sinh viên (thang 0-100)
+
+- Midterm2: Điểm giữa kỳ lần 2 của sinh viên (thang 0-100)
+
+- Diff.Mid: midterm1 - midterm2
+
+- Extra credit: Sinh viên có làm bài tập cộng điểm hay không? (0=NO, 1=YES)
+
+- Final: Điểm cuối kỳ của sinh viên (thang 0-100)
+
+- Class: Cấp độ của sinh viên (sinh viên năm 1, 2, 3, 4)
+
+
+## Câu hỏi
+- Q1. Dữ liệu có cung cấp bằng chứng cho thấy những sinh viên không làm bài tập cộng điểm (nhóm 1) có kết quả cuối kỳ kém hơn đáng kể so với những sinh viên đã làm (nhóm 2) không?
+
+- Q2. Nội dung được dạy bởi bài giữa kì thứ hai khó hơn nội dung được dạy bởi bài giữa kì đầu tiên. Điều này có được phản ánh qua điểm số của học sinh không?
+
+- Q3. Dữ liệu có cung cấp bằng chứng về "hiệu ứng cấp độ" đáng kể đối với kết quả học tập cuối cùng không?
+
+
+## Hiểu vấn đề
+- Trước khi bắt đầu xem xét các câu hỏi cụ thể, chúng ta sẽ xem xét một số đặc điểm chung của vấn đề, chẳng hạn như cấu trúc dữ liệu, cách dữ liệu được thu thập và thiết kế nghiên cứu tổng thể.
+
+### Xem lướt qua dữ liệu
+- Chúng ta sẽ bắt đầu bằng cách trả lời một số câu hỏi về dữ liệu.
+
+- Trong số 10 sinh viên đầu tiên trong tập dữ liệu, có bao nhiêu sinh viên có làm bài tập cộng điểm?
+
+- Trả lời: 6
+
+
+- Trong số 10 sinh viên đầu tiên trong tập dữ liệu, có bao nhiêu sinh viên có `Midterm1` lớn hơn `Midterm2`?
+
+- Trả lời: 5
+
+
+- Sinh viên năm ba đầu tiên trong tập dữ liệu không làm bài tập cộng điểm có điểm cuối kỳ bao nhiêu?
+
+- Trả lời: 82
+
+
+
+### Thiết kế nghiên cứu 
+- Bước tiếp theo để hiểu vấn đề là giải quyết các vấn đề về lấy mẫu và thiết kế nghiên cứu, những vấn đề này có ý nghĩa về tính tổng quát hóa của kết quả và loại kết luận bạn có thể rút ra từ chúng.
+
+#### Xác định loại nghiên cứu
+- Nghiên cứu này là một nghiên cứu quan sát (observational study) hay thí nghiệm (experiment)?
+
+- Trả lời: observational study
+
+#### Xác định cách lấy mẫu
+- Mô tả ngắn gọn những gì mà phát biểu bài toán cho chúng ta biết về cách các cá nhân trong tập dữ liệu được chọn để đưa vào mẫu (simple random sampling, cluster sampling, stratified sampling, multistage sampling).
+
+- Trả lời: stratified sampling
+
+
+
+## Suy ngẫm về câu hỏi
+- Trong bước đầu tiên này, chúng ta nghĩ về câu hỏi và sử dụng trực giác và/hoặc kinh nghiệm của mình để thử và dự đoán kết quả sẽ hiển thị. Sau đó, chúng ta sẽ so sánh những gì chúng ta nghĩ ban đầu với những gì chúng ta thực sự tìm thấy khi chúng ta phân tích dữ liệu.
+
+- Phần hướng dẫn bên dưới gợi ý các vấn đề bạn cần trả lời liên quan đến câu hỏi số 1 (Q1).
+
+- Trước khi phân tích dữ liệu và khám phá xem kết quả điểm cuối kỳ có liên quan như thế nào đến việc sinh viên có làm bài tập cộng điểm hay không, hãy cố gắng dự đoán những gì dữ liệu sẽ hiển thị (sử dụng kinh nghiệm và trực giác của riêng bạn).
+
+- Trả lời: Sẽ là hợp lý khi kỳ vọng rằng những sinh viên có làm bài tập cộng điểm sẽ làm tốt hơn trong bài cuối kỳ so với những sinh viên không làm bài tập cộng điểm.
+
+
+## Phân tích dữ liệu
+- Trong bước này, chúng ta chọn và tiến hành các phân tích cần thiết để giải quyết câu hỏi hiện tại.
+
+### Xác định các biến có liên quan
+- (Các) biến nào trong số những biến trong tập dữ liệu (Midterm1, Midterm2, Diff.Mid, Extra credit, Final, Class) có liên quan đặc biệt đến câu hỏi hiện tại? (Các) biến này thuộc loại nào (quantitative hay categorical)?
+
+- Trả lời: 
+	
+	- Biến giải thích: Extra credit, loại categorical
+
+	- Biến phản hồi: Final, loại quantitative
+
+
+### Phân tích thăm dò (Exploratory Analysis)
+- Bây giờ chúng ta đã xác định và phân loại (các) biến có liên quan, chúng ta sử dụng phương pháp phân tích dữ liệu thăm dò để giúp chúng ta tóm tắt các đặc điểm quan trọng của dữ liệu.
+
+#### Xác định các biểu đồ và tóm tắt số phù hợp
+- Trong các biểu đồ sau, biểu đồ nào là phù hợp cho (các) biến này? 
+
+	- Side-by-side boxplots
+  
+	- Scatterplot
+  
+	- Two-way Table
+  
+	- Pie chart 
+
+	- Histogram
+
+- Trả lời: Side-by-side boxplots
+
+- (Các) tóm tắt số có ý nghĩa để bổ sung cho biểu đồ trên là gì? 
+
+  - Five-numbers summary
+  
+  - Phần trăm theo nhóm
+  
+  - Hệ số tương quan
+  
+  - Phần trăm theo điều kiện
+
+- Trả lời: Five-numbers summary
+
+- Sử dụng biều đồ và tóm tắt số này, bạn sẽ làm được điều nào sau đây:
+
+  - Mô tả các đặc trưng của một phân bố cho biến số
+  
+  - Mô tả các đặc trưng của một phân bố cho biến phân loại
+  
+  - Mô tả mối quan hệ của hai biến số
+  
+  - Mô tả mối quan hệ của hai biến phân loại
+  
+  - Mô tả phân bố của một biến số theo các nhóm của một biến phân loại
+
+- Trả lời: Mô tả phân bố của một biến số theo các nhóm của một biến phân loại
+
+
+#### Thực hiện phân tích thăm dò
+```{r, eval=FALSE}
+# x là explanatory variable
+# y là response variable
+
+# plot
+plot(factor(data$x), data$y)
+
+# summary statistics
+tapply(data$y, factor(data$x), summary)
+```
+
+**Chú ý**: bạn cần xử lý thêm nếu tập dữ liệu có các giá trị bị thiếu ("NA", "N/A", "null", "*", "", ...). Xem thêm ở [removing-blanks-nas](https://community.rstudio.com/t/removing-blanks-nas/27887/3)
+
+
+
+#### Báo cáo kết quả
+- Sử dụng biểu đồ và tóm tắt số để mô tả các đặc điểm của phân bố (các) biến đang quan tâm.
+
+- Trả lời: 
+
+```{r, echo=FALSE, eval=FALSE}
+# x là explanatory variable
+# y là response variable
+
+# plot
+plot(factor(data$Extra_Credit), data$Final)
+
+# summary statistics
+tapply(data$Final, factor(data$Extra_Credit), summary)
+```
+  
+  - Center: Trung vị của điểm cuối kỳ của các sinh viên không làm bài tập cộng điểm thấp hơn đáng kể so với trung vị của điểm cuối kỳ của các sinh viên có làm(74.5 so với 82). 
+  
+  - Spread: Điểm cuối kỳ của hai nhóm sinh viên có range xấp xỉ nhau (20 so với 19), tuy nhiên IQR của nhóm 0 (không làm) thấp hơn nhóm 1 (có làm), (6 so với 10). 
+  
+  - Outliers: Cả 2 nhóm đều không có giá trị ngoại biên.
+
+
+### Suy diễn
+- Chúng ta đã biết được các đặc trưng quan trọng của dữ liệu sử dụng phân tích dữ liệu thăm dò. Bây giờ chúng ta chuyển sang đánh giá độ mạnh của bằng chứng do dữ liệu cung cấp bằng cách sử dụng các kiểm định thống kê.
+
+#### Xác định loại suy diễn
+- Suy diễn thống kê cho câu hỏi hiện tại thuộc loại nào sau đây?
+
+  - Ước lượng population mean
+  
+  - Ước lượng population proportion
+  
+  - So sánh hai population mean
+  
+  - So sánh hai population proportion
+  
+  - So sánh nhiều hơn population mean
+
+  - Xác định mối quan hệ giữa hai biến phân loại
+  
+  - Xác định mối quan hệ giữa hai biến số
+  
+- Trả lời: So sánh hai population mean
+
+
+- Kiểm định thống kê phù hợp cho câu hỏi hiện tại?
+
+  - one sample z-test for the mean ($\mu$)
+  
+  - one sample t-test for the mean ($\mu$)
+  
+  - one sample z-test for the proportion ($p$)
+  
+  - two sample t-test for two means ($\mu_1, \mu_2$)
+  
+  - two sample z-test for two proportions ($p_1, p_2$)
+  
+  - paired t-test for the mean difference ($\mu_d$)
+  
+  - chi-squared test for independence 
+  
+  - ANOVA F-test
+  
+  - regression t-test for the slope
+
+- Trả lời: two sample t-test for two means ($\mu_1, \mu_2$)
+
+- Xác định các giả thuyết
+
+  - Null hypothesis: $H_0:$ ???
+
+  - Alternative hypothesis: $H_A:$ ???
+
+
+- Trả lời: 
+
+  - Null hypothesis: $H_0: \mu_1 - \mu_2 = 0$
+  
+  - Alternative hypothesis: $H_A: \mu_1 - \mu_2 \ne 0$
+
+
+#### Thực hiện phân tích
+- Ở đây chúng ta quan tâm đến tỷ lệ $p$ của dữ liệu đối với biến $x$ với giá trị $p_0$ nào đó. $H_0: p = p_0$.
+
+- **Tính test statistic**
+```{r, eval=FALSE}
+mu1 = ...
+mu2 = ...
+n1 = ...
+n2 = ...
+s1 = ...
+s2 = ...
+se = sqrt(s1^2/n1 + s2^2/n2)
+t = (mu1 - mu2)/se
+```
+
+- **Tính p-value**
+```{r, eval=FALSE}
+v = (s1^2/n1 + s2^2/n2)^2/((s1^2/n1)^2/(n1-1) + (s2^2/n2)^2/(n2-1))
+p_value = pt(q = t, df = v) 
+# hoặc p_value = 1 - p_value = pt(q = t, df = v) nếu t > 0
+```
+
+- Kiểm tra lại bằng hàm `t.test` trong R
+
+  - Trường hợp 1: Hai mẫu được lưu trữ dưới dạng hai cột số.
+
+```{r, eval=FALSE}
+# x là biến giải thích
+# y là biến kết quả
+
+# Kiểm định giả thuyết "Ha: mu1 < mu2"
+t.test(data$x, data$y, alternative="less")
+
+# Kiểm định giả thuyết "Ha: m1 > mu2"
+ t.test(data$x, data$y, alternative="greater")
+
+# Kiểm định giả thuyết "Ha: mu1 != mu2"
+t.test(data$x, data$y, alternative="two.sided")
+```
+
+  - Trường hợp 2: Dữ liệu số được lưu trữ trong một cột, trong khi cột thứ hai chứa các nhãn cho biết dữ liệu thuộc về mẫu nào trong hai mẫu.
+    
+    - Trong trường hợp này, dữ liệu bao gồm hai cột có nhãn cột. Cột đầu tiên là giá trị của biến giải thích; Cột thứ hai là các giá trị tương ứng của biến phản hồi. Giả định rằng tên cột giải thích là x và tên cột phản hồi là y. Thay thế tên cột thật sự trong các lệnh bên dưới.
+    
+```{r, eval=FALSE}
+# x là biến giải thích
+# y là biến kết quả
+
+# Kiểm định giả thuyết "Ha: mu1 < mu2"
+t.test(data$y~data$x, alternative="less")
+
+# Kiểm định giả thuyết "Ha: m1 > mu2"
+ t.test(data$y~data$x, alternative="greater")
+
+# Kiểm định giả thuyết "Ha: mu1 != mu2"
+t.test(data$y~data$x, alternative="two.sided")
+```
+
+
+#### Báo cáo kết quả
+- Cho biết $p$-value của kiểm định? Từ $p$-value ta sẽ quyết định bác bỏ hay chấp nhận $H_0$?
+
+- Trả lời:
+
+  - p-value = 6.271e-13
+
+  - Vì $p$-value nhỏ hơn mức ý nghĩa $\alpha = 0.05$ nên ta bác bỏ $H_0$.
+
+
+## Kết luận
+- Trong bước này, chúng ta giải thích kết quả nhận được từ các phân tích trong bối cảnh của câu hỏi hiện tại.
+
+- Kết quả bạn nhận được cho thấy điều gì về sự khác biệt trong kết quả điểm cuối kỳ giữa những sinh viên có làm thêm bài tập cộng điểm và những sinh viên không làm?
+
+- Trả lời: 
+
+  - Phân tích thăm dò cho thấy sự khác biệt về kết quả điểm cuối kỳ giữa những sinh viên làm thêm bài tập cộng điểm và những sinh viên không làm. Cụ thể hơn, những sinh viên làm thêm bài tập cộng điểm thường đạt điểm cao hơn trong bài cuối kỳ.
+  
+  - Kiểm định thống kê cho ra giá trị $p$ rất nhỏ (về cơ bản là 0), cho thấy bằng chứng được cung cấp bởi dữ liệu đủ mạnh để bác bỏ $H_0$ và kết luận rằng kết quả điểm cuối kỳ của những sinh viên không làm bài tập cộng điểm là kém hơn đáng kể so với kết quả điểm cuối kỳ của những học sinh có làm thêm bài tập cộng điểm.
+
+- Dữ liệu có cung cấp bằng chứng rằng làm thêm bài tập cộng điểm là nguyên nhân giúp sinh viên làm bài tốt hơn trong bài cuối kỳ không? Giải thích câu trả lời của bạn.
+
+- Trả lời: 
+
+  - Không! Vì đây là một nghiên cứu quan sát, không có kết luận nhân quả nào có thể được đưa ra. Trường hợp duy nhất mà từ có mối quan hệ có thể suy ra nhân quả (association implies causation) là khi nghiên cứu là một thí nghiệm ngẫu nhiên. Có thể giải thích cho sự khác biệt giữa hai nhóm sinh viên là những sinh viên tận tâm hơn thường sẽ làm thêm các bài tập cộng điểm và cũng sẽ có xu hướng làm tốt bài cuối cùng.
+
+- Liên hệ các nhận xét bạn đã đưa ra trước khi phân tích dữ liệu bằng cách nhận xét về cả hai điều sau:
+
+  - Kỳ vọng của bạn khác (hoặc không khác) như thế nào so với kết quả thực tế
+  
+  - Nếu nó có liên quan hoặc có ý nghĩa trong ngữ cảnh, hãy nghĩ ra cách mà những kết quả này có thể được sử dụng trong thực tế.
+  
+- Trả lời: 
+  
+  - Kết quả phù hợp với những gì chúng ta mong đợi trước khi phân tích dữ liệu.
+  
+  - Kết quả này có thể được cung cấp cho sinh viên trong các học kỳ sau, nhưng nên lưu ý với họ rằng việc làm thêm bài tập cộng điểm không đảm bảo thành công trong khóa học.
+
+
+
+## Tổng kết
+Trong phần cuối cùng của quá trình phân tích dữ liệu, chúng ta tóm tắt công việc của mình và xem xét các hàm ý và hạn chế có thể có trong kết luận của chúng ta.
+
+- Bạn đã giải quyết tất cả các câu hỏi riêng lẻ, hãy viết một báo cáo tóm tắt ngắn về những phát hiện chính mà bạn đã khám phá bằng cách sử dụng dữ liệu.
+
+- Bạn đã hoàn thành phân tích của mình, hãy thảo luận về điểm mạnh và điểm yếu trong kết luận của bạn. Đặc biệt, hãy giải quyết từng vấn đề sau:
+
+  - Thiết kế này có cho phép bạn đưa ra kết luận nhân quả không? Tại sao hoặc tại sao không?
+  
+  - Cách lấy mẫu trong nghiên cứu có cho phép bạn tổng quát hóa kết quả đối với quần thể như thế nào?
+  
+- Trả lời: 
+  
+  - Không. Vì đây là nghiên cứu quan sát. Muốn rút ra kết luận nhân quả ta cần thiết kế một thí nghiệm. 
+
+  - Thiết kế lấy mẫu phân tầng (stratified sampling) tạo ra một mẫu ngẫu nhiên và do đó chúng ta có thể tổng quát kết quả của mình cho toàn bộ "quần thể" gồm tất cả sinh viên tại trường đại học đang theo học lớp thống kê.

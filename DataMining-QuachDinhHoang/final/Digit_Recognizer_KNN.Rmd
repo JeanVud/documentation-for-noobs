@@ -1,0 +1,191 @@
+---
+title: "Digit Recognizer KNN"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r package-options, include=FALSE}
+knitr::opts_knit$set(progress = TRUE, verbose = FALSE)
+```
+reference: https://api.rpubs.com/dardodel/digit_recognition_KNN_NN_SVM
+
+```{r message=FALSE, warning=FALSE}
+library(readr)
+train <- read_csv("./input/train.csv")
+test <- read_csv("./input/test.csv")
+```
+
+what is the size of each data set?
+``` {r}
+dim(train) ; dim(test)
+```
+
+Train data set has one extra column, called “label”, containing the “digit” that is represented by the other 784 columns. The 784 (28x28 cells) columns contain a value from 0 to 255. This value tells us the lightness or darkness of each cell. Let’s convert the “label” column to factor:
+
+``` {r}
+train[, 1] <- as.factor(train[, 1]$label)  # As Category
+```
+
+All the other columns are numeric:
+``` {r}
+head(sapply(train[1,], class))
+```
+
+For more information about the data see the data description on Kaggle. There are 42000 observation with 784 features. However, some columns contain zero for all observations or they have near zero variance. These columns need to be removed:
+
+```{r warning=FALSE}
+train_orig <- train
+test_orig <- test
+
+library(caret)
+
+nzv.data <- nearZeroVar(train, saveMetrics = TRUE)
+drop.cols <- rownames(nzv.data)[nzv.data$nzv == TRUE]
+train <- train[,!names(train) %in% drop.cols]
+test <- test[,!names(test) %in% drop.cols]
+```
+
+
+# Exploratory data analysis
+Now, let’s do some exploratory data analysis. 
+Using data visualization and EDA:
+
+``` {r}
+library(RColorBrewer)
+BNW <- c("white", "black")
+CUSTOM_BNW <- colorRampPalette(colors = BNW)
+
+par(mfrow = c(4, 3), pty = "s", mar = c(1, 1, 1, 1), xaxt = "n", yaxt = "n")
+
+images_digits_0_9 <- array(dim = c(10, 28 * 28))
+
+for (digit in 0:9) {
+  images_digits_0_9[digit + 1, ] <- apply(train_orig[train_orig[, 1] == digit, -1], 2, sum)
+  images_digits_0_9[digit + 1, ] <- images_digits_0_9[digit + 1, ]/max(images_digits_0_9[digit + 1, ]) * 255
+  z <- array(images_digits_0_9[digit + 1, ], dim = c(28, 28))
+  z <- z[, 28:1]
+  image(1:28, 1:28, z, main = digit, col = CUSTOM_BNW(256))
+}
+```
+
+More blurriness, more chance of misprediction. For example, 0 has a smooth and fully dark line but see how blurry is 9 or 4 or even 1. That means there is a higher chance of incorrect prediction of such numbers. We will explore this more in detail when we predict our validation data set. What is the proportion of each digit in the train set?
+
+``` {r}
+CUSTOM_BNW_PLOT <- colorRampPalette(brewer.pal(10, "Set3"))
+LabTable <- table(train_orig$label)
+par(mfrow = c(1, 1))
+percentage <- round(LabTable/sum(LabTable) * 100)
+labels <- paste0(row.names(LabTable), " (", percentage, "%) ")
+pie(LabTable, labels = labels, col = CUSTOM_BNW_PLOT(10), main = "Percentage of Digits (Training Set)")
+
+```
+
+So, all digits contribute almost equally to the data set implying that the train set is appropriately randomly selected. I chose SVM (Support Vector Mechine) as the first model which is a good fit for classification problems. Let’s see how SVM performs in Digit Recognition Classification. To speed up our initial model runs, I only use 10% of the entire train set (~4200) for training and use almost the same size for validation. Consequently, is it expected to have less accuracy in comparison with the case where all train set is applied. For the final prediction, the entire train set will be utilized.
+
+``` {r}
+set.seed(43210)
+trainIndex <- createDataPartition(train$label, p = 0.1, list = FALSE, times = 1)
+allindices <- c(1:42000)
+training <- train[trainIndex,]
+validating <- train[-trainIndex,]
+vali0_index <- allindices[! allindices %in% trainIndex]
+validIndex <- createDataPartition(validating$label, p = 0.11, list = FALSE, times = 1)
+validating <- validating[validIndex,]
+original_validindex <- vali0_index[validIndex]
+```
+
+``` {r}
+Contrast <- function (DATASET, POWER) {
+  outDATASET <- cbind(DATASET$label, as.data.frame((DATASET[,-1]/255)^(POWER)*255))
+  names(outDATASET)[1] <- "label"  
+  outDATASET
+}
+```
+
+#MODEL: KNN
+
+The K-Nearest Neighbor (KNN) is a simple yet accurate algorithm to solve the Digit Recognition problem. For predicting a new instance, KNN calculates the Euclidean Distance between the new instance and all the instances in the entire training set. Then, the algorithm looks for the top K nearest (most similar) instances and outputs the class with the highest frequency (most vote) as prediction. The question is how to choose K? Cross Validation can be used to choose the best value for K that results in the highest accuracy. I use CARET package to train KNN and choose K. Then, I will switch to FNN which is much faster.
+
+to install doMC on Windows, R version 4.0.2: type in the Console
+install.packages("doMC", repos="http://R-Forge.R-project.org")
+``` {r}
+power = 3
+
+training2   <- Contrast(training, 1/power)
+validating2 <- Contrast(validating, 1/power)
+
+training3   <- Contrast(training,   power)
+validating3 <- Contrast(validating, power)
+
+training4 <- rbind(training, training2, training3)
+```
+
+``` {r}
+library(doMC)
+registerDoMC(cores = 3)
+
+ctrl <- trainControl(method="repeatedcv",repeats = 1, number = 4, verboseIter = T, allowParallel = T)
+knnFit <- train(label ~ ., data = training, method = "knn", trControl = ctrl)
+```
+
+
+``` {r}
+plot(knnFit)
+```
+
+So, we choose K=5. At first, FNN will be trained with three training sets: 1) original “training” 2) “training2” (lower contrast) 3) “training3” (higher contrast). See the FNN documentation for different “algorithm” options and other settings. I found that “kd-tree” was the best choice.
+
+``` {r}
+library(FNN)
+fnn.kd1 <- FNN::knn(training[,-1], validating[,-1], training$label, k=5, algorithm = c("kd_tree"))
+fnn.kd.pred1 <- as.numeric(fnn.kd1)-1
+
+fnn.kd2 <- FNN::knn(training2[,-1], validating2[,-1], training2$label, k=5, algorithm = c("kd_tree"))
+fnn.kd.pred2 <- as.numeric(fnn.kd2)-1
+
+fnn.kd3 <- FNN::knn(training3[,-1], validating3[,-1], training3$label, k=5, algorithm = c("kd_tree"))
+fnn.kd.pred3 <- as.numeric(fnn.kd3)-1
+
+fnn.kd4 <- FNN::knn(training4[,-1], validating2[,-1], training4$label, k=5, algorithm = c("kd_tree"))
+fnn.kd.pred4 <- as.numeric(fnn.kd4)-1
+```
+
+``` {r}
+table(fnn.kd.pred1)
+table(validating$label)
+```
+
+```{r}
+confusionMatrix(
+  factor(fnn.kd.pred1, levels = 1:400),
+  factor(validating$label, levels = 1:400)
+)
+```
+
+
+```{r}
+confusionMatrix(
+  factor(fnn.kd.pred2, levels = 1:400),
+  factor(validating2$label, levels = 1:400)
+)
+```
+
+```{r}
+confusionMatrix(
+  factor(fnn.kd.pred3, levels = 1:400),
+  factor(validating3$label, levels = 1:400)
+)
+```
+
+Again, among these three models, the one with lower contrast had better accuracy (93.5%). Now, what if the three training sets are combined again:
+``` {r}
+confusionMatrix(
+  factor(fnn.kd.pred4, levels = 1:350),
+  factor(validating2$label, levels = 1:350)
+)
+
+```
+
+
+We obtained higher accuracy ~94.5% combining three training sets. Note that the lower-contrast data set is used for prediction. So far, KNN performed well, KNN  is much faster than SVM. 

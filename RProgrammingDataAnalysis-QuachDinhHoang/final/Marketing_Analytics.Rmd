@@ -1,0 +1,62 @@
+---
+title: "Analysis Template"
+author: "Your name"
+date: "dd/mm/yyyy"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## SOURCE: 
+
+https://www.kaggle.com/jennifercrockett/marketing-analytics-eda-task-final/data#Section-02:-Statistical-Analysis
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load-packages, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+## Giới thiệu
+Giới thiệu về cách dữ liệu được thu thập. 
+
+
+## Dữ liệu
+```{r}
+data <- read.csv("D:/8570w/documentation-for-noobs/RProgrammingDataAnalysis-QuachDinhHoang/final/input/marketing_data.csv")
+
+str(data)
+
+#head(data, 10)
+```
+
+```{r warning=FALSE}
+
+library(tidyverse)
+library(Rfast)
+
+cols <- grep("Purchases", colnames(data)) # source: https://stackoverflow.com/a/62698637/8709178
+
+## sum rows with 'Purchases" in name
+data$Total <- rowsums(as.matrix(data[,cols]))
+```
+
+```{r}
+countryPurchases <- aggregate(data$Total, by=list(Country=data$Country), FUN=sum)
+
+countryPurchases <- setNames(aggregate(data$Total, by=list(Country=data$Country), FUN=sum), c("Country", "Total"))
+
+countryPurchases
+```
+
+
+```{r}
+library(ggplot2)
+
+p<-ggplot(data=countryPurchases, aes(x=Country, y=Total)) +
+  geom_bar(stat="identity")
+p
+   
+```

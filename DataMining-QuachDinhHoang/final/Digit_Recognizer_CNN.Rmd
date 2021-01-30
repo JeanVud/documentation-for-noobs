@@ -1,0 +1,272 @@
+<<<<<<< HEAD
+---
+title: "Digit_Recognizer"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Digit Recognizer in R
+by [Koba Khitalishvili](http://www.kobakhit.com/)
+
+## Introduction
+[Setting up a convolutional neural network in Python](https://www.kaggle.com/kobakhit/digit-recognizer/digit-recognizer-in-python-using-cnn) to approach the Digit Recognizer problem yielded a ~0.986 accuracy score which helped me break into the top 100 as of 11/16/2015. Working in the Python framework was a mixed experience for me due to the ever present issue with module dependencies. Once the framework was set up everything went smoothly. 
+
+Now, I try to approach the same problem using R and RStudio. You can enter the competition right away using the [benchmark random forest code found in the forums](https://www.kaggle.com/benhamner/digit-recognizer/random-forest-benchmark). Sadly, there is no implementation of CNN in R as of 11/16/2015. However, I was able to find an implementation of a standard neural network using the promising [h2o](http://h2o.ai/product/) package.
+
+## Table of Contents
+- 1. Data Preprocessing
+- 2. Train, Predict and Save
+- 3. Conclusion
+
+## Data Preprocessing?
+As always, first I read in data and take a look at it. The `train.csv` has one digit label column and 784 columns with pixel color values that go from 0 to 255.
+```{r readin}
+#install.packages("readr")
+library(readr)
+train <- read_csv("../input/train.csv")
+test <- read_csv("../input/test.csv")
+head(train[1:10])
+```
+
+We can quickly plot the pixel color values to obtain a picture of the digit.
+```{r plotimage}
+# Create a 28*28 matrix with pixel color values
+m = matrix(unlist(train[10,-1]),nrow = 28,byrow = T)
+# Plot that matrix
+image(m,col=grey.colors(255))
+```
+
+This image needs to be rotated to the right. I will rotate the matrix and plot a bunch of images.
+```{r plotimages, results='hide' }
+rotate <- function(x) t(apply(x, 2, rev)) # reverses (rotates the matrix)
+
+# Plot a bunch of images
+par(mfrow=c(2,3))
+lapply(1:6, 
+    function(x) image(
+                    rotate(matrix(unlist(train[x,-1]),nrow = 28,byrow = T)),
+                    col=grey.colors(255),
+                    xlab=train[x,1]
+                )
+)
+par(mfrow=c(1,1)) # set plot options back to default
+```
+
+## Train, Predict and Save
+h2o uses virtual Java clusters to do its work and achieve amazingly quick performance. Below code initializes a local cluster.
+
+```{r h2o-cluster, warning=F}
+#install.packages("h2o")
+library(h2o)
+
+## start a local h2o cluster
+localH2O = h2o.init(max_mem_size = '6g', # use 6GB of RAM of *GB available
+                    nthreads = -1) # use all CPUs (8 on my personal computer :3)
+```
+
+Now, I just convert the `train` and `test` sets into the h2o format and set up the model. The `h2o.deeplearning()` function has lots of configurable arguments. For demonstration I went with a two layer neural network with 100 nodes and 0.5 dropout ratio in each. While I could specify a learning rate I decided not to because it is adaptive by default which should result in an improved accuracy score. [This blog post](http://h2o.ai/blog/2015/02/deep-learning-performance/) explores the deeplearning using h2o and its many configurable options. I used it for reference. So let's train the model.
+```{r train, message=F, warning=F}
+## MNIST data as H2O
+train[,1] = as.factor(train[,1]) # convert digit labels to factor for classification
+train_h2o = as.h2o(train)
+test_h2o = as.h2o(test)
+
+## set timer
+s <- proc.time()
+
+## train model
+model =
+  h2o.deeplearning(x = 2:785,  # column numbers for predictors
+                   y = 1,   # column number for label
+                   training_frame = train_h2o, # data in H2O format
+                   activation = "RectifierWithDropout", # algorithm
+                   input_dropout_ratio = 0.2, # % of inputs dropout
+                   hidden_dropout_ratios = c(0.5,0.5), # % for nodes dropout
+                   balance_classes = TRUE, 
+                   hidden = c(100,100), # two layers of 100 nodes
+                   momentum_stable = 0.99,
+                   nesterov_accelerated_gradient = T, # use it for speed
+                   epochs = 15) # no. of epochs
+
+## print confusion matrix
+h2o.confusionMatrix(model)
+```
+
+After training the model we can look at the confusion matrix. The total error after 15 epochs is around `r h2o.confusionMatrix(model)$Error[11]` which translates to 1 - `r h2o.confusionMatrix(model)$Error[11]` = `r 1 - h2o.confusionMatrix(model)$Error[11]` accuracy score. The training process lasted for `r (s - proc.time())[3][[1]]` seconds. Good performance within a short period of time. 
+
+```{r}
+## print time elapsed
+s - proc.time()
+```
+
+Now, let's predict the test data and save the results.
+
+```{r savedata, message=F, warning=F}
+## classify test set
+h2o_y_test <- h2o.predict(model, test_h2o)
+
+## convert H2O format into data frame and  save as csv
+df_y_test = as.data.frame(h2o_y_test)
+df_y_test = data.frame(ImageId = seq(1,length(df_y_test$predict)), Label = df_y_test$predict)
+write.csv(df_y_test, file = "submission-r-h2o.csv", row.names=F)
+
+## shut down virutal H2O cluster
+h2o.shutdown(prompt = F)
+```
+
+## Conclusion
+While using R to approach this problem I spent virtually no time on setting up the framework (in contrast to Python where it unpleasantly lasted). The exploratory analysis would have been quick and easy to do as well if I did any. However, I could not find an implementation of convolutional neural network in R. As a result, I settled for a two layer NN. 
+
+The best accuracy score I could get using the NN setup above was 0.978 in contrast to 0.98614 which I got using the [CNN model written in Python](https://www.kaggle.com/kobakhit/digit-recognizer/digit-recognizer-in-python-using-cnn). I tried using the `nnet` and `neuralnet` packages, but they ended up being useless. To train a one layer NN model with 100 nodes using the `nnet` package on a subset of data with 500 rows lasted for longer than half an hour. The whole process using the complete data took less than a minute using the `h2o` package. The random forest benchmark code takes a couple minutes too. The discrepancy in performance across packages in R is not a problem, but this peculiarity needs to be taken into account.
+
+To generate this doc I used an RMarkdown notebook on Kaggle. The RMakrdown is pretty awesome and the reports come out looking neat. In comparison to IPython notebook and the [Jupyter project](http://jupyter.org/), knitr and RMarkdown feel old. Nevertheless, `knitr` is very flexible and ultimately it comes down to personal preferences when deciding on the report generating solutions.
+
+R is great when it comes to exploratory analysis and data visualization. It has a big community and in case you have an R related question it was probably already answered online. The main problem for R is its efficiency and speed. Since, everything is done in the memory there are immediate limits imposed on the scale of the problem. One of the ways to cope with this problem is to produce extensions like `h2o` which for examples utilizes virtual Java clusters to do its work fast. I wonder what using Julia feels like when approaching the Digit Recognizer problem.
+
+## Resources used
+[Deepl Learning with H2O Demonstration](http://h2o-release.s3.amazonaws.com/h2o/rel-tibshirani/3/docs-website/h2o-docs/booklets/DeepLearning_Vignette.pdf)
+
+[H2O R Package Documentation](http://h2o-release.s3.amazonaws.com/h2o/rel-tibshirani/3/docs-website/h2o-r/h2o_package.pdf)
+
+[Deep learning performance in H2O](http://h2o.ai/blog/2015/02/deep-learning-performance/)
+
+=======
+---
+title: "Digit_Recognizer"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Digit Recognizer in R
+by [Koba Khitalishvili](http://www.kobakhit.com/)
+
+## Introduction
+[Setting up a convolutional neural network in Python](https://www.kaggle.com/kobakhit/digit-recognizer/digit-recognizer-in-python-using-cnn) to approach the Digit Recognizer problem yielded a ~0.986 accuracy score which helped me break into the top 100 as of 11/16/2015. Working in the Python framework was a mixed experience for me due to the ever present issue with module dependencies. Once the framework was set up everything went smoothly. 
+
+Now, I try to approach the same problem using R and RStudio. You can enter the competition right away using the [benchmark random forest code found in the forums](https://www.kaggle.com/benhamner/digit-recognizer/random-forest-benchmark). Sadly, there is no implementation of CNN in R as of 11/16/2015. However, I was able to find an implementation of a standard neural network using the promising [h2o](http://h2o.ai/product/) package.
+
+## Table of Contents
+- 1. Data Preprocessing
+- 2. Train, Predict and Save
+- 3. Conclusion
+
+## Data Preprocessing?
+As always, first I read in data and take a look at it. The `train.csv` has one digit label column and 784 columns with pixel color values that go from 0 to 255.
+```{r readin}
+#install.packages("readr")
+library(readr)
+train <- read_csv("../input/train.csv")
+test <- read_csv("../input/test.csv")
+head(train[1:10])
+```
+
+We can quickly plot the pixel color values to obtain a picture of the digit.
+```{r plotimage}
+# Create a 28*28 matrix with pixel color values
+m = matrix(unlist(train[10,-1]),nrow = 28,byrow = T)
+# Plot that matrix
+image(m,col=grey.colors(255))
+```
+
+This image needs to be rotated to the right. I will rotate the matrix and plot a bunch of images.
+```{r plotimages, results='hide' }
+rotate <- function(x) t(apply(x, 2, rev)) # reverses (rotates the matrix)
+
+# Plot a bunch of images
+par(mfrow=c(2,3))
+lapply(1:6, 
+    function(x) image(
+                    rotate(matrix(unlist(train[x,-1]),nrow = 28,byrow = T)),
+                    col=grey.colors(255),
+                    xlab=train[x,1]
+                )
+)
+par(mfrow=c(1,1)) # set plot options back to default
+```
+
+## Train, Predict and Save
+h2o uses virtual Java clusters to do its work and achieve amazingly quick performance. Below code initializes a local cluster.
+
+```{r h2o-cluster, warning=F}
+#install.packages("h2o")
+library(h2o)
+
+## start a local h2o cluster
+localH2O = h2o.init(max_mem_size = '6g', # use 6GB of RAM of *GB available
+                    nthreads = -1) # use all CPUs (8 on my personal computer :3)
+```
+
+Now, I just convert the `train` and `test` sets into the h2o format and set up the model. The `h2o.deeplearning()` function has lots of configurable arguments. For demonstration I went with a two layer neural network with 100 nodes and 0.5 dropout ratio in each. While I could specify a learning rate I decided not to because it is adaptive by default which should result in an improved accuracy score. [This blog post](http://h2o.ai/blog/2015/02/deep-learning-performance/) explores the deeplearning using h2o and its many configurable options. I used it for reference. So let's train the model.
+```{r train, message=F, warning=F}
+## MNIST data as H2O
+train[,1] = as.factor(train[,1]) # convert digit labels to factor for classification
+train_h2o = as.h2o(train)
+test_h2o = as.h2o(test)
+
+## set timer
+s <- proc.time()
+
+## train model
+model =
+  h2o.deeplearning(x = 2:785,  # column numbers for predictors
+                   y = 1,   # column number for label
+                   training_frame = train_h2o, # data in H2O format
+                   activation = "RectifierWithDropout", # algorithm
+                   input_dropout_ratio = 0.2, # % of inputs dropout
+                   hidden_dropout_ratios = c(0.5,0.5), # % for nodes dropout
+                   balance_classes = TRUE, 
+                   hidden = c(100,100), # two layers of 100 nodes
+                   momentum_stable = 0.99,
+                   nesterov_accelerated_gradient = T, # use it for speed
+                   epochs = 15) # no. of epochs
+
+## print confusion matrix
+h2o.confusionMatrix(model)
+```
+
+After training the model we can look at the confusion matrix. The total error after 15 epochs is around `r h2o.confusionMatrix(model)$Error[11]` which translates to 1 - `r h2o.confusionMatrix(model)$Error[11]` = `r 1 - h2o.confusionMatrix(model)$Error[11]` accuracy score. The training process lasted for `r (s - proc.time())[3][[1]]` seconds. Good performance within a short period of time. 
+
+```{r}
+## print time elapsed
+s - proc.time()
+```
+
+Now, let's predict the test data and save the results.
+
+```{r savedata, message=F, warning=F}
+## classify test set
+h2o_y_test <- h2o.predict(model, test_h2o)
+
+## convert H2O format into data frame and  save as csv
+df_y_test = as.data.frame(h2o_y_test)
+df_y_test = data.frame(ImageId = seq(1,length(df_y_test$predict)), Label = df_y_test$predict)
+write.csv(df_y_test, file = "submission-r-h2o.csv", row.names=F)
+
+## shut down virutal H2O cluster
+h2o.shutdown(prompt = F)
+```
+
+## Conclusion
+While using R to approach this problem I spent virtually no time on setting up the framework (in contrast to Python where it unpleasantly lasted). The exploratory analysis would have been quick and easy to do as well if I did any. However, I could not find an implementation of convolutional neural network in R. As a result, I settled for a two layer NN. 
+
+The best accuracy score I could get using the NN setup above was 0.978 in contrast to 0.98614 which I got using the [CNN model written in Python](https://www.kaggle.com/kobakhit/digit-recognizer/digit-recognizer-in-python-using-cnn). I tried using the `nnet` and `neuralnet` packages, but they ended up being useless. To train a one layer NN model with 100 nodes using the `nnet` package on a subset of data with 500 rows lasted for longer than half an hour. The whole process using the complete data took less than a minute using the `h2o` package. The random forest benchmark code takes a couple minutes too. The discrepancy in performance across packages in R is not a problem, but this peculiarity needs to be taken into account.
+
+To generate this doc I used an RMarkdown notebook on Kaggle. The RMakrdown is pretty awesome and the reports come out looking neat. In comparison to IPython notebook and the [Jupyter project](http://jupyter.org/), knitr and RMarkdown feel old. Nevertheless, `knitr` is very flexible and ultimately it comes down to personal preferences when deciding on the report generating solutions.
+
+R is great when it comes to exploratory analysis and data visualization. It has a big community and in case you have an R related question it was probably already answered online. The main problem for R is its efficiency and speed. Since, everything is done in the memory there are immediate limits imposed on the scale of the problem. One of the ways to cope with this problem is to produce extensions like `h2o` which for examples utilizes virtual Java clusters to do its work fast. I wonder what using Julia feels like when approaching the Digit Recognizer problem.
+
+## Resources used
+[Deepl Learning with H2O Demonstration](http://h2o-release.s3.amazonaws.com/h2o/rel-tibshirani/3/docs-website/h2o-docs/booklets/DeepLearning_Vignette.pdf)
+
+[H2O R Package Documentation](http://h2o-release.s3.amazonaws.com/h2o/rel-tibshirani/3/docs-website/h2o-r/h2o_package.pdf)
+
+[Deep learning performance in H2O](http://h2o.ai/blog/2015/02/deep-learning-performance/)
+
+>>>>>>> 36d5fbee3617d47eb1dbd89d6dbb38e2f412903f
+[Deep Learning in R using H2O](http://didericksen.github.io/deeplearning-r-h2o/)
